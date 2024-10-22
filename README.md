@@ -1,29 +1,39 @@
  > As you complete each section you **must** remove the prompt text. Every *turnin* of this project includes points for formatting of this README so keep it clean and keep it up to date. 
  > Prompt text is any lines beginning with "\>"
- > Replace anything between \<...\> with your project specifics and remove angle brackets. For example, you need to name your project and replace the header right below this line with that title (no angle brackets). 
-# \<Project title\>
- > Your author list below should include links to all members GitHub (remove existing author).
- 
- > Authors: \<[Jeffrey McDaniel](https://github.com/jmcda001)\>
+ > Replace anything between \<...\> with your project specifics and remove angle brackets. For example, you need to name your project and replace the header right below this line with that title (no angle brackets).
 
- > You will be forming a group of **FOUR** students and working on an interesting project. The project has 4 phases, each one with specific requirements. A list of proposed project ideas that have been successful in previous quarters is listed in the project specifications document on Canvas. You can select an idea from the list and start thinking about the features you will implement. If you want to propose your own original idea, you will have to contact your instructor to discuss the project and obtain written permission before you submit your project proposal (Phase 1). The project work should be divided almost equally among team members. You can of course help each other, but it needs to be clear who will be responsible for which features. Additionally, you are expected to follow Scrum patterns, specifically the use of a Scrum (Project) board, Sprints, and Scrum meetings.
+ > Authors: Andrew Maciborski [(GitHub)](https://github.com/dpxa), Advaith Tontaalpur [(GitHub)](https://github.com/atontalapur), Arjun M [(GitHub)](https://github.com/Valientkyton), Ritul Roshan Ravindran [(GitHub)](https://github.com/Vishifishi)
 
- > ## Expectations
- > * The backend of your project should be implemented in C++. If you wish to choose anoher programming language (e.g. Java, Python), please discuss with your lab TA to obtain permission.
- > * You can incorporate additional technologies/tools but they must be approved (in writing) by the instructor or the TA.
- > * Each member of the group **must** be committing code regularly and make sure their code is correctly attributed to them. We will be checking attributions to determine if there was equal contribution to the project.
- > * **Each member of the group must actively participate in the Github Project board, writing unit tests, and reviewing commited code.**
-> * All project phases are to be submitted to this GitHub repository. You should modify this README file to reflect the different phases of the project. In addition, you should regularly hold sprint meetings with your group. You will need to hold two to three scrum/check-in meetings with your lab TA/reader at different times in addition to the final demo.
+Catch The Coins will consist of a greedy person and an environment full of bouncing coins. The user will control the person, and their goal is to collect as many coins as possible within the level’s time limit. There will be obstacles like walls and traps that slow the player down. There will also be special coins that are deducted from the number of coins collected.
 
-## Project Description
- > Your project description should summarize the project you are proposing. Be sure to include:
- > * Why is it important or interesting to you?
- > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
- > * What will be the input/output of your project?
- > * What are the features that the project provides?
- > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
- > 
- > You also need to set up an empty project board using GitHub projects (board view with default columns). Make sure you add the board under your project repository. You should also have a Product Backlog and In testing columns added. All columns should be in the right order.
+There will be X number of levels, and the only thing that will change between runs of a level will be the random coin movement.
+
+There will be a leaderboard for each level, and it will consist of the top X times of the user. The game will be able to be signed into through a login screen only asking for the profile name.
+
+There will be functionality to exit a level, pause/resume a level, mute sound, and other appropriate controls for the effects added.
+
+This project is important due to its full-stack approach to building a functional video game that parallels many key features in modern video games. Building this project would help build valuable skills in frontend, and back development and implement software design structures that we have learned so far.  While this can be challenging, it makes it that much more interesting due to the fact that none of us have experience building something of this exact nature, so it will push us to be more creative. It will also give us the opportunity to work on technologies/frameworks that we may not have used before which would also help us become a better developer.
+
+Input: There will be a “user login” page where the user can enter their username. This will open the game and take them to a specified game level, or the level they left with.
+The details entered will be cross-referenced with the database to retrieve the level information for the output. If they are a “pro” (finished all the levels), they will be prompted to choose a level they would like to play on another page. Based on this selection, a level will be launched.
+
+Output: Based on the input parameters, and the information that was pulled from the database, a pop-up window will take the user to the level that they left the game, or the level they specify. On the GUI window, we will have the game, a high score for the user, an overall high score, current points, a timer to indicate the time they have left to complete the current level, and the number of tries they have taken. After the game, all of the information received will be displayed, and the leaderboard will also be displayed. After they finish the game, the new data will be entered into the database.
+
+Languages
+Python -Used for creating the game itself
+SQL - Used for querying and storing user data in the database.
+
+Tools
+Python Arcade - The Python library used to code the core game mechanics.
+Pytest - Python module for writing unit tests.
+
+Technologies
+Git - Used as a version control system for the project.
+Pip - Used for installing and managing the project dependencies.
+SQLite - A mobile version of MySQL which is used to store the user information.
+
+We are still exploring options to host the game online.
+
  > ## Phase II
  > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
  > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
