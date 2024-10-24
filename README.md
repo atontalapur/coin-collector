@@ -2,7 +2,7 @@
  > Prompt text is any lines beginning with "\>"
  > Replace anything between \<...\> with your project specifics and remove angle brackets. For example, you need to name your project and replace the header right below this line with that title (no angle brackets).
 
- > Authors: Andrew Maciborski [(GitHub)](https://github.com/dpxa), Advaith Tontaalpur [(GitHub)](https://github.com/atontalapur), Arjun M [(GitHub)](https://github.com/Valientkyton), Ritul Roshan Ravindran [(GitHub)](https://github.com/Vishifishi)
+ > Authors: Andrew Maciborski [(GitHub)](https://github.com/dpxa), Advaith Tontalpur [(GitHub)](https://github.com/atontalapur), Arjun M [(GitHub)](https://github.com/Valientkyton), Ritul Roshan Ravindran [(GitHub)](https://github.com/Vishifishi)
 
 Catch The Coins will consist of a greedy person and an environment full of bouncing coins. The user will control the person, and their goal is to collect as many coins as possible within the level’s time limit. There will be obstacles like walls and traps that slow the player down. There will also be special coins that are deducted from the number of coins collected.
 
