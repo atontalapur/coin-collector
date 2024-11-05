@@ -39,7 +39,12 @@ We are still exploring options to host the game online.
 ![Navigation Diagram](assets/nav_diag.png)
 ![Screen Diagram](assets/screen_diag1.jpg)
 ![Screen Diagram](assets/screen_diag2.jpg)
+
+> ## Class Diagram
+
 ![Class Diagram](assets/class_diag.jpg)
+
+On login, a game object will be created. The game object will contain everything that the user will see in the game. It has a level object, which is the current level, as well as the player. The level has its own unique environment as well as leaderboard, which is aggregated. The environment controls all of the obstacles and coins that are in that level. The game object will own everything except the leaderboard, as it must persist. On login, a user object will be created, as well as a DatabaseManager object, which will both manage that state of the leaderboard in the current level.
 
  > ## Phase II
  > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
