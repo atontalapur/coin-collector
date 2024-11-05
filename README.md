@@ -36,6 +36,11 @@ SQLite - A mobile version of MySQL which is used to store the user information.
 
 We are still exploring options to host the game online.
 
+![Navigation Diagram](assets/nav_diag.png)
+![Screen Diagram](assets/screen_diag1.jpg)
+![Screen Diagram](assets/screen_diag2.jpg)
+![Class Diagram](assets/class_diag.jpg)
+
  > ## Phase II
  > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
  > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
