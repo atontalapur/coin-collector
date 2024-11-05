@@ -36,39 +36,41 @@ SQLite - A mobile version of MySQL which is used to store the user information.
 
 We are still exploring options to host the game online.
 
-![Navigation Diagram](assets/nav_diag.png)
-![Screen Diagram](assets/screen_diag1.jpg)
-![Screen Diagram](assets/screen_diag2.jpg)
-
-> ## Class Diagram
-
-![Class Diagram](assets/class_diag.jpg)
-
-On login, a game object will be created. The game object will contain everything that the user will see in the game. It has a level object, which is the current level, as well as the player. The level has its own unique environment as well as leaderboard, which is aggregated. The environment controls all of the obstacles and coins that are in that level. The game object will own everything except the leaderboard, as it must persist. On login, a user object will be created, as well as a DatabaseManager object, which will both manage that state of the leaderboard in the current level.
-
- > ## Phase II
- > In addition to completing the "User Interface Specification" and "Class Diagram" sections below, you will need to:
- > * Create an "Epic" (note) for each feature. Place these epics in the `Product Backlog` column
- > * Complete your first *sprint planning* meeting to plan out the next 7 days of work.
- >   * Break down the "Epics" into smaller actionable user stories (i.e. smaller development tasks). Convert them into issues and assign them to team members. Place these in the `TODO` column (aka Sprint Backlog).
- >   * These cards should represent roughly 7 days worth of development time for your team. Then, once the sprint is over you should be repeating these steps to plan a new sprint, taking you until your second scrum meeting with the reader in phase III.
- > * Each team member needs to submit the Individual Contributions Form on Canvas for this phase. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for phase  II, and a description of their contributions. Remember that each team member should submit the form individually.
- > * Schedule two check-ins using Calendly. Both time slots should be during your lab on week 6. Your entire team must be present for both check-ins.
- >   * The first check-in needs to be scheduled with your lab TA. During that meeting, you will discuss your project design/class diagram from phase II.
- >   * The second check-in should be scheduled with a reader. During that meeting you will discuss:
- >     * The tasks you are planning for the first sprint
- >     * How work will be divided between the team members
 ## User Interface Specification
- > Include a navigation diagram for your screens and the layout of each of those screens as desribed below. For all the layouts/diagrams, you can use any tool such as PowerPoint or a drawing program. (Specification requirement is adapted from the User Interface Design Document Template of CMSC 345 at the University of Maryland Global Campus)
-
 ### Navigation Diagram
-> Draw a diagram illustrating how the user can navigate from one screen to another. Here is an [example](https://creately.com/diagram/example/ikfqudv82/user-navigation-diagram-classic?r=v). It can be useful to label each symbol that represents a screen so that you can reference the screens in the next section or the rest of the document if necessary. Give a brief description of what the diagram represents.
+![Navigation Diagram](assets/nav_diag.png)
+
+The navigation diagram illustrates the flow of a user interface for a login and game system. Here’s the breakdown:
+
+1. **Login/Logout**: The central point where users can log in or log out. If user information is not found, a pop-up window appears.
+
+2. **User Found**: If the user is verified, they are directed to their profile.
+
+3. **New Player Registration**: If the user is new, they go through a registration process to create a profile.
+
+4. **Profile Actions**: After login, users can:
+   - Select a level to begin the game.
+   - Exit and save their progress.
+
+5. **Game Flow**: 
+   - *Start Game*: Once a level is selected, the game begins.
+   - *Rules*: Users can view the game rules before starting.
+
+6. **Game Outcomes**: After playing, users can either win or lose.
+   - *Win*: Winning a game may allow selecting the next level.
+   - *Lost*: If the user loses, they can choose to restart.
+
+7. **Exit Options**: At any stage, users can exit and save their progress.
 
 ### Screen Layouts
-> Include the layout of each of your screens. The layout should describe the screen’s major components such as menus and prompts for user inputs and expected output, or any graphical user interface components if applicable (e.g. buttons, text boxes, etc). Explain what is on the layout, and the purpose of each menu item, button, etc. If many screens share the same layout, start by describing the general layout and then list the screens that will be using that layout and the differences between each of them.
+![Screen Diagram](assets/screen_diag1.jpg)
+
+![Screen Diagram](assets/screen_diag2.jpg)
 
 ## Class Diagram
- > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
+![Class Diagram](assets/class_diag.jpg)
+
+On login, a game object will be created. The game object will contain everything that the user will see in the game. It has a level object, which is the current level, as well as the player. The level has its own unique environment as well as leaderboard, which is aggregated. The environment controls all of the obstacles and coins that are in that level. The game object will own everything except the leaderboard, as it must persist. On login, a user object will be created, as well as a DatabaseManager object, which will both manage that state of the leaderboard in the current level. 
  
  > ## Phase III
  > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on week 8 during lab time.
