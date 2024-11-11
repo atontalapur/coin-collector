@@ -3,6 +3,8 @@ Example code showing how to use the OKMessageBox
 """
 import arcade
 import arcade.gui
+
+
 class MyWindow(arcade.Window):
 
     def __init__(self):
@@ -31,7 +33,7 @@ class MyWindow(arcade.Window):
                 child=self.v_box),
         )
 
-    def on_click_open(self,event):
+    def on_click_open(self, event):
         message_box = arcade.gui.UIMessageBox(
             message_text=(
                 "The User information was not found.\n"
