@@ -24,7 +24,7 @@ class GameHome(arcade.Window):
     def setup(self):
 
 
-        self.load_sounds()
+
 
         # start background music and loop
         self.background_music.play(loop=True)
@@ -33,12 +33,6 @@ class GameHome(arcade.Window):
 
         self.clear()
 
-
-
-    # def main(self):
-    #     window = Game()
-    #     window.setup()212
-    #     arcade.run()
 
 if __name__ == "__main__":
     window = GameHome()
