@@ -17,24 +17,24 @@ class Environment:
         """Set up the obstacles (walls) around the screen."""
         # obstacles on bottom and top
         for x in range(32, SCREEN_WIDTH, 64):
-            wall = Obstacle(":resources:images/tiles/grass.png", SPRITE_SCALING, x, 32)
+            wall = Obstacle(":resources:images/tiles/grassCenter.png", SPRITE_SCALING, x, 32)
             self.wall_list.append(wall)
 
-            wall = Obstacle(":resources:images/tiles/grass.png", SPRITE_SCALING, x, SCREEN_HEIGHT - 32)
+            wall = Obstacle(":resources:images/tiles/grassCenter.png", SPRITE_SCALING, x, SCREEN_HEIGHT - 32)
             self.wall_list.append(wall)
         
         # obstacles on left and right
         for y in range(96, SCREEN_HEIGHT, 64):
-            wall = Obstacle(":resources:images/tiles/grass.png", SPRITE_SCALING, 32, y)
+            wall = Obstacle(":resources:images/tiles/grassCenter.png", SPRITE_SCALING, 32, y)
             self.wall_list.append(wall)
 
-            wall = Obstacle(":resources:images/tiles/grass.png", SPRITE_SCALING, SCREEN_WIDTH - 32, y)
+            wall = Obstacle(":resources:images/tiles/grassCenter.png", SPRITE_SCALING, SCREEN_WIDTH - 32, y)
             self.wall_list.append(wall)
 
         # obstacles in middle
         for x in range(128, SCREEN_WIDTH, 196):
             for y in range(128, SCREEN_HEIGHT, 196):
-                wall = Obstacle(":resources:images/tiles/grass.png", SPRITE_SCALING, x, y)
+                wall = Obstacle(":resources:images/tiles/grassCenter.png", SPRITE_SCALING, x, y)
                 self.wall_list.append(wall)
 
     def setup_coins(self):
