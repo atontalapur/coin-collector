@@ -25,10 +25,13 @@ class GameHome(arcade.Window):
         # Create a button. We'll click on this to open our window.
         # Add it v_box for positioning.
         test_message_box_button = arcade.gui.UIFlatButton(text="Test PopUp", width=150)
+        start_game_box_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(test_message_box_button)
+        self.v_box.add(start_game_box_button)
 
         # Add a hook to run when we click on the button.
         test_message_box_button.on_click = self.on_click_open
+        start_game_box_button.on_click = self.start_game
         # Create a widget to hold the v_box widget, that will center the buttons
         self.manager.add(
             arcade.gui.UIAnchorWidget(
@@ -49,6 +52,12 @@ class GameHome(arcade.Window):
             buttons=["Ok"]
         )
         self.manager.add(message_box)
+
+
+    def start_game(self, event):
+        game = Game()
+        game.setup()
+        arcade.run()
 
     def load_sounds(self):
         self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
