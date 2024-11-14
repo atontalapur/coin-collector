@@ -47,7 +47,7 @@ class GameHome(arcade.Window):
         self.key_pressed = False
         self.manager.add(
             arcade.gui.UIAnchorWidget(
-                align_x=-120,
+                align_x=0,
                 child=self.v_box),
         )
 
