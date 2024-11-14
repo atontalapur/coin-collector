@@ -110,7 +110,6 @@ class GameHome(arcade.Window):
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.user_text_box.text = ""
-        self.new_name_available.color = arcade.color.GREEN
 
     def change_status(self, event):
         available = False
