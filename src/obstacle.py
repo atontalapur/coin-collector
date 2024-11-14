@@ -1,8 +1,9 @@
 import arcade
 
 class Obstacle(arcade.Sprite):
-    """Class to represent obstacles (walls)."""
-    def __init__(self, image, scale, c_x, c_y):
+    """Class to represent obstacles. They do not move."""
+    def __init__(self, x, y, image, scale):
+        """Initialize the obstacle."""
         super().__init__(image, scale)
-        self.center_x = c_x
-        self.center_y = c_y
+        self.center_x = x
+        self.center_y = y

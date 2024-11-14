@@ -1,16 +1,16 @@
 from environment import Environment
 
 class Level:
-    """Class to represent a level in the game."""
-    def __init__(self):
-        self.environment = Environment()
+    """Class to represent a level in the game. Includes environment and leaderboard."""
+    def __init__(self, level):
+        """Initialize level."""
+        self.environment = Environment(level)
+    
+    def reset(self):
+        """Reset environment."""
+        self.environment.setup()
+    
+    def draw(self):
+        """Only draw, as leaderboard will not update during game."""
+        self.environment.draw()
 
-    def setup(self):
-        """Set up the level's environment."""
-        self.environment.setup_walls()
-        self.environment.setup_coins()
-        self.environment.setup_player()
-
-    def update(self):
-        """Update the environment's contents."""
-        self.environment.update()
