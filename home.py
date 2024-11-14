@@ -1,3 +1,4 @@
+
 import arcade
 import arcade.gui
 import math
@@ -35,33 +36,23 @@ class GameHome(arcade.Window):
 
         right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
         right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
-        self.user_text_box = arcade.gui.UIInputText(width=250, height=50, font_size=20, font_name="Arial", multiline=False, text="Enter User Name")
+        self.user_text_box = arcade.gui.UIInputText(width=250, height=50, font_size=20, font_name="Arial", anchor_x="center",
+            anchor_y="center", multiline=False, text="")
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w, width=150)
-        self.v_box.add(self.user_text_box)
+        #self.v_box.add(self.user_text_box)
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
-        self.user_text_box.on_key_press = self.on_key_press
-        self.user_text_box.on_mouse_press = self.on_mouse_press
         self.confirm_box_button.on_click = self.on_click_open
+        self.key_pressed = False
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=-120,
                 child=self.v_box),
         )
 
-    def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            self.user_text_box.text = ""
-
-    def on_key_press(self, key, modifiers):
-        if key == arcade.key.ENTER:
-            self.on_click_open(None)
-        if key == arcade.key.ESCAPE:
-            self.user_text_box.text = "Enter User Name"
-
     def on_click_open(self, event):
-        if self.user_text_box.text == "Enter User Name":
+        if self.user_text_box.text == "" or not self.user_text_box.text:
             message_box = arcade.gui.UIMessageBox(
                 message_text=(
                     "The User information was not found.\n"
