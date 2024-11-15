@@ -1,22 +1,21 @@
-
 import arcade
 import arcade.gui
-import math
 from settings import *
 
 DEFAULT_LINE_HEIGHT = 45
 DEFAULT_FONT_SIZE = 20
 
-class GameHome(arcade.Window):
+
+class New_Player(arcade.View):
 
     def __init__(self):
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=False)
+        super().__init__()
         self.text_angle = 0
         self.time_elapsed = 0.0
         self.heading_text = arcade.Text(
             text="Catch the Coins",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 30,
+            start_y=SCREEN_HEIGHT - 60,
             color=arcade.color.YELLOW,
             font_size=40,
             anchor_x="center",
@@ -29,7 +28,7 @@ class GameHome(arcade.Window):
         self.new_player = arcade.Text(
             text="New Player",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 140,
+            start_y=SCREEN_HEIGHT - 170,
             color=arcade.color.YELLOW,
             font_size=35,
             anchor_x="center",
@@ -53,15 +52,16 @@ class GameHome(arcade.Window):
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
-                               font_size=10,
+                               font_size=15,
                                font_name="Arial",
                                anchor_x="center",
                                anchor_y="center",
                                multiline=False, text="Enter New User Name")
-                            )
+                              )
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
-        self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w, width=150)
-        self.create_profile = arcade.gui.UIFlatButton(text="Create Profile", width=100)
+        self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
+                                                             width=150)
+        self.create_profile = arcade.gui.UIFlatButton(text="Back", width=100)
         #self.v_box.add(self.user_text_box)
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
@@ -118,40 +118,26 @@ class GameHome(arcade.Window):
         elif available is False:
             self.new_name_unavailable.color = arcade.color.RED
 
-
     def new_user_open(self, event):
-            message_box = arcade.gui.UIMessageBox(
-                message_text=(
-                    "Created Profile"
-                ),
-                width=150,
-                height=150,
-                buttons=["Ok"]
-            )
-            self.text_box_manager.add(message_box)
-
+        view = h_view()
+        self.window.show_view(view)
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.ENTER:
             self.on_click_open(None)
         if key == arcade.key.ESCAPE:
             self.user_text_box.text = "Enter User Name"
-    def load_sounds(self):
-        #self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("sounds/Collision.wav")
-        #self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
-        #self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 
+    def load_sounds(self):
+        pass
     def setup(self):
-        self.load_sounds()
-        self.background_music.play(loop=False)
+        pass
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
         #self.text_angle = 10 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
-        self.clear()
         arcade.start_render()
         self.heading_text.rotation = self.text_angle
         self.heading_text.draw()
@@ -160,10 +146,3 @@ class GameHome(arcade.Window):
         self.text_box_manager.draw()
         self.new_name_available.draw()
         self.new_name_unavailable.draw()
-
-
-
-if __name__ == "__main__":
-    window = GameHome()
-    window.setup()
-    arcade.run()

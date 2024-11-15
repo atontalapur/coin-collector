@@ -1,7 +1,7 @@
 # Game config constants
 SCREEN_WIDTH = 700
 SCREEN_HEIGHT = 500
-SCREEN_TITLE = "Coin Collector"
+SCREEN_TITLE = "Catch the Coins"
 IMAGE_SCALING = 2.0
 
 SHIP_SPEED = 700
