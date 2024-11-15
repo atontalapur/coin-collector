@@ -1,34 +1,35 @@
 import arcade
-from constants import PLAYER_SPEED
 
 class Player(arcade.Sprite):
-    def __init__(self, image_file, scale, c_x, c_y):
-        """Initialize the player sprite with a given image and scale."""
-        super().__init__(image_file, scale)
-        self.center_x = c_x
-        self.center_y = c_y
+    """Sprite to represent the player."""
+    def __init__(self, x, y, speed, image, scale):
+        """Initialize the player."""
+        super().__init__(image, scale)
+        self.center_x = x
+        self.center_y = y
+        self.player_speed = speed
 
         # track key presses
-        self.left_pressed = False
-        self.right_pressed = False
-        self.up_pressed = False
-        self.down_pressed = False
+        self.moving_left = False
+        self.moving_right = False
+        self.moving_up = False
+        self.moving_down = False
 
     def update(self, walls):
-        """Move the player and stop at walls without bouncing."""
+        """Move the player and stop at walls without bouncing. Speed determined by key input."""
 
         # set where player is going
-        if self.up_pressed and not self.down_pressed:
-            self.change_y = PLAYER_SPEED
-        elif self.down_pressed and not self.up_pressed:
-            self.change_y = -PLAYER_SPEED
+        if self.moving_up and not self.moving_down:
+            self.change_y = self.player_speed
+        elif self.moving_down and not self.moving_up:
+            self.change_y = -self.player_speed
         else:
             self.change_y = 0
 
-        if self.left_pressed and not self.right_pressed:
-            self.change_x = -PLAYER_SPEED
-        elif self.right_pressed and not self.left_pressed:
-            self.change_x = PLAYER_SPEED
+        if self.moving_left and not self.moving_right:
+            self.change_x = -self.player_speed
+        elif self.moving_right and not self.moving_left:
+            self.change_x = self.player_speed
         else:
             self.change_x = 0
         
