@@ -16,7 +16,7 @@ class GameHome(arcade.Window):
         self.heading_text = arcade.Text(
             text="Catch the Coins",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 30,
+            start_y=SCREEN_HEIGHT - 40,
             color=arcade.color.YELLOW,
             font_size=40,
             anchor_x="center",
@@ -29,9 +29,9 @@ class GameHome(arcade.Window):
         self.new_player = arcade.Text(
             text="Level 1",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 140,
+            start_y=SCREEN_HEIGHT - 260,
             color=arcade.color.YELLOW,
-            font_size=50,
+            font_size=80,
             anchor_x="center",
             anchor_y="center",
             bold=True,
@@ -42,7 +42,7 @@ class GameHome(arcade.Window):
         self.difficulty = arcade.Text(
             text="Difficulty: Easy",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 200,
+            start_y=SCREEN_HEIGHT - 360,
             color=arcade.color.YELLOW,
             font_size=30,
             anchor_x="center",
@@ -63,8 +63,8 @@ class GameHome(arcade.Window):
 
 
 
-        self.create_profile = arcade.gui.UIFlatButton(text="Create Profile", width=100)
-        self.trophy = arcade.load_texture("assets/trophy.jpeg")
+
+
         self.v_box.add(self.new_profile_button.with_space_around(top=200))
         self.manager.add(
             arcade.gui.UIAnchorWidget(
@@ -73,9 +73,9 @@ class GameHome(arcade.Window):
         )
 
         self.high_score = arcade.Text(
-            text="20",
-            start_x=SCREEN_WIDTH -670,
-            start_y=SCREEN_HEIGHT - 120,
+            text="high score: 0",
+            start_x=SCREEN_WIDTH - 1140,
+            start_y=SCREEN_HEIGHT - 170,
             color=arcade.color.GOLD,
             font_size=20,
             anchor_x="center",
@@ -84,6 +84,8 @@ class GameHome(arcade.Window):
             italic=True,
             font_name="Kenney High Square"
         )
+
+        self.trophy = arcade.load_texture("assets/trophy.jpeg")
 
     def new_user_open(self, event):
             message_box = arcade.gui.UIMessageBox(
@@ -108,7 +110,15 @@ class GameHome(arcade.Window):
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
-        #self.text_angle = 10 * math.sin(self.time_elapsed * 2)
+        self.heading_text.angle = 6 * math.sin(self.time_elapsed * 2)
+        self.heading_text.color = (
+            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
+            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
+            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
+        )
+        self.heading_text.font_size = 70 + 5 * math.sin(self.time_elapsed * 2)
+        self.heading_text.start_y = SCREEN_HEIGHT - 60 + 10 * math.sin(self.time_elapsed * 2)
+
 
     def on_draw(self):
         self.clear()
@@ -117,7 +127,7 @@ class GameHome(arcade.Window):
         self.heading_text.draw()
         self.new_player.draw()
         self.manager.draw()
-        self.trophy.draw_scaled(30, 430, 0.2, 0.2)
+        self.trophy.draw_scaled(55, 550, 0.2, 0.2)
         self.high_score.draw()
         self.difficulty.draw()
 
