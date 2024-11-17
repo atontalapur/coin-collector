@@ -70,7 +70,7 @@ The navigation diagram illustrates the flow of a user interface for a login and 
 ## Class Diagram
 ![Class Diagram](assets/class_diag.jpg)
 
-On login, a game object will be created. The game object will contain everything that the user will see in the game. It has a level object, which is the current level, as well as the player. The level has its own unique environment as well as leaderboard, which is aggregated. The environment controls all of the obstacles and coins that are in that level. The game object will own everything except the leaderboard, as it must persist. On login, a user object will be created, as well as a DatabaseManager object, which will both manage that state of the leaderboard in the current level. 
+On login, a game object will be created. The game object will contain everything that the user will see in the game. It has a level object, which is the current level. The level has its own unique environment as well as leaderboard, which is aggregated. The environment controls the player and all of the obstacles and coins that are in that level. The game object will own everything except the leaderboard, as the leaderboard can exist on its own. On login, a username will be fetched/created and a databaseManager object will be created, and these will ensure the leaderboards will stay updated as well as the user's new high scores can be seen on the leaderboard.
  
  > ## Phase III
  > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on week 8 during lab time.
