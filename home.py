@@ -29,9 +29,9 @@ class GameHome(arcade.View):
         self.returning_users = arcade.Text(
             text="Returning  Users",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 160,
+            start_y=SCREEN_HEIGHT - 215,
             color=arcade.color.YELLOW,
-            font_size=35,
+            font_size=50,
             anchor_x="center",
             anchor_y="center",
             bold=True,
@@ -84,9 +84,9 @@ class GameHome(arcade.View):
         self.new_users = arcade.Text(
             text="New  Users",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 350,
+            start_y=SCREEN_HEIGHT - 425,
             color=arcade.color.YELLOW,
-            font_size=35,
+            font_size=50,
             anchor_x="center",
             anchor_y="center",
             bold=True,
@@ -155,7 +155,7 @@ class GameHome(arcade.View):
             int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
             int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
         )
-        self.heading_text.font_size = 40 + 5 * math.sin(self.time_elapsed * 2)
+        self.heading_text.font_size = 70 + 5 * math.sin(self.time_elapsed * 2)
         self.heading_text.start_y = SCREEN_HEIGHT - 60 + 10 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
@@ -191,7 +191,7 @@ class New_Player(arcade.View):
             start_x=SCREEN_WIDTH // 2,
             start_y=SCREEN_HEIGHT - 170,
             color=arcade.color.YELLOW,
-            font_size=35,
+            font_size=50,
             anchor_x="center",
             anchor_y="center",
             bold=True,
@@ -246,7 +246,7 @@ class New_Player(arcade.View):
         self.new_name_available = arcade.Text(
             text="Username Found!",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 330,
+            start_y=SCREEN_HEIGHT - 450,
             color=arcade.color.COOL_GREY,
             font_size=35,
             anchor_x="center",
@@ -259,7 +259,7 @@ class New_Player(arcade.View):
         self.new_name_unavailable = arcade.Text(
             text="Username Not Found!",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 400,
+            start_y=SCREEN_HEIGHT - 520,
             color=arcade.color.COOL_GREY,
             font_size=35,
             anchor_x="center",
@@ -274,7 +274,7 @@ class New_Player(arcade.View):
             self.user_text_box.text = ""
 
     def change_status(self, event):
-        available = False
+        available = True
         if available is True:
             self.new_name_available.color = arcade.color.GREEN
         elif available is False:
