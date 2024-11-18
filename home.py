@@ -53,46 +53,39 @@ class GameHome(arcade.View):
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
-                               font=15,
-                               text="Enter User Name",
-                               text_color=arcade.color.BLACK,
-                               background_color=arcade.color.WHITE
-                               )
+                               font_size=15,
+                               font_name="Arial",
+                               anchor_x="center",
+                               anchor_y="center",
+                               multiline=False, text="Enter Username", text_color=arcade.color.BLACK,
+                               # Set text color to black
+                               visible=True)
                               )
-
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
-
         self.new_profile_button = arcade.gui.UIFlatButton(text="Create Profile", width=200)
-        self.rule_button = arcade.gui.UIFlatButton(text="Rules", width=200)
-        # self.v_box.add(self.user_text_box)
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
-        self.r_box.add(self.new_profile_button.with_space_around(top=340))
-        self.r_box.add(self.rule_button.with_space_around(top=390))
+        self.r_box.add(self.new_profile_button.with_space_around(top=480))
         self.user_text_box.on_key_press = self.on_key_press
         self.user_text_box.on_mouse_press = self.on_mouse_press
         self.confirm_box_button.on_click = self.on_click_open
         self.new_profile_button.on_click = self.new_user_open
-        self.rule_button.on_click = self.rules_open
         self.manager.add(
             arcade.gui.UIAnchorWidget(
-                anchor_x="center_x",
-                anchor_y="center_y",
+                align_x=3,
                 child=self.v_box),
         )
-
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=2,
                 child=self.r_box),
         )
-
         self.new_users = arcade.Text(
             text="New  Users",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 425,
+            start_y=SCREEN_HEIGHT - 470,
             color=arcade.color.YELLOW,
             font_size=50,
             anchor_x="center",
@@ -102,14 +95,8 @@ class GameHome(arcade.View):
             font_name="Kenney High"
         )
 
-    def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            if self.user_text_box.text == "Enter User Name":
-                self.user_text_box.text = ""
-        super().on_mouse_press(x, y, button, modifiers)
-
     def on_click_open(self, event):
-        if self.user_text_box.text == "Enter username":
+        if self.user_text_box.text == "":
             message_box = arcade.gui.UIMessageBox(
                 message_text=(
                     "The User information was not found.\n"
@@ -138,21 +125,14 @@ class GameHome(arcade.View):
         new_player_v.setup()
         self.window.show_view(new_player_v)
 
-    def rules_open(self, event, ):
-        rule_view = RulesPage()
-        rule_view.setup()
-        self.window.show_view(rule_view)
-
     def prior_game_open(self, event):
         prior_game_v = Prior_Game()
         prior_game_v.setup()
         self.window.show_view(prior_game_v)
 
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.ENTER:
-            self.on_click_open(None)
-        if key == arcade.key.ESCAPE:
-            self.user_text_box.text = "Enter User Name"
+        if key:
+            self.user_text_box.text = self.user_text_box.text
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
@@ -165,7 +145,6 @@ class GameHome(arcade.View):
         self.background_music.play(loop=False)
 
     def on_update(self, delta_time):
-
         self.time_elapsed += delta_time
         self.heading_text.angle = 6 * math.sin(self.time_elapsed * 2)
         self.heading_text.color = (
@@ -229,8 +208,8 @@ class New_Player(arcade.View):
 
         right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
         right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
-        back_button_f = arcade.load_texture("textures/icons8-back-arrow-50.png", width=50, height=50)
-        back_button_h = arcade.load_texture("textures/icons8-back-arrow-50 (1).png", width=50, height=50)
+        back_button_f = arcade.load_texture("textures/icons8-back-button-50.png", width=50, height=50)
+        back_button_h = arcade.load_texture("textures/icons8-back-button-50 (1).png", width=50, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -248,15 +227,14 @@ class New_Player(arcade.View):
         # self.v_box.add(self.user_text_box)
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
-        self.r_box.add(self.back_button.with_space_around(top=350, left=500))
+        self.r_box.add(self.back_button.with_space_around(top=450, left=600))
         self.user_text_box.on_key_press = self.on_key_press
         self.user_text_box.on_mouse_press = self.on_mouse_press
         self.back_button.on_click = self.new_user_open
         self.confirm_box_button.on_click = self.change_status
         self.manager.add(
             arcade.gui.UIAnchorWidget(
-                anchor_x="center_x",
-                anchor_y="center_y",
+                align_x=0,
                 child=self.v_box),
         )
         self.manager.add(
@@ -292,9 +270,7 @@ class New_Player(arcade.View):
 
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
         if button == arcade.MOUSE_BUTTON_LEFT:
-            if self.user_text_box.text == "Enter New User Name":
-                self.user_text_box.text = ""  # Clear placeholder text
-        super().on_mouse_press(x, y, button, modifiers)  # Retain default behavior
+            self.user_text_box.text = "What"
 
     def change_status(self, event):
         available = True
@@ -389,21 +365,26 @@ class Prior_Game(arcade.View):
         self.text_box_manager = arcade.gui.UIManager()
         self.text_box_manager.enable()
         self.manager.enable()
-
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.new_profile_button = arcade.gui.UIFlatButton(text="Play", width=200)
-
+        self.back_button = arcade.gui.UIFlatButton(text="Home", width=100)
+        self.r_box.add(self.back_button.with_space_around(top=550,left=650))
         self.v_box.add(self.new_profile_button.with_space_around(top=200))
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=0,
                 child=self.v_box),
         )
-
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=1,
+                child=self.r_box),
+        )
         self.high_score = arcade.Text(
             text="high score: 0",
             start_x=SCREEN_WIDTH - 1140,
-            start_y=SCREEN_HEIGHT - 170,
+            start_y=SCREEN_HEIGHT - 180,
             color=arcade.color.GOLD,
             font_size=20,
             anchor_x="center",
@@ -412,9 +393,13 @@ class Prior_Game(arcade.View):
             italic=True,
             font_name="Kenney High Square"
         )
+        self.back_button.on_click = self.back_to_home
+        self.trophy = arcade.load_texture("assets/championship-trophy1.png")
 
-        self.trophy = arcade.load_texture("assets/trophy.jpeg")
-
+    def back_to_home(self, event):
+        view = GameHome()
+        view.setup()
+        self.window.show_view(view)
     def new_user_open(self, event):
         message_box = arcade.gui.UIMessageBox(
             message_text=(
@@ -454,135 +439,9 @@ class Prior_Game(arcade.View):
         self.heading_text.draw()
         self.new_player.draw()
         self.manager.draw()
-        self.trophy.draw_scaled(55, 550, 0.2, 0.2)
+        self.trophy.draw_scaled(55, 540, 0.2, 0.2)
         self.high_score.draw()
         self.difficulty.draw()
-
-
-class RulesPage(arcade.View):
-
-    def __init__(self):
-        super().__init__()
-        self.text_angle = 0
-        self.time_elapsed = 0.0
-        self.username_text = arcade.Text(
-            text="atontalapur",
-            start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 20,
-            color=arcade.color.YELLOW,
-            font_size=10,
-            anchor_x="center",
-            anchor_y="center",
-            bold=True,
-            italic=True,
-            font_name="Kenney Future"
-        )
-
-        self.rules = arcade.Text(
-            text="How to play?",
-            start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 100,
-            color=arcade.color.YELLOW,
-            font_size=50,
-            anchor_x="center",
-            anchor_y="center",
-            bold=True,
-            italic=True,
-            font_name="Kenney High"
-        )
-        arcade.set_background_color(arcade.color.COOL_GREY)
-
-        self.manager = arcade.gui.UIManager()
-        self.text_box_manager = arcade.gui.UIManager()
-        self.text_box_manager.enable()
-        self.manager.enable()
-
-        self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
-
-        right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
-
-        self.first_rule = arcade.Text(
-            text="1) Must complete the level within the given time period",
-            start_x=SCREEN_WIDTH // 9,
-            start_y=SCREEN_HEIGHT - 230,
-            color=arcade.color.YELLOW,
-            font_size=25,
-            bold=True,
-
-            font_name="Arial"
-        )
-
-        self.second_rule = arcade.Text(
-            text="2) Use up, down, left, right keys OR W,A,S,D for navigation",
-            start_x=SCREEN_WIDTH // 9,
-            start_y=SCREEN_HEIGHT - 290,
-            color=arcade.color.YELLOW,
-            font_size=25,
-            bold=True,
-
-            font_name="Arial"
-        )
-
-        self.third_rule = arcade.Text(
-            text="3) Complete this level to continue to the next",
-            start_x=SCREEN_WIDTH // 9,
-            start_y=SCREEN_HEIGHT - 350,
-            color=arcade.color.YELLOW,
-            font_size=25,
-            bold=True,
-
-            font_name="Arial"
-        )
-
-        self.fourth_rule = arcade.Text(
-            text="4) Good Luck!",
-            start_x=SCREEN_WIDTH // 9,
-            start_y=SCREEN_HEIGHT - 410,
-            color=arcade.color.YELLOW,
-            font_size=25,
-            bold=True,
-
-            font_name="Arial"
-        )
-
-
-        self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
-                                                             width=150,
-                                                             start_x=SCREEN_WIDTH / 2,
-                                                             start_y=SCREEN_HEIGHT - 200
-                                                             )
-        self.v_box.add(self.confirm_box_button.with_space_around(top=500))
-
-        self.manager.add(
-            arcade.gui.UIAnchorWidget(
-
-                child=self.v_box)
-        )
-
-    def load_sounds(self):
-        # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("sounds/Collision.wav")
-        # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
-        # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
-
-    def setup(self):
-        self.load_sounds()
-        self.background_music.play(loop=False)
-
-    def on_update(self, delta_time):
-        self.time_elapsed += delta_time
-
-    def on_draw(self):
-        self.clear()
-        arcade.start_render()
-        self.username_text.draw()
-        self.rules.draw()
-        self.manager.draw()
-        self.first_rule.draw()
-        self.second_rule.draw()
-        self.third_rule.draw()
-        self.fourth_rule.draw()
 
 
 if __name__ == "__main__":
