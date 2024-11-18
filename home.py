@@ -67,16 +67,16 @@ class GameHome(arcade.View):
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
         self.new_profile_button = arcade.gui.UIFlatButton(text="Create Profile", width=200)
-        self.rules_button = arcade.gui.UIFlatButton(text="Rules", width=200)
+
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
-        self.r_box.add(self.rules_button.with_space_around(top=400))
+
         self.r_box.add(self.new_profile_button.with_space_around(top=340))
         self.user_text_box.on_key_press = self.on_key_press
         self.user_text_box.on_mouse_press = self.on_mouse_press
         self.confirm_box_button.on_click = self.on_click_open
         self.new_profile_button.on_click = self.new_user_open
-        self.rules_button.on_click = self.rules_open
+
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=3,
@@ -140,10 +140,7 @@ class GameHome(arcade.View):
         prior_game_v.setup()
         self.window.show_view(prior_game_v)
 
-    def rules_open(self, event):
-        rules = Rule_Page()
-        rules.setup()
-        self.window.show_view(rules)
+
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.ENTER:
@@ -340,15 +337,13 @@ class Prior_Game(arcade.View):
         self.text_angle = 0
         self.time_elapsed = 0.0
         self.heading_text = arcade.Text(
-            text="Catch the Coins",
+            text="atontalapur",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 40,
+            start_y=SCREEN_HEIGHT - 20,
             color=arcade.color.YELLOW,
-            font_size=40,
+            font_size=15,
             anchor_x="center",
             anchor_y="center",
-            bold=True,
-            italic=True,
             font_name="Kenney Future"
         )
 
@@ -385,9 +380,11 @@ class Prior_Game(arcade.View):
         self.manager.enable()
 
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+
         self.new_profile_button = arcade.gui.UIFlatButton(text="Play", width=200)
 
         self.v_box.add(self.new_profile_button.with_space_around(top=200))
+        self.new_profile_button.on_click = self.rules_open
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=0,
@@ -430,16 +427,13 @@ class Prior_Game(arcade.View):
         self.load_sounds()
         self.background_music.play(loop=False)
 
+    def rules_open(self, event):
+        rules = Rule_Page()
+        rules.setup()
+        self.window.show_view(rules)
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
-        self.heading_text.angle = 6 * math.sin(self.time_elapsed * 2)
-        self.heading_text.color = (
-            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
-            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
-            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
-        )
-        self.heading_text.font_size = 70 + 5 * math.sin(self.time_elapsed * 2)
-        self.heading_text.start_y = SCREEN_HEIGHT - 60 + 10 * math.sin(self.time_elapsed * 2)
+        
 
     def on_draw(self):
         self.clear()
