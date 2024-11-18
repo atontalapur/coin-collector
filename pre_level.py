@@ -85,7 +85,7 @@ class GameHome(arcade.Window):
             font_name="Kenney High Square"
         )
 
-        self.trophy = arcade.load_texture("assets/trophy.jpeg")
+        self.trophy = arcade.load_texture("textures/trophy.jpeg")
 
     def new_user_open(self, event):
             message_box = arcade.gui.UIMessageBox(
