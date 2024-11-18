@@ -57,11 +57,12 @@ class GameHome(arcade.View):
                                font_name="Arial",
                                anchor_x="center",
                                anchor_y="center",
-                               multiline=False, text="Enter Username", text_color=arcade.color.BLACK,
+                               multiline=False, text="Enter User Name", text_color=arcade.color.BLACK,
                                # Set text color to black
                                color=arcade.color.WHITE,
                                visible=True)
                               )
+
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
@@ -100,9 +101,9 @@ class GameHome(arcade.View):
         )
 
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            self.user_text_box._text_color = arcade.color.BLACK
-            self.user_text_box.text = "What"
+        if button == arcade.MOUSE_BUTTON_LEFT and self.user_text_box.text == "Enter User Name":
+            self.user_text_box.text = ""
+
 
     def on_click_open(self, event):
         if self.user_text_box.text == "" or not self.user_text_box.text:
