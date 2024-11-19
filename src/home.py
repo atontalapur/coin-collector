@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 import math
 from settings import *
+from level import Level
 
 DEFAULT_LINE_HEIGHT = 45
 DEFAULT_FONT_SIZE = 20
@@ -48,8 +49,8 @@ class GameHome(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
+        right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
+        right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -146,7 +147,7 @@ class GameHome(arcade.View):
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("sounds/Collision.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 
@@ -216,8 +217,8 @@ class New_Player(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        back_button_f = arcade.load_texture("textures/icons8-back-button-50.png", width=50, height=50)
-        back_button_h = arcade.load_texture("textures/icons8-back-button-50 (1).png", width=50, height=50)
+        back_button_f = arcade.load_texture("../textures/icons8-back-button-50.png", width=50, height=50)
+        back_button_h = arcade.load_texture("../textures/icons8-back-button-50 (1).png", width=50, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -227,8 +228,8 @@ class New_Player(arcade.View):
                                anchor_y="center",
                                multiline=False, text="Enter New User Name")
                               )
-        right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
+        right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
+        right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
@@ -302,7 +303,7 @@ class New_Player(arcade.View):
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("sounds/Collision.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 
@@ -380,8 +381,8 @@ class Prior_Game(arcade.View):
         self.level_4_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.level_5_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        one_white = arcade.load_texture("textures/levelOneWhite132.jpg")
-        one_black = arcade.load_texture("textures/levelOneBlack150.jpg")
+        one_white = arcade.load_texture("../textures/levelOneWhite132.jpg")
+        one_black = arcade.load_texture("../textures/levelOneBlack150.jpg")
         self.level_one = arcade.gui.UITextureButton(texture=one_black, texture_hovered=one_white, width=300, height=114)
 
 
@@ -393,8 +394,8 @@ class Prior_Game(arcade.View):
                 child=self.level_1_box),
         )
 
-        two_white = arcade.load_texture("textures/Level2_White.png")
-        two_black = arcade.load_texture("textures/Level2_Black.png")
+        two_white = arcade.load_texture("../textures/Level2_White.png")
+        two_black = arcade.load_texture("../textures/Level2_Black.png")
         self.level_two = arcade.gui.UITextureButton(texture=two_black, texture_hovered=two_white, width=300, height=114)
 
         self.level_2_box.add(self.level_two)
@@ -405,8 +406,8 @@ class Prior_Game(arcade.View):
                 child=self.level_2_box),
         )
 
-        three_white = arcade.load_texture("textures/Level3_White.png")
-        three_black = arcade.load_texture("textures/Level3_Black.png")
+        three_white = arcade.load_texture("../textures/Level3_White.png")
+        three_black = arcade.load_texture("../textures/Level3_Black.png")
         self.level_three = arcade.gui.UITextureButton(texture=three_black, texture_hovered=three_white, width=300, height=114)
 
         self.level_3_box.add(self.level_three)
@@ -417,8 +418,8 @@ class Prior_Game(arcade.View):
                 child=self.level_3_box),
         )
 
-        four_white = arcade.load_texture("textures/Level4_White.png")
-        four_black = arcade.load_texture("textures/Level4_Black.png")
+        four_white = arcade.load_texture("../textures/Level4_White.png")
+        four_black = arcade.load_texture("../textures/Level4_Black.png")
         self.level_four = arcade.gui.UITextureButton(texture=four_black, texture_hovered=four_white, width=300, height=114)
 
         self.level_4_box.add(self.level_four)
@@ -429,8 +430,8 @@ class Prior_Game(arcade.View):
                 child=self.level_4_box),
         )
 
-        five_white = arcade.load_texture("textures/Level5_White.png")
-        five_black = arcade.load_texture("textures/Level5_Black.png")
+        five_white = arcade.load_texture("../textures/Level5_White.png")
+        five_black = arcade.load_texture("../textures/Level5_Black.png")
         self.level_five = arcade.gui.UITextureButton(texture=five_black, texture_hovered=five_white, width=300,
                                                      height=114)
 
@@ -441,6 +442,12 @@ class Prior_Game(arcade.View):
                 align_y=-100,
                 child=self.level_5_box),
         )
+        self.level_one.on_click = self.level_click
+        self.level_two.on_click = self.level_click
+        self.level_three.on_click = self.level_click
+        self.level_four.on_click = self.level_click
+        self.level_five.on_click = self.level_click
+
 
         self.high_score = arcade.Text(
             text="high score: 0",
@@ -455,25 +462,31 @@ class Prior_Game(arcade.View):
             font_name="Kenney High Square"
         )
 
-        self.trophy = arcade.load_texture("textures/trophy.jpeg")
+        self.trophy = arcade.load_texture("../textures/trophy.jpeg")
 
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("sounds/Collision.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
+
+    def level_click(self, event):
+        # get the current level of user
+        #if the level ID is greater than the current level of user, then show a message box
+        # that the user has not reached that level yet
+        #else, open the rules page
+        print("Need to add logic to restrict the levels")
+        view = Rule_Page()
+        view.setup()
+        self.window.show_view(view)
+
 
 
     def setup(self):
         self.load_sounds()
         self.background_music.play(loop=False)
 
-
-    def rules_open(self, event):
-        rules = Rule_Page()
-        rules.setup()
-        self.window.show_view(rules)
 
 
     def on_update(self, delta_time):
@@ -526,24 +539,30 @@ class Rule_Page(arcade.View):
         self.manager.enable()
 
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
-        self.new_profile_button = arcade.gui.UIFlatButton(text="Play", width=200)
+        self.play_button = arcade.gui.UIFlatButton(text="Play", width=200)
 
-        self.v_box.add(self.new_profile_button.with_space_around(top=200))
+        self.v_box.add(self.play_button.with_space_around(top=200))
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=0,
                 child=self.v_box),
         )
+        self.play_button.on_click = self.game_open
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("sounds/Collision.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 
     def setup(self):
         self.load_sounds()
         self.background_music.play(loop=False)
+
+    def game_open(self, event):
+        game = Game()
+        game.setup()
+        self.window.show_view(game)
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
@@ -555,6 +574,79 @@ class Rule_Page(arcade.View):
         self.heading_text.draw()
         self.new_player.draw()
         self.manager.draw()
+
+
+class Game(arcade.View):
+    def __init__(self):
+        """Initialize the game window."""
+        super().__init__()
+
+        # all level components
+        # temp -> hardcode level_1 for now
+        self.level = Level("level_1")
+
+    def on_update(self, delta_time):
+        """Movement and game logic."""
+        self.level.environment.update()
+
+        # temp -> leaderboard will be drawn
+        if len(self.level.environment.coin_list) == 0:
+            self.exit()
+
+    def on_draw(self):
+        """Render the screen."""
+        self.level.draw()
+
+    def on_key_press(self, key, modifiers):
+        """Keys that are pressed."""
+        self.movement_press(key)
+
+        # Quit
+        if key == arcade.key.Q:
+            self.exit() \
+                # Restart level environment
+        elif key == arcade.key.R:
+            self.level.reset()
+
+    def on_key_release(self, key, modifiers):
+        """Keys that are released."""
+        self.movement_release(key)
+
+    def movement_press(self, key):
+        """Checks if movement keys are pressed down. Supports arrow keys and WASD."""
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.level.environment.player.moving_up = True
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.level.environment.player.moving_down = True
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.level.environment.player.moving_left = True
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.level.environment.player.moving_right = True
+
+    def movement_release(self, key):
+        """Checks if movement keys were released. Supports arrow keys and WASD."""
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.level.environment.player.moving_up = False
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.level.environment.player.moving_down = False
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.level.environment.player.moving_left = False
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.level.environment.player.moving_right = False
+
+    def load_sounds(self):
+        # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
+        # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
+        # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
+
+    def setup(self):
+        self.load_sounds()
+        self.background_music.play(loop=False)
+
+    def exit(self):
+        """Exit program."""
+        self.close()
 
 
 if __name__ == "__main__":
