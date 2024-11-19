@@ -374,18 +374,72 @@ class Prior_Game(arcade.View):
         self.text_box_manager.enable()
         self.manager.enable()
 
-        self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.level_1_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.level_2_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.level_3_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.level_4_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.level_5_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
         one_white = arcade.load_texture("textures/levelOneWhite132.jpg")
         one_black = arcade.load_texture("textures/levelOneBlack150.jpg")
+        self.level_one = arcade.gui.UITextureButton(texture=one_black, texture_hovered=one_white, width=300, height=114)
 
-        self.level_one = arcade.gui.UITextureButton(texture=one_black, texture_hovered=one_white, width=150, height=57)
 
-        self.v_box.add(self.level_one)
+        self.level_1_box.add(self.level_one)
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=-400,
+                align_y=200,
+                child=self.level_1_box),
+        )
+
+        two_white = arcade.load_texture("textures/Level2_White.png")
+        two_black = arcade.load_texture("textures/Level2_Black.png")
+        self.level_two = arcade.gui.UITextureButton(texture=two_black, texture_hovered=two_white, width=300, height=114)
+
+        self.level_2_box.add(self.level_two)
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=0,
-                child=self.v_box),
+                align_y=200,
+                child=self.level_2_box),
+        )
+
+        three_white = arcade.load_texture("textures/Level3_White.png")
+        three_black = arcade.load_texture("textures/Level3_Black.png")
+        self.level_three = arcade.gui.UITextureButton(texture=three_black, texture_hovered=three_white, width=300, height=114)
+
+        self.level_3_box.add(self.level_three)
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=400,
+                align_y=200,
+                child=self.level_3_box),
+        )
+
+        four_white = arcade.load_texture("textures/Level4_White.png")
+        four_black = arcade.load_texture("textures/Level4_Black.png")
+        self.level_four = arcade.gui.UITextureButton(texture=four_black, texture_hovered=four_white, width=300, height=114)
+
+        self.level_4_box.add(self.level_four)
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=-200,
+                align_y=-100,
+                child=self.level_4_box),
+        )
+
+        five_white = arcade.load_texture("textures/Level5_White.png")
+        five_black = arcade.load_texture("textures/Level5_Black.png")
+        self.level_five = arcade.gui.UITextureButton(texture=five_black, texture_hovered=five_white, width=300,
+                                                     height=114)
+
+        self.level_5_box.add(self.level_five)
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=200,
+                align_y=-100,
+                child=self.level_5_box),
         )
 
         self.high_score = arcade.Text(
