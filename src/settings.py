@@ -1,7 +1,7 @@
 from arcade import color
 
-SCREEN_WIDTH = 1664
-SCREEN_HEIGHT = 896
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 640
 SCREEN_TITLE = "Sprite Bouncing Coins and Player"
 
 LEVEL_SETTINGS = {

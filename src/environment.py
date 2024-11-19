@@ -45,7 +45,7 @@ class Environment:
             width_from_border = int(obstacle_width * 2.5)
             height_from_border = int(obstacle_height * 2.5)
             width_step = obstacle_width * 3
-            height_step = obstacle_height * 3
+            height_step = int(obstacle_height * 2.5)
 
             # obstacles on top and bottom
             for x in range(half_obstacle_width, SCREEN_WIDTH, obstacle_width):
