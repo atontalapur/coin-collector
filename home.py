@@ -128,7 +128,7 @@ class GameHome(arcade.View):
             )
             self.text_box_manager.add(message_box)
 
-    def new_user_open(self, event, ):
+    def new_user_open(self, event):
         new_player_v = New_Player()
         new_player_v.setup()
         self.window.show_view(new_player_v)
@@ -216,8 +216,8 @@ class New_Player(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        back_button_f = arcade.load_texture("textures/icons8-back-arrow-50.png", width=50, height=50)
-        back_button_h = arcade.load_texture("textures/icons8-back-arrow-50 (1).png", width=50, height=50)
+        back_button_f = arcade.load_texture("textures/icons8-back-button-50.png", width=50, height=50)
+        back_button_h = arcade.load_texture("textures/icons8-back-button-50 (1).png", width=50, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
