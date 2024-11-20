@@ -6,7 +6,7 @@ SCREEN_TITLE = "Sprite Bouncing Coins and Player"
 
 LEVEL_SETTINGS = {
     "level_1": {
-        "BACKGROUND_COLOR" : color.SAND,
+        "BACKGROUND_COLOR" : color.SHAMROCK_GREEN,
         "OBSTACLE_IMAGE" : ":resources:images/tiles/boxCrate_double.png",
         "OBSTACLE_PIXELS_X" : 128,
         "OBSTACLE_PIXELS_Y" : 128,
@@ -23,7 +23,7 @@ LEVEL_SETTINGS = {
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": SCREEN_WIDTH // 2,
         "PLAYER_SPAWN_Y": SCREEN_HEIGHT // 2,
-        "PLAYER_SCALING" : 0.625,
+        "PLAYER_SCALING" : 0.55,
         "PLAYER_SPEED": 6,
     },
     "level_2": {
@@ -44,7 +44,30 @@ LEVEL_SETTINGS = {
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": SCREEN_WIDTH // 2,
         "PLAYER_SPAWN_Y": SCREEN_HEIGHT // 2 - 100,
-        "PLAYER_SCALING" : 0.625,
+        "PLAYER_SCALING" : 0.55,
         "PLAYER_SPEED": 10,
+    },
+    "level_5": {
+        "BACKGROUND_COLOR" : color.DARK_RED,
+        "OBSTACLE_IMAGE" : "../resources/lava_rounded.png",
+        "OBSTACLE_IMAGE_2" : ":resources:images/tiles/lavaTop_low.png",
+        "OBSTACLE_IMAGE_3" : "../resources/lavaTop_low_flipped.png",
+        "OBSTACLE_PIXELS_X" : 128,
+        "OBSTACLE_PIXELS_Y" : 128,
+        "OBSTACLE_SCALING" : 0.5,
+
+        "COIN_IMAGE" : ":resources:images/items/gemBlue.png",
+        "COIN_SCALING" : 0.375,
+        "NUM_COINS": 15,
+        "COIN_OFFSET": 50,
+        "COIN_FROM_BORDER": 100,
+        "COIN_MIN_SPEED": 1.5,
+        "COIN_MAX_SPEED": 3.5,
+
+        "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
+        "PLAYER_SPAWN_X": 64 * 10,
+        "PLAYER_SPAWN_Y": 64 * 4,
+        "PLAYER_SCALING" : 0.55,
+        "PLAYER_SPEED": 5,
     },
 }

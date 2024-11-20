@@ -6,7 +6,7 @@ def main():
     """Main function"""
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     window.set_location(0, 30)
-    game_view = Game("level_2")
+    game_view = Game("level_5")
     window.show_view(game_view)
     arcade.run()
 

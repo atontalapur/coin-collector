@@ -1,5 +1,5 @@
 import arcade
-from random import randint
+from random import randint, uniform
 from coin import Coin
 from obstacle import Obstacle
 from player import Player
@@ -69,7 +69,6 @@ class Environment:
 
         elif (self.level == "level_2"):
             # precomputed values
-            # precomputed values
             half_obstacle_width = obstacle_width // 2
             half_obstacle_height = obstacle_height // 2
             width_from_border = obstacle_width * 2 + half_obstacle_width
@@ -98,6 +97,39 @@ class Environment:
             # top pattern
             for i in range(0, 2):
                  self.obstacle_list.append(Obstacle(width_from_border + 448 + i * 64, height_from_border + 320, obstacle_image, obstacle_scaling))
+        
+        elif(self.level == "level_5"):
+            obstacle_image_2 = self.level_settings["OBSTACLE_IMAGE_2"]
+            obstacle_image_3 = self.level_settings["OBSTACLE_IMAGE_3"]
+
+            # precomputed values
+            half_obstacle_width = obstacle_width // 2
+            half_obstacle_height = obstacle_height // 2
+            
+            for x in range(half_obstacle_width + obstacle_width, SCREEN_WIDTH - obstacle_width, obstacle_width):
+                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image_2, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image_3, obstacle_scaling))
+
+            # obstacles on left and right
+            for y in range(half_obstacle_height, SCREEN_HEIGHT, obstacle_height):
+                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image, obstacle_scaling))
+
+            obstacle_positions = [
+                (6, 1), (12, 1),
+                (2, 2), (6, 2), (10, 2), (11, 2), (16, 2),
+                (3, 3), (7, 3), (15, 3),
+                (13, 4),
+                (4, 5), (8, 5), (9, 5), (11, 5), (17, 5),
+                (2, 6), (4, 6), (7, 6), (8, 6), (11, 6), (15, 6), (18, 6),
+                (4, 7), (9, 7),
+                (5, 8), (10, 8), (13, 8),
+            ]
+
+            # create obstacles from grid positions
+            for x_pos, y_pos in obstacle_positions:
+                self.obstacle_list.append(Obstacle(64 * x_pos + 32, 64 * y_pos + 32, obstacle_image, obstacle_scaling))
+
 
     def _setup_coins(self):
         """Create coins in random locations and add to sprite list."""
@@ -122,12 +154,12 @@ class Environment:
                     break
 
             while True:
-                change_x = randint(-coin_max_speed, coin_max_speed)
+                change_x = uniform(-coin_max_speed, coin_max_speed)
                 if abs(change_x) >= coin_min_speed:
                     break
 
             while True:
-                change_y = randint(-coin_max_speed, coin_max_speed)
+                change_y = uniform(-coin_max_speed, coin_max_speed)
                 if abs(change_y) >= coin_min_speed:
                     break
 
