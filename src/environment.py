@@ -85,27 +85,19 @@ class Environment:
                 self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image, obstacle_scaling))
                 self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image, obstacle_scaling))
             
-            self.obstacle_list.append(Obstacle(width_from_border, height_from_border, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 64, height_from_border + 64, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 128, height_from_border + 128, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 192, height_from_border + 192, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 256, height_from_border + 256, obstacle_image, obstacle_scaling))
-
-            self.obstacle_list.append(Obstacle(width_from_border + 320, height_from_border + 64, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 384, height_from_border + 128, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 448, height_from_border + 192, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 512, height_from_border + 192, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 576, height_from_border + 128, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 640, height_from_border + 64, obstacle_image, obstacle_scaling))
-
-            self.obstacle_list.append(Obstacle(width_from_border + 448, height_from_border + 320, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(width_from_border + 512, height_from_border + 320, obstacle_image, obstacle_scaling))
-
-            self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - 256, height_from_border + 256, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - 192, height_from_border + 192, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - 128, height_from_border + 128, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - 64, height_from_border + 64, obstacle_image, obstacle_scaling))
-            self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border, height_from_border, obstacle_image, obstacle_scaling))
+            # left/right large diagonal patterns
+            for i in range(0, 5):
+                self.obstacle_list.append(Obstacle(width_from_border + i * 64, height_from_border + i * 64, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - i * 64, height_from_border + i * 64, obstacle_image, obstacle_scaling))
+            
+            # middle diagonal patterns
+            for i in range(0, 3):
+                self.obstacle_list.append(Obstacle(width_from_border + (5 + i) * 64, height_from_border + (i + 1) * 64, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + (8 + i) * 64, height_from_border - (i * 64) + 192, obstacle_image, obstacle_scaling))
+            
+            # top pattern
+            for i in range(0, 2):
+                 self.obstacle_list.append(Obstacle(width_from_border + 448 + i * 64, height_from_border + 320, obstacle_image, obstacle_scaling))
 
     def _setup_coins(self):
         """Create coins in random locations and add to sprite list."""
