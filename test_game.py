@@ -1,6 +1,6 @@
 import arcade.color
 import pytest
-from home import *
+from src.home import *
 
 
 # Test GameHome class
