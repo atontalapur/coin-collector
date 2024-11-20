@@ -19,10 +19,10 @@ class GameHome(arcade.View):
             start_x=SCREEN_WIDTH // 2,
             start_y=SCREEN_HEIGHT - 60,
             color=arcade.color.YELLOW,
-            font_size=40,
+            font_size=70,
             anchor_x="center",
             anchor_y="center",
-            bold=True,
+            bold=False,
             italic=True,
             font_name="Kenney Future"
         )
@@ -48,6 +48,7 @@ class GameHome(arcade.View):
 
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        #self.text_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
         right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
         right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
@@ -60,10 +61,8 @@ class GameHome(arcade.View):
                                anchor_y="center",
                                multiline=False, text="Enter User Name", text_color=arcade.color.BLACK,
                                # Set text color to black
-                               color=arcade.color.WHITE,
-                               visible=True)
+                               color=arcade.color.BLACK)
                               )
-
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
@@ -100,7 +99,6 @@ class GameHome(arcade.View):
             italic=True,
             font_name="Kenney High"
         )
-
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
         if button == arcade.MOUSE_BUTTON_LEFT and self.user_text_box.text == "Enter User Name":
             self.user_text_box.text = ""
@@ -156,15 +154,16 @@ class GameHome(arcade.View):
         self.background_music.play(loop=False)
 
     def on_update(self, delta_time):
-        self.time_elapsed += delta_time
-        self.heading_text.angle = 6 * math.sin(self.time_elapsed * 2)
-        self.heading_text.color = (
-            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
-            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
-            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
-        )
-        self.heading_text.font_size = 70 + 5 * math.sin(self.time_elapsed * 2)
-        self.heading_text.start_y = SCREEN_HEIGHT - 60 + 10 * math.sin(self.time_elapsed * 2)
+            self.time_elapsed += delta_time
+            radius = 10
+            self.heading_text.start_x = SCREEN_WIDTH // 2 + radius * math.cos(self.time_elapsed * 2)
+            self.heading_text.start_y = SCREEN_HEIGHT - 60 + radius * math.sin(self.time_elapsed * 2)
+            self.heading_text.color = (
+                int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
+                int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
+                int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
+            )
+            self.heading_text.rotation = 5 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
         self.clear()
@@ -647,11 +646,3 @@ class Game(arcade.View):
     def exit(self):
         """Exit program."""
         self.close()
-
-
-if __name__ == "__main__":
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=False)
-    home_view = GameHome()
-    home_view.setup()
-    window.show_view(home_view)
-    arcade.run()
