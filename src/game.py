@@ -1,17 +1,11 @@
 import arcade
-import pyglet
-from player import Player
 from level import Level
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 
-class Game(arcade.Window):
+class Game(arcade.View):
     """Main application class."""
     def __init__(self):
         """Initialize the game window."""
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-
-        # set window to open in top-left
-        pyglet.window.Window.set_location(self, 0, 30)
+        super().__init__()
 
         # all level components
         # temp -> hardcode level_1 for now
