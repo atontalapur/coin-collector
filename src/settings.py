@@ -1,7 +1,7 @@
 from arcade import color
 
-SCREEN_WIDTH = 1664
-SCREEN_HEIGHT = 896
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 640
 SCREEN_TITLE = "Sprite Bouncing Coins and Player"
 
 LEVEL_SETTINGS = {
@@ -20,10 +20,31 @@ LEVEL_SETTINGS = {
         "COIN_MIN_SPEED": 2,
         "COIN_MAX_SPEED": 4,
 
-        "PLAYER_IMAGE" : ":resources:images/animated_characters/robot/robot_walk0.png",
+        "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": SCREEN_WIDTH // 2,
         "PLAYER_SPAWN_Y": SCREEN_HEIGHT // 2,
         "PLAYER_SCALING" : 0.625,
         "PLAYER_SPEED": 6,
+    },
+    "level_2": {
+        "BACKGROUND_COLOR" : color.ICEBERG,
+        "OBSTACLE_IMAGE" : ":resources:images/tiles/snow.png",
+        "OBSTACLE_PIXELS_X" : 128,
+        "OBSTACLE_PIXELS_Y" : 128,
+        "OBSTACLE_SCALING" : 0.5,
+
+        "COIN_IMAGE" : ":resources:images/items/coinSilver.png",
+        "COIN_SCALING" : 0.375,
+        "NUM_COINS": 20,
+        "COIN_OFFSET": 50,
+        "COIN_FROM_BORDER": 100,
+        "COIN_MIN_SPEED": 3,
+        "COIN_MAX_SPEED": 5,
+
+        "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
+        "PLAYER_SPAWN_X": SCREEN_WIDTH // 2,
+        "PLAYER_SPAWN_Y": SCREEN_HEIGHT // 2 - 100,
+        "PLAYER_SCALING" : 0.625,
+        "PLAYER_SPEED": 10,
     },
 }

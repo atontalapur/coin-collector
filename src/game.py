@@ -1,21 +1,14 @@
 import arcade
-import pyglet
-from player import Player
 from level import Level
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 
-class Game(arcade.Window):
+class Game(arcade.View):
     """Main application class."""
-    def __init__(self):
+    def __init__(self, level):
         """Initialize the game window."""
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-
-        # set window to open in top-left
-        pyglet.window.Window.set_location(self, 0, 30)
+        super().__init__()
 
         # all level components
-        # temp -> hardcode level_1 for now
-        self.level = Level("level_1")
+        self.level = Level(level)
 
     def on_update(self, delta_time):
         """Movement and game logic."""
@@ -23,7 +16,7 @@ class Game(arcade.Window):
 
         # temp -> leaderboard will be drawn
         if len(self.level.environment.coin_list) == 0:
-            self.exit()
+            arcade.exit()
 
     def on_draw(self):
         """Render the screen."""
@@ -35,7 +28,7 @@ class Game(arcade.Window):
 
         # Quit
         if key == arcade.key.Q:
-            self.exit()\
+            arcade.exit()
         # Restart level environment
         elif key == arcade.key.R:
             self.level.reset()
@@ -65,7 +58,3 @@ class Game(arcade.Window):
             self.level.environment.player.moving_left = False
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.level.environment.player.moving_right = False
-
-    def exit(self):
-        """Exit program."""
-        self.close()
