@@ -36,21 +36,21 @@ class Player(arcade.Sprite):
         # update horiziontal movement
         self.center_x += self.change_x
 
-        # if there are horizontal collisions, move player
+        # if there are horizontal collisions, move player back
         walls_hit = arcade.check_for_collision_with_list(self, walls)
         for wall in walls_hit:
             if self.change_x > 0:
-                self.right = wall.left
+                self.right = wall.left - 1
             elif self.change_x < 0:
-                self.left = wall.right
+                self.left = wall.right + 1
 
         # update vertical movement
         self.center_y += self.change_y
 
-        # if there are vertical collisions, move player
+        # if there are vertical collisions, move player back
         walls_hit = arcade.check_for_collision_with_list(self, walls)
         for wall in walls_hit:
             if self.change_y > 0:
-                self.top = wall.bottom
+                self.top = wall.bottom - 1
             elif self.change_y < 0:
-                self.bottom = wall.top
+                self.bottom = wall.top + 1
