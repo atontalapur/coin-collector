@@ -66,8 +66,12 @@ class Environment:
                     for y in range(height_from_border, SCREEN_HEIGHT - height_from_border + 1, height_step):
                         self.obstacle_list.append(Obstacle(x, y, obstacle_image, obstacle_scaling))
                     counter += 1
-
+        
         elif (self.level == "level_2"):
+            obstacle_image_2 = self.level_settings["OBSTACLE_IMAGE_2"]
+            obstacle_image_3 = self.level_settings["OBSTACLE_IMAGE_3"]
+            obstacle_image_4 = self.level_settings["OBSTACLE_IMAGE_4"]
+
             # precomputed values
             half_obstacle_width = obstacle_width // 2
             half_obstacle_height = obstacle_height // 2
@@ -76,44 +80,115 @@ class Environment:
 
             # obstacles on top and bottom
             for x in range(half_obstacle_width, SCREEN_WIDTH, obstacle_width):
-                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image, obstacle_scaling))
-                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image_2, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image_2, obstacle_scaling))
 
             # obstacles on left and right
             for y in range(half_obstacle_height + obstacle_height, SCREEN_HEIGHT, obstacle_height):
-                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image, obstacle_scaling))
-                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image_3, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image_4, obstacle_scaling))
+            
+            for i in range(0, 6):
+                self.obstacle_list.append(Obstacle(width_from_border + 64 + i * obstacle_width, SCREEN_HEIGHT - height_from_border, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 64 + i * obstacle_width, height_from_border, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 576 + i * obstacle_width, SCREEN_HEIGHT - height_from_border, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 576 + i * obstacle_width, height_from_border, obstacle_image, obstacle_scaling))
+            
+            for i in range(0, 4):
+                self.obstacle_list.append(Obstacle(width_from_border + 64, height_from_border + 64 + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - 64, height_from_border + 64 + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 192 + i * obstacle_width, height_from_border + 192, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 576 + i * obstacle_width, height_from_border + 192, obstacle_image, obstacle_scaling))
+            
+            for i in range(0, 2):
+                self.obstacle_list.append(Obstacle(width_from_border + 448 + i * obstacle_width, height_from_border + 128,obstacle_image, obstacle_scaling))
+
+
+        elif (self.level == "level_3"):
+            obstacle_image_2 = self.level_settings["OBSTACLE_IMAGE_2"]
+            obstacle_image_3 = self.level_settings["OBSTACLE_IMAGE_3"]
+            obstacle_image_4 = self.level_settings["OBSTACLE_IMAGE_4"]
+
+            # precomputed values
+            half_obstacle_width = obstacle_width // 2
+            half_obstacle_height = obstacle_height // 2
+            width_from_border = obstacle_width * 2 + half_obstacle_width
+            height_from_border = obstacle_height * 2 + half_obstacle_height
+
+            # obstacles on top and bottom
+            for x in range(half_obstacle_width, SCREEN_WIDTH, obstacle_width):
+                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image_2, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image_2, obstacle_scaling))
+
+            # obstacles on left and right
+            for y in range(half_obstacle_height + obstacle_height, SCREEN_HEIGHT, obstacle_height):
+                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image_3, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image_4, obstacle_scaling))
             
             # left/right large diagonal patterns
             for i in range(0, 5):
-                self.obstacle_list.append(Obstacle(width_from_border + i * 64, height_from_border + i * 64, obstacle_image, obstacle_scaling))
-                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - i * 64, height_from_border + i * 64, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + i * obstacle_width, height_from_border + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - i * obstacle_width, height_from_border + i * obstacle_height, obstacle_image, obstacle_scaling))
             
             # middle diagonal patterns
             for i in range(0, 3):
-                self.obstacle_list.append(Obstacle(width_from_border + (5 + i) * 64, height_from_border + (i + 1) * 64, obstacle_image, obstacle_scaling))
-                self.obstacle_list.append(Obstacle(width_from_border + (8 + i) * 64, height_from_border - (i * 64) + 192, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 320 + i * obstacle_width, height_from_border + 64 + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 512 + i * obstacle_width, height_from_border + 192 - i * obstacle_height, obstacle_image, obstacle_scaling))
             
             # top pattern
             for i in range(0, 2):
-                 self.obstacle_list.append(Obstacle(width_from_border + 448 + i * 64, height_from_border + 320, obstacle_image, obstacle_scaling))
-        
-        elif(self.level == "level_5"):
+                 self.obstacle_list.append(Obstacle(width_from_border + 448 + i * obstacle_width, height_from_border + 320, obstacle_image, obstacle_scaling))
+
+        elif (self.level == "level_4"):
             obstacle_image_2 = self.level_settings["OBSTACLE_IMAGE_2"]
             obstacle_image_3 = self.level_settings["OBSTACLE_IMAGE_3"]
+            obstacle_image_4 = self.level_settings["OBSTACLE_IMAGE_4"]
+
+            # precomputed values
+            half_obstacle_width = obstacle_width // 2
+            half_obstacle_height = obstacle_height // 2
+            width_from_border = obstacle_width * 2 + half_obstacle_width
+            height_from_border = obstacle_height * 2 + half_obstacle_height
+            
+            # obstacles on top and bottom
+            for x in range(half_obstacle_width + obstacle_width, SCREEN_WIDTH - obstacle_width, obstacle_width):
+                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image_3, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image_4, obstacle_scaling))
+
+            # obstacles on left and right
+            for y in range(half_obstacle_height, SCREEN_HEIGHT, obstacle_height):
+                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image_2, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image_2, obstacle_scaling))
+            
+            # obstacles near edges
+            for i in range(0, 3):
+                self.obstacle_list.append(Obstacle(width_from_border + i * obstacle_width, height_from_border + 192 + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - width_from_border - 128 + i * obstacle_width, height_from_border + i * obstacle_height, obstacle_image, obstacle_scaling))
+            
+            # obstacles near middle
+            for i in range(0, 6):
+                self.obstacle_list.append(Obstacle(width_from_border + 64 + i * obstacle_width, height_from_border + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 320 + i * obstacle_width, height_from_border + i * obstacle_height, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(width_from_border + 576 + i * obstacle_width, height_from_border + i * obstacle_height, obstacle_image, obstacle_scaling))
+        
+        elif (self.level == "level_5"):
+            obstacle_image_2 = self.level_settings["OBSTACLE_IMAGE_2"]
+            obstacle_image_3 = self.level_settings["OBSTACLE_IMAGE_3"]
+            obstacle_image_4 = self.level_settings["OBSTACLE_IMAGE_4"]
 
             # precomputed values
             half_obstacle_width = obstacle_width // 2
             half_obstacle_height = obstacle_height // 2
             
+            # obstacles on top and bottom
             for x in range(half_obstacle_width + obstacle_width, SCREEN_WIDTH - obstacle_width, obstacle_width):
-                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image_2, obstacle_scaling))
-                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image_3, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, half_obstacle_height, obstacle_image_3, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x, SCREEN_HEIGHT - half_obstacle_height, obstacle_image_4, obstacle_scaling))
 
             # obstacles on left and right
             for y in range(half_obstacle_height, SCREEN_HEIGHT, obstacle_height):
-                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image, obstacle_scaling))
-                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(half_obstacle_width, y, obstacle_image_2, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(SCREEN_WIDTH - half_obstacle_width, y, obstacle_image_2, obstacle_scaling))
 
             obstacle_positions = [
                 (6, 1), (12, 1),
@@ -126,9 +201,9 @@ class Environment:
                 (5, 8), (10, 8), (13, 8),
             ]
 
-            # create obstacles from grid positions
+            # obstacles from grid positions
             for x_pos, y_pos in obstacle_positions:
-                self.obstacle_list.append(Obstacle(64 * x_pos + 32, 64 * y_pos + 32, obstacle_image, obstacle_scaling))
+                self.obstacle_list.append(Obstacle(x_pos * obstacle_width + 32, y_pos * obstacle_height + 32, obstacle_image, obstacle_scaling))
 
 
     def _setup_coins(self):
