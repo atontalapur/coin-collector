@@ -10,7 +10,7 @@ class Game(arcade.View):
         self.lvl = level
 
         self.box_x, self.box_y, self.box_width, self.box_height = SCREEN_WIDTH - 320, SCREEN_HEIGHT - 40, 285, 30
-
+        
         self.setup()
     
     def setup(self):
