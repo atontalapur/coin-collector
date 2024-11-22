@@ -8,6 +8,7 @@ class Game(arcade.View):
         """Initialize the game window."""
         super().__init__()
         self.lvl = level
+        self.paused = False
 
         self.box_x, self.box_y, self.box_width, self.box_height = SCREEN_WIDTH - 320, SCREEN_HEIGHT - 40, 285, 30
         
@@ -20,13 +21,14 @@ class Game(arcade.View):
         self.time_elapsed = 0  # Initialize the timer
 
     def on_update(self, delta_time):
-        self.time_elapsed += delta_time
-        """Movement and game logic."""
-        self.level.environment.update()
+        if not self.paused:
+            self.time_elapsed += delta_time
+            """Movement and game logic."""
+            self.level.environment.update()
 
-        # temp -> leaderboard will be drawn
-        if len(self.level.environment.coin_list) == 0:
-            arcade.exit()
+            # temp -> leaderboard will be drawn
+            if len(self.level.environment.coin_list) == 0:
+                self._exit()
 
     def on_draw(self):
         """Render the screen."""
@@ -47,20 +49,22 @@ class Game(arcade.View):
 
     def on_key_press(self, key, modifiers):
         """Keys that are pressed."""
-        self.movement_press(key)
+        self._movement_press(key)
 
         # Quit
         if key == arcade.key.Q:
-            arcade.exit()
+            self._exit()
         # Restart level environment
         elif key == arcade.key.R:
             self.setup()
+        elif key == arcade.key.ESCAPE:
+            self._toggle_pause()
 
     def on_key_release(self, key, modifiers):
         """Keys that are released."""
-        self.movement_release(key)
+        self._movement_release(key)
     
-    def movement_press(self, key):
+    def _movement_press(self, key):
         """Checks if movement keys are pressed down. Supports arrow keys and WASD."""
         if key == arcade.key.UP or key == arcade.key.W:
             self.level.environment.player.moving_up = True
@@ -70,8 +74,14 @@ class Game(arcade.View):
             self.level.environment.player.moving_left = True
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.level.environment.player.moving_right = True
+    
+    def _exit(self):
+        arcade.exit()
 
-    def movement_release(self, key):
+    def _toggle_pause(self):
+        self.paused = not self.paused
+
+    def _movement_release(self, key):
         """Checks if movement keys were released. Supports arrow keys and WASD."""
         if key == arcade.key.UP or key == arcade.key.W:
             self.level.environment.player.moving_up = False
