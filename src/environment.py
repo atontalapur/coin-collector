@@ -271,8 +271,6 @@ class Environment:
 
     def draw(self):
         """Render game environment."""
-        arcade.start_render()
-        
         self.obstacle_list.draw()
         self.coin_list.draw()
         self.player.draw()
