@@ -6,7 +6,7 @@ class Level:
         """Initialize level."""
         self.environment = Environment(level)
     
-    def reset(self):
+    def setup(self):
         """Reset environment."""
         self.environment.setup()
     

@@ -1,5 +1,4 @@
 import arcade
-from game import Game
 from home import GameHome
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 

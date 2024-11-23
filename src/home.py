@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 import math
 from settings import *
+from game import Game
 from level import Level
 
 DEFAULT_LINE_HEIGHT = 45
@@ -441,11 +442,11 @@ class Prior_Game(arcade.View):
                 align_y=-100,
                 child=self.level_5_box),
         )
-        self.level_one.on_click = self.level_click
-        self.level_two.on_click = self.level_click
-        self.level_three.on_click = self.level_click
-        self.level_four.on_click = self.level_click
-        self.level_five.on_click = self.level_click
+        self.level_one.on_click = self.level_click_1
+        self.level_two.on_click = self.level_click_2
+        self.level_three.on_click = self.level_click_3
+        self.level_four.on_click = self.level_click_4
+        self.level_five.on_click = self.level_click_5
 
 
         self.high_score = arcade.Text(
@@ -470,16 +471,60 @@ class Prior_Game(arcade.View):
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 
-    def level_click(self, event):
+
+    def level_click_1(self, event):
         # get the current level of user
         #if the level ID is greater than the current level of user, then show a message box
         # that the user has not reached that level yet
         #else, open the rules page
         print("Need to add logic to restrict the levels")
-        view = Rule_Page()
+        view = Rule_Page("level_1")
         view.setup()
         self.window.show_view(view)
+    
 
+    def level_click_2(self, event):
+        # get the current level of user
+        #if the level ID is greater than the current level of user, then show a message box
+        # that the user has not reached that level yet
+        #else, open the rules page
+        print("Need to add logic to restrict the levels")
+        view = Rule_Page("level_2")
+        view.setup()
+        self.window.show_view(view)
+    
+
+    def level_click_3(self, event):
+        # get the current level of user
+        #if the level ID is greater than the current level of user, then show a message box
+        # that the user has not reached that level yet
+        #else, open the rules page
+        print("Need to add logic to restrict the levels")
+        view = Rule_Page("level_3")
+        view.setup()
+        self.window.show_view(view)
+    
+
+    def level_click_4(self, event):
+        # get the current level of user
+        #if the level ID is greater than the current level of user, then show a message box
+        # that the user has not reached that level yet
+        #else, open the rules page
+        print("Need to add logic to restrict the levels")
+        view = Rule_Page("level_4")
+        view.setup()
+        self.window.show_view(view)
+    
+
+    def level_click_5(self, event):
+        # get the current level of user
+        #if the level ID is greater than the current level of user, then show a message box
+        # that the user has not reached that level yet
+        #else, open the rules page
+        print("Need to add logic to restrict the levels")
+        view = Rule_Page("level_5")
+        view.setup()
+        self.window.show_view(view)
 
 
     def setup(self):
@@ -505,7 +550,8 @@ class Prior_Game(arcade.View):
 
 class Rule_Page(arcade.View):
 
-    def __init__(self):
+    def __init__(self, level):
+        self.level = level
         super().__init__()
         self.text_angle = 0
         self.time_elapsed = 0.0
@@ -559,7 +605,7 @@ class Rule_Page(arcade.View):
         self.background_music.play(loop=False)
 
     def game_open(self, event):
-        game = Game()
+        game = Game(self.level)
         game.setup()
         self.window.show_view(game)
 
@@ -573,76 +619,3 @@ class Rule_Page(arcade.View):
         self.heading_text.draw()
         self.new_player.draw()
         self.manager.draw()
-
-
-class Game(arcade.View):
-    def __init__(self):
-        """Initialize the game window."""
-        super().__init__()
-
-        # all level components
-        # temp -> hardcode level_1 for now
-        self.level = Level("level_1")
-
-    def on_update(self, delta_time):
-        """Movement and game logic."""
-        self.level.environment.update()
-
-        # temp -> leaderboard will be drawn
-        if len(self.level.environment.coin_list) == 0:
-            self.exit()
-
-    def on_draw(self):
-        """Render the screen."""
-        self.level.draw()
-
-    def on_key_press(self, key, modifiers):
-        """Keys that are pressed."""
-        self.movement_press(key)
-
-        # Quit
-        if key == arcade.key.Q:
-            self.exit() \
-                # Restart level environment
-        elif key == arcade.key.R:
-            self.level.reset()
-
-    def on_key_release(self, key, modifiers):
-        """Keys that are released."""
-        self.movement_release(key)
-
-    def movement_press(self, key):
-        """Checks if movement keys are pressed down. Supports arrow keys and WASD."""
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.level.environment.player.moving_up = True
-        elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.level.environment.player.moving_down = True
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.level.environment.player.moving_left = True
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.level.environment.player.moving_right = True
-
-    def movement_release(self, key):
-        """Checks if movement keys were released. Supports arrow keys and WASD."""
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.level.environment.player.moving_up = False
-        elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.level.environment.player.moving_down = False
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.level.environment.player.moving_left = False
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.level.environment.player.moving_right = False
-
-    def load_sounds(self):
-        # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("../sounds/Collision.wav")
-        # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
-        # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
-
-    def setup(self):
-        self.load_sounds()
-        self.background_music.play(loop=False)
-
-    def exit(self):
-        """Exit program."""
-        self.close()
