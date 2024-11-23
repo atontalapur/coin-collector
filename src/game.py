@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui
 from level import Level
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT
 
@@ -11,6 +12,19 @@ class Game(arcade.View):
         self.paused = False
 
         self.box_x, self.box_y, self.box_width, self.box_height = SCREEN_WIDTH - 320, SCREEN_HEIGHT - 40, 285, 30
+        self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
+        self.pause_menu_button = arcade.gui.UIFlatButton(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 20, 100, 40, "Pause")
+
+        self.v_box.add(self.pause_menu_button)
+        self.pause_manager = arcade.gui.UIManager()
+        self.pause_manager.enable()
+        self.pause_manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=-600,
+                align_y=300,
+                child=self.v_box),)
+
+        self.pause_menu_button.on_click = self.pause_game
         
         self.setup()
     
@@ -20,21 +34,37 @@ class Game(arcade.View):
 
         self.time_elapsed = 0  # Initialize the timer
 
+    def pause_game(self,event):
+        self.paused = True
+
     def on_update(self, delta_time):
         if not self.paused:
             self.time_elapsed += delta_time
             """Movement and game logic."""
             self.level.environment.update()
+        elif self.paused:
+
+            pause_menu = arcade.gui.UIMessageBox(
+                width=300,
+                height=200,
+                message_text=(
+                    "You should have a look on the new GUI features "
+                    "coming up with arcade 2.6!"
+                ),
+                buttons=["Ok", "Cancel"]
+            )
+            self.pause_manager.add(pause_menu)
 
             # temp -> leaderboard will be drawn
             if len(self.level.environment.coin_list) == 0:
                 arcade.exit()
-
+        
     def on_draw(self):
         """Render the screen."""
-        arcade.start_render()
+        self.clear()
         self.level.draw()
         self.draw_time_box()
+        self.pause_manager.draw()
     
     def draw_time_box(self):
         # Draw the box
