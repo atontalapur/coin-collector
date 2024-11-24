@@ -1,147 +1,123 @@
-import arcade.color
 import pytest
-from src.home import *
+import arcade
+from game import Game
+from level import Level
 
-
-# Test GameHome class
-def test_game_home_initialization():
+def test_game_initialization():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    assert game_home.heading_text.text == "Catch the Coins"
-    assert game_home.returning_users.text == "Returning  Users"
-    assert game_home.new_users.text == "New  Users"
-    assert game_home.user_text_box.text == "Enter User Name"
+    game = Game("level_1")
+    window.show_view(game)
+    assert isinstance(game.level, Level)
+    assert game.level.environment is not None
 
-
-def test_game_home_on_mouse_press():
+def test_game_on_update():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.user_text_box.text = "Enter User Name"
-    game_home.on_mouse_press(0, 0, arcade.MOUSE_BUTTON_LEFT, 0)
-    assert game_home.user_text_box.text == ""
+    game = Game("level_1")
+    window.show_view(game)
+    initial_coin_count = len(game.level.environment.coin_list)
+    game.on_update(1.0)
+    assert len(game.level.environment.coin_list) == initial_coin_count
 
-
-def test_game_home_on_click_open_empty():
+def test_game_on_draw():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.user_text_box.text = ""
-    game_home.on_click_open(None)
-    assert isinstance(game_home.text_box_manager.children[0][0], arcade.gui.UIMessageBox)
+    game = Game("level_1")
+    window.show_view(game)
+    game.on_draw()
+    assert game.level is not None
 
-
-def test_game_home_on_click_open_valid_user():
+def test_game_on_key_press_quit():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.user_text_box.text = "Thomas"
-    game_home.on_click_open(None)
-    assert isinstance(window.current_view, Prior_Game)
+    game = Game("level_1")
+    window.show_view(game)
+    game.on_key_press(arcade.key.Q, None)
+    assert game.window_closed==True
 
-
-def test_game_home_on_click_open_invalid_user():
+def test_game_on_key_press_restart():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.user_text_box.text = "InvalidUser"
-    game_home.on_click_open(None)
-    assert isinstance(game_home.text_box_manager.children[0][0], arcade.gui.UIMessageBox)
+    game = Game("level_1")
+    window.show_view(game)
+    game.on_key_press(arcade.key.R, None)
+    assert len(game.level.environment.coin_list) > 0
 
-
-def test_game_home_new_user_open():
+def test_game_draw_time_box():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.new_user_open(None)
-    assert isinstance(window.current_view, New_Player)
+    game = Game("level_1")
+    window.show_view(game)
+    game.draw_time_box()
+    assert game.time_elapsed == 0
 
 
-def test_game_home_prior_game_open():
+def test_game_draw_time_box_coins_left():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.prior_game_open(None)
-    assert isinstance(window.current_view, Prior_Game)
+    game = Game("level_1")
+    window.show_view(game)
+    game.level.environment.coin_list = arcade.SpriteList()
+    game.level.environment.coin_list.append(arcade.Sprite())
+    game.draw_time_box()
 
+    # Create a text object with the expected content
+    expected_text = f"Coins left : 1     Time: 0"
+    text_object = arcade.Text(expected_text, game.box_x + 10, game.box_y + 5, arcade.color.BLACK, 16, bold=True)
 
-def test_game_home_on_key_press_enter():
+    # Check if the text object content matches the expected content
+    assert text_object.text == expected_text
+
+def test_game_movement_press_up():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.user_text_box.text = "Thomas"
-    game_home.on_key_press(arcade.key.ENTER, None)
-    assert isinstance(window.current_view, Prior_Game)
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.UP)
+    assert game.level.environment.player.moving_up
 
-
-def test_game_home_on_key_press_escape():
+def test_game_movement_release_up():
     window = arcade.Window(800, 600, "Test Window")
-    game_home = GameHome()
-    window.show_view(game_home)
-    game_home.user_text_box.text = "SomeUser"
-    game_home.on_key_press(arcade.key.ESCAPE, None)
-    assert game_home.user_text_box.text == "Enter User Name"
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.UP)
+    game.movement_release(arcade.key.UP)
+    assert not game.level.environment.player.moving_up
 
-
-# Test New_Player class
-def test_new_player_initialization():
+def test_game_movement_press_down():
     window = arcade.Window(800, 600, "Test Window")
-    new_player = New_Player()
-    window.show_view(new_player)
-    assert new_player.heading_text.text == "Catch the Coins"
-    assert new_player.new_player.text == "New Player"
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.DOWN)
+    assert game.level.environment.player.moving_down
 
-
-def test_new_player_on_mouse_press():
+def test_game_movement_release_down():
     window = arcade.Window(800, 600, "Test Window")
-    new_player = New_Player()
-    window.show_view(new_player)
-    new_player.user_text_box.text = "Enter New User Name"
-    new_player.on_mouse_press(0, 0, arcade.MOUSE_BUTTON_LEFT, 0)
-    assert new_player.user_text_box.text == ""
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.DOWN)
+    game.movement_release(arcade.key.DOWN)
+    assert not game.level.environment.player.moving_down
 
-
-def test_new_player_change_status_available():
+def test_game_movement_press_left():
     window = arcade.Window(800, 600, "Test Window")
-    new_player = New_Player()
-    window.show_view(new_player)
-    new_player.change_status(None)
-    assert new_player.new_name_available.color == (0, 255, 0, 255)
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.LEFT)
+    assert game.level.environment.player.moving_left
 
-
-def test_new_player_change_status_unavailable():
+def test_game_movement_release_left():
     window = arcade.Window(800, 600, "Test Window")
-    new_player = New_Player()
-    window.show_view(new_player)
-    new_player.change_status(None)
-    assert new_player.new_name_unavailable.color == (140, 146, 172, 255)
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.LEFT)
+    game.movement_release(arcade.key.LEFT)
+    assert not game.level.environment.player.moving_left
 
-
-def test_new_player_new_user_open():
+def test_game_movement_press_right():
     window = arcade.Window(800, 600, "Test Window")
-    new_player = New_Player()
-    window.show_view(new_player)
-    new_player.new_user_open(None)
-    assert isinstance(window.current_view, GameHome)
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.RIGHT)
+    assert game.level.environment.player.moving_right
 
-
-# Test Prior_Game class
-def test_prior_game_initialization():
+def test_game_movement_release_right():
     window = arcade.Window(800, 600, "Test Window")
-    prior_game = Prior_Game()
-    window.show_view(prior_game)
-    assert prior_game.heading_text.text == "atontalapur"
-
-
-# Test Rule_Page class
-def test_rule_page_initialization():
-    window = arcade.Window(800, 600, "Test Window")
-    rule_page = Rule_Page()
-    window.show_view(rule_page)
-    assert rule_page.heading_text.text == "atontalapur"
-    assert rule_page.new_player.text == "How to Play?"
-
-
-if __name__ == "__main__":
-    pytest.main()
+    game = Game("level_1")
+    window.show_view(game)
+    game.movement_press(arcade.key.RIGHT)
+    game.movement_release(arcade.key.RIGHT)
+    assert not game.level.environment.player.moving_right
