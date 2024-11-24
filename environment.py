@@ -13,21 +13,21 @@ class Environment:
         self.setup()
 
     def setup(self):
-        """Setup settings and all visible game parts. Allows environment to easilt restart."""
+        """Setup settings and all visible game parts. Allows environment to easily restart."""
         self.level_settings = LEVEL_SETTINGS[self.level]
         self.coin_list = arcade.SpriteList()
         self.obstacle_list = arcade.SpriteList()
         self.player = None
 
-        self._setup_background()
+        #self._setup_background()
         self._setup_walls()
         self._setup_coins()
         self._setup_player()
     
-    def _setup_background(self):
-        """Set background color."""
-        background_color = self.level_settings["BACKGROUND_COLOR"]
-        arcade.set_background_color(background_color)
+    #def _setup_background(self):
+        #"""Set background color."""
+        #background_color = self.level_settings["BACKGROUND_COLOR"]
+        #arcade.set_background_color(background_color)
 
     def _setup_walls(self):
         """Create obstacles in a set order and add to sprite list."""
