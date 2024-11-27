@@ -619,3 +619,118 @@ class Rule_Page(arcade.View):
         self.heading_text.draw()
         self.new_player.draw()
         self.manager.draw()
+
+
+
+
+class PostGame(arcade.View):
+    def __init__(self, win_status):
+        super().__init__()
+        self.text_angle = 0
+        self.time_elapsed = 0.0
+
+        self.username_text = arcade.Text(
+            text="atontalapur",
+            start_x=SCREEN_WIDTH // 2,
+            start_y=SCREEN_HEIGHT - 20,
+            color=arcade.color.YELLOW,
+            font_size=15,
+            anchor_x="center",
+            anchor_y="center",
+            font_name="Kenney Future"
+        )
+        self.heading_text = arcade.Text(
+            text="You Won!",
+            start_x=SCREEN_WIDTH // 2,
+            start_y=SCREEN_HEIGHT - 70,
+            color=arcade.color.YELLOW,
+            font_size=70,
+            anchor_x="center",
+            anchor_y="center",
+            bold=False,
+            italic=True,
+            font_name="Kenney Future"
+        )
+        arcade.set_background_color(arcade.color.COOL_GREY)
+
+        self.underline_coin = arcade.Text(
+            text="________________",
+            start_x = SCREEN_WIDTH / 4,
+            start_y = SCREEN_HEIGHT - 250,
+            color = arcade.color.YELLOW,
+            font_size = 5,
+            anchor_x = "center",
+            anchor_y = "center",
+            bold = False,
+            italic = True,
+            font_name = "Kenney Future"
+        )
+
+        self.time_text = arcade.Text(
+            text="Time Taken: ",
+            start_x=(SCREEN_WIDTH / 4) + SCREEN_WIDTH / 2,
+            start_y=SCREEN_HEIGHT - 250,
+            color=arcade.color.YELLOW,
+            font_size=20,
+            anchor_x="center",
+            anchor_y="center",
+            bold=False,
+            italic=True,
+            font_name="Kenney Future"
+        )
+
+        self.leaderboard_text = arcade.Text(
+            text="LEADERBOARD TBD",
+            start_x=SCREEN_WIDTH // 2,
+            start_y=SCREEN_HEIGHT - 300,
+            color=arcade.color.YELLOW,
+            font_size=70,
+            anchor_x="center",
+            anchor_y="center",
+            bold=False,
+            italic=True,
+            font_name="Kenney Future"
+        )
+
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+
+        self.v_box = arcade.gui.UIBoxLayout(space_between=200, vertical=False)
+
+
+        self.next_level_button = arcade.gui.UIFlatButton(text="Next Level", width=200)
+        self.v_box.add(self.next_level_button.with_space_around(top=200, right=500))
+        self.exit_button = arcade.gui.UIFlatButton(text="Save and Exit", width=200)
+        self.v_box.add(self.exit_button.with_space_around(top=200))
+
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                align_x=0,
+                child=self.v_box),
+        )
+
+
+    def on_draw(self):
+        self.clear()
+        arcade.start_render()
+        self.username_text.draw()
+        self.heading_text.draw()
+        self.underline_coin.draw()
+        self.time_text.draw()
+        self.leaderboard_text.draw()
+        self.manager.draw()
+
+    def load_sounds(self):
+        # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
+        # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
+        # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
+
+    def setup(self):
+        self.load_sounds()
+        self.background_music.play(loop=False)
+
+
+
+
+
