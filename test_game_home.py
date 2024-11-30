@@ -75,6 +75,22 @@ def test_game_home_on_key_press_escape():
     game_home.on_key_press(arcade.key.ESCAPE, None)
     assert game_home.user_text_box.text == "Enter User Name"
 
+def test_game_home_on_click_open_special_characters():
+    window = arcade.Window(800, 600, "Test Window")
+    game_home = GameHome()
+    window.show_view(game_home)
+    game_home.user_text_box.text = "@InvalidUser!"
+    game_home.on_click_open(None)
+    assert isinstance(game_home.text_box_manager.children[0][0], arcade.gui.UIMessageBox)
+
+def test_game_home_on_key_press_invalid_key():
+    window = arcade.Window(800, 600, "Test Window")
+    game_home = GameHome()
+    window.show_view(game_home)
+    game_home.user_text_box.text = "SomeUser"
+    game_home.on_key_press(arcade.key.A, None)
+    assert game_home.user_text_box.text == "SomeUser"
+
 # Test New_Player class
 def test_new_player_initialization():
     window = arcade.Window(800, 600, "Test Window")

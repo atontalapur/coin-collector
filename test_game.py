@@ -10,6 +10,10 @@ def test_game_initialization():
     assert isinstance(game.level, Level)
     assert game.level.environment is not None
 
+def test_game_initialization_invalid_level():
+    with pytest.raises(KeyError):
+        Game("invalid_level")
+
 def test_game_on_update():
     window = arcade.Window(800, 600, "Test Window")
     game = Game("level_1")
@@ -61,6 +65,14 @@ def test_game_draw_time_box_coins_left():
 
     # Check if the text object content matches the expected content
     assert text_object.text == expected_text
+
+def test_game_on_update_no_coins():
+    window = arcade.Window(800, 600, "Test Window")
+    game = Game("level_1")
+    window.show_view(game)
+    game.level.environment.coin_list = arcade.SpriteList()
+    game.on_update(1.0)
+    assert len(game.level.environment.coin_list) == 0
 
 def test_game_movement_press_up():
     window = arcade.Window(800, 600, "Test Window")
@@ -121,3 +133,14 @@ def test_game_movement_release_right():
     game.movement_press(arcade.key.RIGHT)
     game.movement_release(arcade.key.RIGHT)
     assert not game.level.environment.player.moving_right
+
+def test_game_on_key_press_invalid_key():
+    window = arcade.Window(800, 600, "Test Window")
+    game = Game("level_1")
+    window.show_view(game)
+    game.on_key_press(arcade.key.Z, None)
+    assert not game.level.environment.player.moving_up
+    assert not game.level.environment.player.moving_down
+    assert not game.level.environment.player.moving_left
+    assert not game.level.environment.player.moving_right
+
