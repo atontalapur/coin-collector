@@ -156,15 +156,12 @@ class GameHome(arcade.View):
 
     def on_update(self, delta_time):
             self.time_elapsed += delta_time
-            radius = 10
-            self.heading_text.start_x = SCREEN_WIDTH // 2 + radius * math.cos(self.time_elapsed * 2)
-            self.heading_text.start_y = SCREEN_HEIGHT - 60 + radius * math.sin(self.time_elapsed * 2)
             self.heading_text.color = (
                 int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
                 int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
                 int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
             )
-            self.heading_text.rotation = 5 * math.sin(self.time_elapsed * 2)
+            self.heading_text.rotation = 3 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
         self.clear()
@@ -642,16 +639,16 @@ class PostGame(arcade.View):
         self.heading_text = arcade.Text(
             text="You Won!",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 70,
+            start_y=SCREEN_HEIGHT - 100,
             color=arcade.color.YELLOW,
             font_size=70,
             anchor_x="center",
             anchor_y="center",
             bold=False,
-            italic=True,
+            italic=False,
             font_name="Kenney Future"
         )
-        arcade.set_background_color(arcade.color.COOL_GREY)
+        arcade.set_background_color(arcade.color.SKY_BLUE)
 
         self.underline_coin = arcade.Text(
             text="________________",
@@ -708,6 +705,26 @@ class PostGame(arcade.View):
                 align_x=0,
                 child=self.v_box),
         )
+
+    def interpolate_color(self, color1, color2, t):
+        return (
+            int(color1[0] * (1 - t) + color2[0] * t),
+            int(color1[1] * (1 - t) + color2[1] * t),
+            int(color1[2] * (1 - t) + color2[2] * t)
+        )
+    def on_update(self, delta_time):
+        self.time_elapsed += delta_time
+        self.heading_text.font_size = 70 + 10 * math.sin(self.time_elapsed * 2)
+        t = (math.sin(self.time_elapsed * 2) + 1) / 2
+        self.heading_text.color = (
+            int(255 * (1 - t) + 50 * t),
+            int(255 * (1 - t) + 150 * t),
+            int(0 * (1 - t) + 50 * t)
+        )
+        color1=arcade.color.SKY_BLUE
+        color2=arcade.color.DARK_SLATE_GRAY
+        background_color = self.interpolate_color(color1, color2, t)
+        arcade.set_background_color(background_color)
 
 
     def on_draw(self):

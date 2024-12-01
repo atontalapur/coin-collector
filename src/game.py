@@ -1,4 +1,5 @@
 import arcade
+from PIL import ImageFilter
 from level import Level
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
 
@@ -10,7 +11,7 @@ class Game(arcade.View):
         self.lvl = level
 
         self.box_x, self.box_y, self.box_width, self.box_height = SCREEN_WIDTH - 320, SCREEN_HEIGHT - 40, 285, 30
-        
+        self.game_view_screen=None
         self.setup()
     
     def setup(self):
@@ -21,9 +22,8 @@ class Game(arcade.View):
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
-        """Movement and game logic."""
         self.level.environment.update()
-
+        self.game_view_screen = arcade.get_image()
         # temp -> leaderboard will be drawn
         if len(self.level.environment.coin_list) == 0:
             arcade.exit()
@@ -93,25 +93,32 @@ class PauseView(arcade.View):
         super().__init__()
         self.game_view = game_view
         self.level_settings = LEVEL_SETTINGS[self.game_view.lvl]
+        self.image = game_view.game_view_screen
+        self.blur_image=None
 
     def on_show_view(self):
-        arcade.set_background_color(arcade.color.ORANGE)
+        if self.image:
+            self.blur_image = self.image.filter(ImageFilter.GaussianBlur(5))
 
     def on_draw(self):
         self.clear()
 
+        if self.blur_image:
+            bg_texture = arcade.Texture("blurred background", self.blur_image)
+            arcade.draw_texture_rectangle(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, SCREEN_WIDTH, SCREEN_HEIGHT, bg_texture)
+
         # Draw player, for effect, on pause screen.
         # The previous View (GameView) was passed in
         # and saved in self.game_view.
-        player_sprite = self.game_view.level.environment.player
-        player_sprite.draw()
+        #player_sprite = self.game_view.level.environment.player
+        #player_sprite.draw()
 
         # draw an orange filter over him
-        arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
-                                          right=player_sprite.right,
-                                          top=player_sprite.top,
-                                          bottom=player_sprite.bottom,
-                                          color=arcade.color.ORANGE + (200,))
+        #arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
+                                          #right=player_sprite.right,
+                                          #top=player_sprite.top,
+                                          #bottom=player_sprite.bottom,
+                                          #color=arcade.color.ORANGE + (200,))
 
         arcade.draw_text("PAUSED", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 50,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
@@ -133,9 +140,8 @@ class PauseView(arcade.View):
     def on_key_press(self, key, _modifiers):
         if key == arcade.key.ESCAPE:   # resume game
             self.window.show_view(self.game_view)
-
             background_color = self.level_settings["BACKGROUND_COLOR"]
             arcade.set_background_color(background_color)
         elif key == arcade.key.ENTER:  # reset game
-            game = Game(self.game_view.level)
+            game = Game(self.game_view.lvl)
             self.window.show_view(game)
