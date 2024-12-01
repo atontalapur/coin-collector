@@ -1,6 +1,7 @@
 import arcade
 from PIL import ImageFilter
 from level import Level
+import controller_manager
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
 
 class Game(arcade.View):
@@ -56,8 +57,9 @@ class Game(arcade.View):
         elif key == arcade.key.R:
             self.setup()
         elif key == arcade.key.ESCAPE:
-            pause_view = PauseView(self)
-            self.window.show_view(pause_view)
+            self._toggle_pause()
+        elif key == arcade.key.L:
+            controller_manager.controller.to_level_screen()
 
     def on_key_release(self, key, modifiers):
         """Keys that are released."""
