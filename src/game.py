@@ -115,3 +115,4 @@ class Game(arcade.View):
             self.level.environment.player.moving_left = False
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.level.environment.player.moving_right = False
+            
