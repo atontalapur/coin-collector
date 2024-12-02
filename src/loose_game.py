@@ -106,7 +106,7 @@ class LooseGame(arcade.View):
             int(0 * (1 - t) + 50 * t)
         )
         color1=arcade.color.REDWOOD
-        color2=arcade.color.DARK_SLATE_GRAY
+        color2=arcade.color.DARK_RED
         background_color = self.interpolate_color(color1, color2, t)
         arcade.set_background_color(background_color)
 
