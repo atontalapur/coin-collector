@@ -19,12 +19,14 @@ LEVEL_SETTINGS = {
         "COIN_FROM_BORDER" : 100,
         "COIN_MIN_SPEED": 2,
         "COIN_MAX_SPEED": 4,
+        "LEVEL_ID": 1,
 
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": SCREEN_WIDTH // 2,
         "PLAYER_SPAWN_Y": SCREEN_HEIGHT // 2,
         "PLAYER_SCALING" : 0.55,
         "PLAYER_SPEED": 6,
+
     },
     "level_2": {
         "BACKGROUND_COLOR" : color.WARM_BLACK,
@@ -43,6 +45,7 @@ LEVEL_SETTINGS = {
         "COIN_FROM_BORDER" : 100,
         "COIN_MIN_SPEED": 5,
         "COIN_MAX_SPEED": 6,
+        "LEVEL_ID": 2,
 
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": 64 * 10,
@@ -67,6 +70,7 @@ LEVEL_SETTINGS = {
         "COIN_FROM_BORDER" : 100,
         "COIN_MIN_SPEED": 3,
         "COIN_MAX_SPEED": 5,
+        "LEVEL_ID": 3,
 
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": SCREEN_WIDTH // 2,
@@ -91,6 +95,7 @@ LEVEL_SETTINGS = {
         "COIN_FROM_BORDER" : 100,
         "COIN_MIN_SPEED": 1,
         "COIN_MAX_SPEED": 2,
+        "LEVEL_ID": 4,
 
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": 64 * 10 + 32,
@@ -115,6 +120,7 @@ LEVEL_SETTINGS = {
         "COIN_FROM_BORDER" : 100,
         "COIN_MIN_SPEED": 1.5,
         "COIN_MAX_SPEED": 3.5,
+        "LEVEL_ID": 5,
 
         "PLAYER_IMAGE" : ":resources:images/animated_characters/male_adventurer/maleAdventurer_walk1.png",
         "PLAYER_SPAWN_X": 64 * 11,
