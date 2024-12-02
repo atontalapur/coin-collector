@@ -1,5 +1,4 @@
 import time
-
 import arcade
 import arcade.gui
 from PIL import ImageFilter
