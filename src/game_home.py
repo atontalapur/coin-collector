@@ -13,7 +13,7 @@ class GameHome(arcade.View):
         self.heading_text = arcade.Text(
             text="Catch the Coins",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 60,
+            start_y=SCREEN_HEIGHT - 70,
             color=arcade.color.YELLOW,
             font_size=70,
             anchor_x="center",
@@ -155,7 +155,7 @@ class GameHome(arcade.View):
                 int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
                 int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
             )
-            self.heading_text.rotation = 5 * math.sin(self.time_elapsed * 2)
+            self.heading_text.rotation = 3 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
         self.clear()

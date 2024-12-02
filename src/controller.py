@@ -7,6 +7,8 @@ from level_screen import Level_Screen
 from rule_page import Rule_Page
 from pause_view import PauseView
 from game import Game
+from win_game import WinGame
+from loose_game import LooseGame
 
 import controller_manager
 
@@ -47,6 +49,16 @@ class Controller(arcade.Window):
     
     def to_pause_menu(self, game_view):
         view = PauseView(game_view)
+        self.show_view(view)
+
+    def to_win(self, time_taken):
+        view = WinGame(time_taken)
+        view.setup()
+        self.show_view(view)
+
+    def to_loose(self, num_coins):
+        view = LooseGame(num_coins)
+        view.setup()
         self.show_view(view)
 
 if __name__ == "__main__":

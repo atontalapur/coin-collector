@@ -1,8 +1,11 @@
+import time
+
 import arcade
 import arcade.gui
 from level import Level
 import controller_manager
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
+
 
 class Game(arcade.View):
     """Main application class."""
@@ -19,7 +22,7 @@ class Game(arcade.View):
         # all level components
         self.level = Level(self.lvl)
 
-        self.time_elapsed = 0  # Initialize the timer
+        self.time_elapsed = 50  # Initialize the timer
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
@@ -27,7 +30,12 @@ class Game(arcade.View):
         self.game_view_screen = arcade.get_image()
         # temp -> leaderboard will be drawn
         if len(self.level.environment.coin_list) == 0:
-            arcade.exit()
+            time.sleep(1)
+            controller_manager.controller.to_win(self.time_elapsed)
+        if self.time_elapsed > 60:
+            time.sleep(1)
+            controller_manager.controller.to_loose(LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
+            len(self.level.environment.coin_list))
 
     def on_draw(self):
         """Render the screen."""
