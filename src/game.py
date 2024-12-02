@@ -6,7 +6,6 @@ from PIL import ImageFilter
 from level import Level
 import controller_manager
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
-from src import settings
 
 
 class Game(arcade.View):
@@ -24,7 +23,7 @@ class Game(arcade.View):
         # all level components
         self.level = Level(self.lvl)
 
-        self.time_elapsed = 0  # Initialize the timer
+        self.time_elapsed = 50  # Initialize the timer
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
@@ -36,7 +35,7 @@ class Game(arcade.View):
             controller_manager.controller.to_win(self.time_elapsed)
         if self.time_elapsed > 60:
             time.sleep(1)
-            controller_manager.controller.to_loose(settings.LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
+            controller_manager.controller.to_loose(LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
             len(self.level.environment.coin_list))
 
     def on_draw(self):
