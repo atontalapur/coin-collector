@@ -108,7 +108,7 @@ class PauseView(arcade.View):
         self.pause_text = arcade.Text(
             "PAUSED",
             SCREEN_WIDTH / 2,
-            SCREEN_HEIGHT / 2 + 50,
+            SCREEN_HEIGHT / 2 + 80,
             arcade.color.YELLOW_ROSE,
             50,
             anchor_x="center",
@@ -130,18 +130,24 @@ class PauseView(arcade.View):
         }
         self.resume_button=arcade.gui.UIFlatButton(
             text="Resume",
-            width=150,
+            width=180,
             style=button_style
             )
         self.restart_button=arcade.gui.UIFlatButton(
             text="Restart",
-            width=150,
+            width=180,
             style=button_style
             )
+        self.levelSelect = arcade.gui.UIFlatButton(
+            text="Select Level",
+            width=180,
+            style=button_style
+        )
 
         self.b_box=arcade.gui.UIBoxLayout(space_between=15)
         self.b_box.add(self.resume_button)
         self.b_box.add(self.restart_button)
+        self.b_box.add(self.levelSelect)
 
         self.ui_manager.add(arcade.gui.UIAnchorWidget(
             anchor_x="center_x",
@@ -152,6 +158,8 @@ class PauseView(arcade.View):
 
         self.resume_button.on_click=self.resume
         self.restart_button.on_click=self.restart
+        self.levelSelect.on_click = self.level
+
 
 
     def on_show_view(self):
@@ -188,3 +196,6 @@ class PauseView(arcade.View):
     def restart(self, event):
         game = Game(self.game_view.lvl)
         self.window.show_view(game)
+
+    def level(self, event):
+        controller_manager.controller.to_level_screen()
