@@ -6,6 +6,7 @@ from new_player import New_Player
 from level_screen import Level_Screen
 from rule_page import Rule_Page
 from game import Game
+from win_game import WinGame
 
 import controller_manager
 
@@ -41,6 +42,11 @@ class Controller(arcade.Window):
     
     def to_game(self, level):
         view = Game(level)
+        view.setup()
+        self.show_view(view)
+
+    def to_win(self):
+        view = WinGame()
         view.setup()
         self.show_view(view)
 
