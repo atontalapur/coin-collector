@@ -22,7 +22,7 @@ class Game(arcade.View):
         # all level components
         self.level = Level(self.lvl)
 
-        self.time_elapsed = 50  # Initialize the timer
+        self.time_elapsed = 0  # Initialize the timer
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
