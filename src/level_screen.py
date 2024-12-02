@@ -129,6 +129,8 @@ class Level_Screen(arcade.View):
         #else, open the rules page
         print("Need to add logic to restrict the levels")
         controller_manager.controller.to_rule_page("level_1")
+        self.manager.disable()
+
     
 
     def level_click_2(self, event):
@@ -138,6 +140,7 @@ class Level_Screen(arcade.View):
         #else, open the rules page
         print("Need to add logic to restrict the levels")
         controller_manager.controller.to_rule_page("level_2")
+        self.manager.disable()
     
 
     def level_click_3(self, event):
@@ -147,6 +150,7 @@ class Level_Screen(arcade.View):
         #else, open the rules page
         print("Need to add logic to restrict the levels")
         controller_manager.controller.to_rule_page("level_3")
+        self.manager.disable()
     
 
     def level_click_4(self, event):
@@ -156,6 +160,7 @@ class Level_Screen(arcade.View):
         #else, open the rules page
         print("Need to add logic to restrict the levels")
         controller_manager.controller.to_rule_page("level_4")
+        self.manager.disable()
     
 
     def level_click_5(self, event):
@@ -165,6 +170,7 @@ class Level_Screen(arcade.View):
         #else, open the rules page
         print("Need to add logic to restrict the levels")
         controller_manager.controller.to_rule_page("level_5")
+        self.manager.disable()
 
 
     def setup(self):
