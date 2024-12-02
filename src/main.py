@@ -1,4 +1,4 @@
-from controller import Controller
+from globals.controller import Controller
     
 if __name__ == "__main__":
     controller = Controller()
