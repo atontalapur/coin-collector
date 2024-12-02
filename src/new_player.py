@@ -1,10 +1,6 @@
 import arcade
-import arcade.gui
 from settings import *
-
-DEFAULT_LINE_HEIGHT = 45
-DEFAULT_FONT_SIZE = 20
-
+import controller_manager
 
 class New_Player(arcade.View):
 
@@ -30,7 +26,7 @@ class New_Player(arcade.View):
             start_x=SCREEN_WIDTH // 2,
             start_y=SCREEN_HEIGHT - 170,
             color=arcade.color.YELLOW,
-            font_size=35,
+            font_size=50,
             anchor_x="center",
             anchor_y="center",
             bold=True,
@@ -47,8 +43,8 @@ class New_Player(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
+        back_button_f = arcade.load_texture("../textures/icons8-back-button-50.png", width=50, height=50)
+        back_button_h = arcade.load_texture("../textures/icons8-back-button-50 (1).png", width=50, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -58,19 +54,21 @@ class New_Player(arcade.View):
                                anchor_y="center",
                                multiline=False, text="Enter New User Name")
                               )
+        right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
+        right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
-        self.create_profile = arcade.gui.UIFlatButton(text="Back", width=100)
-        #self.v_box.add(self.user_text_box)
+        self.back_button = arcade.gui.UITextureButton(texture=back_button_h, texture_hovered=back_button_f, width=50,
+                                                      height=50)
+        # self.v_box.add(self.user_text_box)
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
-        self.r_box.add(self.create_profile.with_space_around(top=350, left=500))
+        self.r_box.add(self.back_button.with_space_around(top=350, left=500))
         self.user_text_box.on_key_press = self.on_key_press
         self.user_text_box.on_mouse_press = self.on_mouse_press
-        self.create_profile.on_click = self.new_user_open
+        self.back_button.on_click = self.new_user_open
         self.confirm_box_button.on_click = self.change_status
-        self.key_pressed = False
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=0,
@@ -84,7 +82,7 @@ class New_Player(arcade.View):
         self.new_name_available = arcade.Text(
             text="Username Found!",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 330,
+            start_y=SCREEN_HEIGHT - 450,
             color=arcade.color.COOL_GREY,
             font_size=35,
             anchor_x="center",
@@ -97,7 +95,7 @@ class New_Player(arcade.View):
         self.new_name_unavailable = arcade.Text(
             text="Username Not Found!",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 400,
+            start_y=SCREEN_HEIGHT - 520,
             color=arcade.color.COOL_GREY,
             font_size=35,
             anchor_x="center",
@@ -108,19 +106,18 @@ class New_Player(arcade.View):
         )
 
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
-        if button == arcade.MOUSE_BUTTON_LEFT:
+        if button == arcade.MOUSE_BUTTON_LEFT and self.user_text_box.text == "Enter New User Name":
             self.user_text_box.text = ""
 
     def change_status(self, event):
-        available = False
+        available = True
         if available is True:
             self.new_name_available.color = arcade.color.GREEN
         elif available is False:
             self.new_name_unavailable.color = arcade.color.RED
 
     def new_user_open(self, event):
-        view = h_view()
-        self.window.show_view(view)
+        controller_manager.controller.to_game_home()
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.ENTER:
@@ -129,16 +126,21 @@ class New_Player(arcade.View):
             self.user_text_box.text = "Enter User Name"
 
     def load_sounds(self):
-        pass
+        # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
+        self.background_music = arcade.load_sound("../sounds/Collision.wav")
+        # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
+        # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
+
     def setup(self):
-        pass
+        self.load_sounds()
+        self.background_music.play(loop=False)
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
-        #self.text_angle = 10 * math.sin(self.time_elapsed * 2)
+        # self.text_angle = 10 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
-        arcade.start_render()
+        self.clear()
         self.heading_text.rotation = self.text_angle
         self.heading_text.draw()
         self.new_player.draw()
