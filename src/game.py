@@ -6,6 +6,8 @@ from PIL import ImageFilter
 from level import Level
 import controller_manager
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
+from src import settings
+
 
 class Game(arcade.View):
     """Main application class."""
@@ -34,7 +36,8 @@ class Game(arcade.View):
             controller_manager.controller.to_win(self.time_elapsed)
         if self.time_elapsed > 60:
             time.sleep(1)
-            controller_manager.controller.to_loose(len(self.level.environment.coin_list))
+            controller_manager.controller.to_loose(settings.LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
+            len(self.level.environment.coin_list))
 
     def on_draw(self):
         """Render the screen."""
