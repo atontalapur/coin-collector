@@ -18,32 +18,6 @@ class Level_Screen(arcade.View):
             anchor_y="center",
             font_name="Kenney Future"
         )
-        #
-        # self.new_player = arcade.Text(
-        #     text="Level 1",
-        #     start_x=SCREEN_WIDTH // 2,
-        #     start_y=SCREEN_HEIGHT - 260,
-        #     color=arcade.color.YELLOW,
-        #     font_size=80,
-        #     anchor_x="center",
-        #     anchor_y="center",
-        #     bold=True,
-        #     italic=True,
-        #     font_name="Kenney High"
-        # )
-        #
-        # self.difficulty = arcade.Text(
-        #     text="Difficulty: Easy",
-        #     start_x=SCREEN_WIDTH // 2,
-        #     start_y=SCREEN_HEIGHT - 360,
-        #     color=arcade.color.YELLOW,
-        #     font_size=30,
-        #     anchor_x="center",
-        #     anchor_y="center",
-        #     bold=True,
-        #     italic=True,
-        #     font_name="Kenney High"
-        # )
         arcade.set_background_color(arcade.color.COOL_GREY)
 
         self.manager = arcade.gui.UIManager()

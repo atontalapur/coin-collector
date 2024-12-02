@@ -2,16 +2,14 @@ import arcade
 import arcade.gui
 import math
 from settings import *
-from game import Game
-from level import Level
 import controller_manager
 
 DEFAULT_LINE_HEIGHT = 45
 DEFAULT_FONT_SIZE = 20
 
 
-class WinGame(arcade.View):
-    def __init__(self, time_taken):
+class LooseGame(arcade.View):
+    def __init__(self, num_coins):
         super().__init__()
         self.text_angle = 0
         self.time_elapsed = 0.0
@@ -27,7 +25,7 @@ class WinGame(arcade.View):
             font_name="Kenney Future"
         )
         self.heading_text = arcade.Text(
-            text="You Won!",
+            text="You Lost :(",
             start_x=SCREEN_WIDTH // 2,
             start_y=SCREEN_HEIGHT - 100,
             color=arcade.color.YELLOW,
@@ -40,23 +38,23 @@ class WinGame(arcade.View):
         )
         arcade.set_background_color(arcade.color.SKY_BLUE)
 
-        self.time_text = arcade.Text(
-            text="Time Taken: " + str(int(time_taken)) + " seconds",
-            start_x=(SCREEN_WIDTH /2),
-            start_y=SCREEN_HEIGHT - 250,
-            color=arcade.color.YELLOW,
-            font_size=20,
-            anchor_x="center",
-            anchor_y="center",
-            bold=False,
-            italic=True,
-            font_name="Kenney Future"
+        self.underline_coin = arcade.Text(
+            text="Num of Coins Collected:" + str(num_coins),
+            start_x = SCREEN_WIDTH / 2,
+            start_y = SCREEN_HEIGHT - 250,
+            color = arcade.color.YELLOW,
+            font_size = 20,
+            anchor_x = "center",
+            anchor_y = "center",
+            bold = False,
+            italic = True,
+            font_name = "Kenney Future"
         )
 
         self.leaderboard_text = arcade.Text(
             text="LEADERBOARD TBD",
             start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 300,
+            start_y=SCREEN_HEIGHT - 330,
             color=arcade.color.YELLOW,
             font_size=70,
             anchor_x="center",
@@ -72,20 +70,18 @@ class WinGame(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=200, vertical=False)
 
 
-        self.next_level_button = arcade.gui.UIFlatButton(text="Next Level", width=200)
-        self.v_box.add(self.next_level_button.with_space_around(top=200, right=500))
+        self.retry_button = arcade.gui.UIFlatButton(text="Retry", width=200)
+        self.v_box.add(self.retry_button.with_space_around(top=200, right=500))
         self.exit_button = arcade.gui.UIFlatButton(text="Save and Exit", width=200)
         self.v_box.add(self.exit_button.with_space_around(top=200))
-
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 align_x=0,
                 child=self.v_box),
         )
+        self.retry_button.on_click = self.level_select_launch
 
-        self.next_level_button.on_click = self.level_select_launch
         self.exit_button.on_click = self.quit
-
 
     def interpolate_color(self, color1, color2, t):
         return (
@@ -109,19 +105,18 @@ class WinGame(arcade.View):
             int(255 * (1 - t) + 150 * t),
             int(0 * (1 - t) + 50 * t)
         )
-        color1=arcade.color.SKY_BLUE
+        color1=arcade.color.REDWOOD
         color2=arcade.color.DARK_SLATE_GRAY
         background_color = self.interpolate_color(color1, color2, t)
         arcade.set_background_color(background_color)
-
 
     def on_draw(self):
         self.clear()
         arcade.start_render()
         self.username_text.draw()
         self.heading_text.draw()
+        self.underline_coin.draw()
 
-        self.time_text.draw()
         self.leaderboard_text.draw()
         self.manager.draw()
 

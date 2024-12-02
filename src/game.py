@@ -27,7 +27,9 @@ class Game(arcade.View):
         self.game_view_screen = arcade.get_image()
         # temp -> leaderboard will be drawn
         if len(self.level.environment.coin_list) == 0:
-            controller_manager.controller.to_win()
+            controller_manager.controller.to_win(self.time_elapsed)
+        if self.time_elapsed > 60:
+            controller_manager.controller.to_loose(len(self.level.environment.coin_list))
 
     def on_draw(self):
         """Render the screen."""
