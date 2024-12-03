@@ -1,4 +1,5 @@
 import arcade
+import pyglet
 
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 from game_home import GameHome
@@ -15,6 +16,8 @@ class Controller(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         self.set_location(0, 30)
+        self.set_icon(pyglet.image.load("../textures/icons8-coin-128.png"))
+
 
         controller_manager.controller = self
 
@@ -55,6 +58,3 @@ class Controller(arcade.Window):
         view = LooseGame(num_coins)
         view.setup()
         self.show_view(view)
-
-if __name__ == "__main__":
-    controller = Controller()
