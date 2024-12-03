@@ -12,6 +12,7 @@ class PauseView(arcade.View):
         self.game_view = game_view
         self.image = game_view.game_view_screen
         self.blur_image=None
+        self.bg_texture=None
         self.ui_manager = arcade.gui.UIManager()
         self.ui_manager.enable()
         self.pause_text = arcade.Text(
@@ -72,13 +73,14 @@ class PauseView(arcade.View):
     def on_show_view(self):
         if self.image:
             self.blur_image = self.image.filter(ImageFilter.GaussianBlur(10))
+            unique_texture_name = f"blurred_background_{id(self)}"
+            self.bg_texture = arcade.Texture(unique_texture_name, self.blur_image)
 
     def on_draw(self):
         self.clear()
 
-        if self.blur_image:
-            bg_texture = arcade.Texture("blurred background", self.blur_image)
-            arcade.draw_texture_rectangle(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, SCREEN_WIDTH, SCREEN_HEIGHT, bg_texture)
+        if self.bg_texture:
+            self.bg_texture.draw_sized(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, SCREEN_WIDTH, SCREEN_HEIGHT)
 
         self.pause_text.draw()
         self.ui_manager.draw()
