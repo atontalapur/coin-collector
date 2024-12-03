@@ -1,5 +1,5 @@
 import arcade
-
+import arcade.gui
 from game.settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
 from PIL import ImageFilter
 import globals.controller_manager as controller_manager
@@ -10,7 +10,6 @@ class PauseView(arcade.View):
         super().__init__()
         self.time_elapsed = 0
         self.game_view = game_view
-        self.level_settings = LEVEL_SETTINGS[self.game_view.lvl]
         self.image = game_view.game_view_screen
         self.blur_image=None
         self.ui_manager = arcade.gui.UIManager()
@@ -95,15 +94,15 @@ class PauseView(arcade.View):
             int(b * 255)
         )
 
-
     def resume(self, event):
+        self.ui_manager.disable()
         self.window.show_view(self.game_view)
-        background_color = self.level_settings["BACKGROUND_COLOR"]
-        arcade.set_background_color(background_color)
 
     def restart(self, event):
-        self.window.show_view(self.game_view)
+        self.ui_manager.disable()
         self.game_view.level.setup()
+        self.window.show_view(self.game_view)
 
     def level(self, event):
+        self.ui_manager.disable()
         controller_manager.controller.to_level_screen()

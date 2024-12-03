@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui
 from game.settings import *
 import globals.controller_manager as controller_manager
 
@@ -23,8 +24,6 @@ class Level_Screen(arcade.View):
         arcade.set_background_color(arcade.color.COOL_GREY)
 
         self.manager = arcade.gui.UIManager()
-        self.text_box_manager = arcade.gui.UIManager()
-        self.text_box_manager.enable()
         self.manager.enable()
 
         self.level_1_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
@@ -128,8 +127,8 @@ class Level_Screen(arcade.View):
         # that the user has not reached that level yet
         #else, open the rules page
         # print("Need to add logic to restrict the levels")
-        controller_manager.controller.to_rule_page("level_1")
         self.manager.disable()
+        controller_manager.controller.to_rule_page("level_1")
 
     
 
@@ -139,8 +138,8 @@ class Level_Screen(arcade.View):
         # that the user has not reached that level yet
         #else, open the rules page
         # print("Need to add logic to restrict the levels")
-        controller_manager.controller.to_rule_page("level_2")
         self.manager.disable()
+        controller_manager.controller.to_rule_page("level_2")
     
 
     def level_click_3(self, event):
@@ -149,8 +148,8 @@ class Level_Screen(arcade.View):
         # that the user has not reached that level yet
         #else, open the rules page
         # print("Need to add logic to restrict the levels")
-        controller_manager.controller.to_rule_page("level_3")
         self.manager.disable()
+        controller_manager.controller.to_rule_page("level_3")
     
 
     def level_click_4(self, event):
@@ -159,8 +158,8 @@ class Level_Screen(arcade.View):
         # that the user has not reached that level yet
         #else, open the rules page
         # print("Need to add logic to restrict the levels")
-        controller_manager.controller.to_rule_page("level_4")
         self.manager.disable()
+        controller_manager.controller.to_rule_page("level_4")
     
 
     def level_click_5(self, event):
@@ -169,8 +168,8 @@ class Level_Screen(arcade.View):
         # that the user has not reached that level yet
         #else, open the rules page
         # print("Need to add logic to restrict the levels")
-        controller_manager.controller.to_rule_page("level_5")
         self.manager.disable()
+        controller_manager.controller.to_rule_page("level_5")
 
 
     def setup(self):

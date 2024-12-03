@@ -1,9 +1,9 @@
 import arcade
+import arcade.gui
 from game.settings import *
 import globals.controller_manager as controller_manager
 
 class New_Player(arcade.View):
-
     def __init__(self):
         super().__init__()
         self.text_angle = 0
@@ -117,6 +117,8 @@ class New_Player(arcade.View):
             self.new_name_unavailable.color = arcade.color.RED
 
     def new_user_open(self, event):
+        self.text_box_manager.disable()
+        self.manager.disable()
         controller_manager.controller.to_game_home()
 
     def on_key_press(self, key, modifiers):

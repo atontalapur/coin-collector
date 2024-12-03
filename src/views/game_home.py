@@ -126,9 +126,13 @@ class GameHome(arcade.View):
             self.text_box_manager.add(message_box)
 
     def new_user_open(self, event):
+        self.text_box_manager.disable()
+        self.manager.disable()
         controller_manager.controller.to_new_player()
 
     def prior_game_open(self, event):
+        self.text_box_manager.disable()
+        self.manager.disable()
         controller_manager.controller.to_level_screen()
 
     def on_key_press(self, key, modifiers):

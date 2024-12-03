@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui
 from game.settings import *
 import globals.controller_manager as controller_manager
 
@@ -106,6 +107,7 @@ class Rule_Page(arcade.View):
         click.play(loop=False)
 
     def game_open(self, event):
+        self.manager.disable()
         controller_manager.controller.to_game(self.level)
 
     def on_update(self, delta_time):
