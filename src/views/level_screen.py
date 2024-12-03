@@ -33,8 +33,8 @@ class Level_Screen(arcade.View):
         self.level_4_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.level_5_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        one_white = arcade.load_texture("../textures/levelOneWhite132.jpg")
-        one_black = arcade.load_texture("../textures/levelOneBlack150.jpg")
+        one_white = arcade.load_texture("textures/levelOneWhite132.jpg")
+        one_black = arcade.load_texture("textures/levelOneBlack150.jpg")
         self.level_one = arcade.gui.UITextureButton(texture=one_black, texture_hovered=one_white, width=300, height=114)
 
 
@@ -46,8 +46,8 @@ class Level_Screen(arcade.View):
                 child=self.level_1_box),
         )
 
-        two_white = arcade.load_texture("../textures/Level2_White.png")
-        two_black = arcade.load_texture("../textures/Level2_Black.png")
+        two_white = arcade.load_texture("textures/Level2_White.png")
+        two_black = arcade.load_texture("textures/Level2_Black.png")
         self.level_two = arcade.gui.UITextureButton(texture=two_black, texture_hovered=two_white, width=300, height=114)
 
         self.level_2_box.add(self.level_two)
@@ -58,8 +58,8 @@ class Level_Screen(arcade.View):
                 child=self.level_2_box),
         )
 
-        three_white = arcade.load_texture("../textures/Level3_White.png")
-        three_black = arcade.load_texture("../textures/Level3_Black.png")
+        three_white = arcade.load_texture("textures/Level3_White.png")
+        three_black = arcade.load_texture("textures/Level3_Black.png")
         self.level_three = arcade.gui.UITextureButton(texture=three_black, texture_hovered=three_white, width=300, height=114)
 
         self.level_3_box.add(self.level_three)
@@ -70,8 +70,8 @@ class Level_Screen(arcade.View):
                 child=self.level_3_box),
         )
 
-        four_white = arcade.load_texture("../textures/Level4_White.png")
-        four_black = arcade.load_texture("../textures/Level4_Black.png")
+        four_white = arcade.load_texture("textures/Level4_White.png")
+        four_black = arcade.load_texture("textures/Level4_Black.png")
         self.level_four = arcade.gui.UITextureButton(texture=four_black, texture_hovered=four_white, width=300, height=114)
 
         self.level_4_box.add(self.level_four)
@@ -82,8 +82,8 @@ class Level_Screen(arcade.View):
                 child=self.level_4_box),
         )
 
-        five_white = arcade.load_texture("../textures/Level5_White.png")
-        five_black = arcade.load_texture("../textures/Level5_Black.png")
+        five_white = arcade.load_texture("textures/Level5_White.png")
+        five_black = arcade.load_texture("textures/Level5_Black.png")
         self.level_five = arcade.gui.UITextureButton(texture=five_black, texture_hovered=five_white, width=300,
                                                      height=114)
 
@@ -114,12 +114,12 @@ class Level_Screen(arcade.View):
             font_name="Kenney High Square"
         )
 
-        self.trophy = arcade.load_texture("../textures/trophy.jpeg")
+        self.trophy = arcade.load_texture("textures/trophy.jpeg")
 
 
     def load_sounds(self):
-        arcade.load_sound(f"../sounds/{music_player.music}")
-        self.background_music = arcade.load_sound("../sounds/click.wav")
+        arcade.load_sound(f"sounds/{music_player.music}")
+        self.background_music = arcade.load_sound("sounds/click.wav")
 
 
     def level_click_1(self, event):
@@ -174,12 +174,13 @@ class Level_Screen(arcade.View):
 
 
     def setup(self):
-        self.background_music = arcade.load_sound("../sounds/click.wav")
+        click = arcade.load_sound("sounds/click.wav")
+        click.play(loop=False)
 
-        if music_player.music != "opening.wav":
+        if music_player.music != "theme.wav":
             arcade.stop_sound(music_player.player)
-            music_player.music = "opening.wav"
-            music = arcade.load_sound(f"../sounds/{music_player.music}")
+            music_player.music = "theme.wav"
+            music = arcade.load_sound(f"sounds/{music_player.music}")
             music_player.player = music.play(loop=True)
 
 

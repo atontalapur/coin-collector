@@ -122,7 +122,7 @@ class LooseGame(arcade.View):
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("../sounds/click.wav")
+        self.background_music = arcade.load_sound("sounds/click.wav")
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 

@@ -48,8 +48,8 @@ class GameHome(arcade.View):
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         #self.text_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
+        right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
+        right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -138,11 +138,11 @@ class GameHome(arcade.View):
             self.user_text_box.text = "Enter User Name"
 
     def setup(self):
-        self.background_music = arcade.load_sound("../sounds/click.wav")
-
-        if music_player.music != "opening.wav":
-            music_player.music = "opening.wav"
-            music = arcade.load_sound(f"../sounds/{music_player.music}")
+        if music_player.music != "theme.wav":
+            if music_player.player:
+                arcade.stop_sound(music_player.player)
+            music_player.music = "theme.wav"
+            music = arcade.load_sound(f"sounds/{music_player.music}")
             music_player.player = music.play(loop=True)
 
     def on_update(self, delta_time):

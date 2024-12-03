@@ -70,8 +70,6 @@ class PauseView(arcade.View):
         self.restart_button.on_click=self.restart
         self.levelSelect.on_click = self.level
 
-
-
     def on_show_view(self):
         if self.image:
             self.blur_image = self.image.filter(ImageFilter.GaussianBlur(10))
@@ -104,7 +102,8 @@ class PauseView(arcade.View):
         arcade.set_background_color(background_color)
 
     def restart(self, event):
-        controller_manager.controller.to_game(self.game_view.lvl)
+        self.window.show_view(self.game_view)
+        self.game_view.level.setup()
 
     def level(self, event):
         controller_manager.controller.to_level_screen()

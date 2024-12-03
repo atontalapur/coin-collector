@@ -45,7 +45,6 @@ class Controller(arcade.Window):
     
     def to_game(self, level):
         view = Game(level)
-        view.setup()
         self.show_view(view)
     
     def to_pause_menu(self, game_view):

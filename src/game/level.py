@@ -12,17 +12,23 @@ class Level:
     def __init__(self, level):
         """Initialize the level. Goes into setup."""
         self.level = level
-        self.setup()
 
-    def setup(self):
-        """Setup settings and all visible game parts. Allows Level to easilt restart."""
         self.level_settings = LEVEL_SETTINGS[self.level]
         self.coin_list = arcade.SpriteList()
         self.obstacle_list = arcade.SpriteList()
         self.player = None
 
         self._setup_background()
+        self._setup_sounds()
         self._setup_walls()
+
+        self.setup()
+
+    def setup(self):
+        """Setup settings and all visible game parts. Allows Level to easilt restart."""
+        self.coin_list.clear()
+        self.player = None
+
         self._setup_coins()
         self._setup_player()
     
@@ -30,9 +36,17 @@ class Level:
         """Set background color."""
         background_color = self.level_settings["BACKGROUND_COLOR"]
         arcade.set_background_color(background_color)
-        arcade.stop_sound(music_player.player)
-        music_player.music = arcade.load_sound(f"../sounds/{self.level_settings['BACKGROUND_MUSIC']}")
-        music_player.player = music_player.music.play(loop=True)
+    
+    def _setup_sounds(self):
+        """Set level sounds."""
+        if music_player.player:
+            arcade.stop_sound(music_player.player)
+
+        music_player.music = self.level_settings['BACKGROUND_MUSIC']
+        music = arcade.load_sound(f"sounds/{music_player.music}")
+        music_player.player = music.play(loop=True)
+
+        self.coin_sound = arcade.load_sound("sounds/coin.wav")
 
     def _setup_walls(self):
         """Create obstacles in a set order and add to sprite list."""
@@ -242,7 +256,7 @@ class Level:
                 change_y = uniform(-coin_max_speed, coin_max_speed)
                 if abs(change_y) >= coin_min_speed:
                     break
-
+            
             self.coin_list.append(Coin(x, y, change_x, change_y, coin_image, coin_scaling))
 
     def _setup_player(self):
@@ -273,6 +287,7 @@ class Level:
 
         for coin in coins_collected:
             coin.remove_from_sprite_lists()
+            self.coin_sound.play(loop=False)
 
     def draw(self):
         """Render game Level."""

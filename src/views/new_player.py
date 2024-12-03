@@ -43,8 +43,8 @@ class New_Player(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        back_button_f = arcade.load_texture("../textures/icons8-back-button-50.png", width=50, height=50)
-        back_button_h = arcade.load_texture("../textures/icons8-back-button-50 (1).png", width=50, height=50)
+        back_button_f = arcade.load_texture("textures/icons8-back-button-50.png", width=50, height=50)
+        back_button_h = arcade.load_texture("textures/icons8-back-button-50 (1).png", width=50, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -54,8 +54,8 @@ class New_Player(arcade.View):
                                anchor_y="center",
                                multiline=False, text="Enter New User Name")
                               )
-        right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
+        right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
+        right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
@@ -125,15 +125,9 @@ class New_Player(arcade.View):
         if key == arcade.key.ESCAPE:
             self.user_text_box.text = "Enter User Name"
 
-    def load_sounds(self):
-        # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("../sounds/click.wav")
-        # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
-        # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
-
     def setup(self):
-        self.load_sounds()
-        self.background_music.play(loop=False)
+        click = arcade.load_sound("sounds/click.wav")
+        click.play(loop=False)
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
