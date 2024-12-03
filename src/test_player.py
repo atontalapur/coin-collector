@@ -1,7 +1,7 @@
 import pytest
 import arcade
-from player import Player
-from obstacle import Obstacle
+from game.player import Player
+from game.obstacle import Obstacle
 
 @pytest.fixture
 def player():
@@ -23,6 +23,8 @@ def test_player_initialization(player):
     assert player.center_x == 100
     assert player.center_y == 100
     assert player.player_speed == 5
+    assert player.texture is not None  # Check if the texture is properly loaded (i.e., the image)
+    assert player.scale == 1
 
 def test_player_move_up(player):
     """Test player moves up when up is pressed."""

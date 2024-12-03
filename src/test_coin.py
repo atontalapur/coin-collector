@@ -1,7 +1,7 @@
 import pytest
 import arcade
-from coin import Coin
-from obstacle import Obstacle
+from game.coin import Coin
+from game.obstacle import Obstacle
 
 @pytest.fixture
 def coin():
@@ -23,6 +23,7 @@ def test_coin_initialization(coin):
     """Test coin is initialized with correct attributes."""
     assert coin.center_x == 100
     assert coin.center_y == 100
+    assert coin.texture is not None
     assert coin.change_x == 5
     assert coin.change_y == 0
 

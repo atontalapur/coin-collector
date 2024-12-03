@@ -1,5 +1,5 @@
 import pytest
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, LEVEL_SETTINGS
+from game.settings import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, LEVEL_SETTINGS
 
 def test_screen_settings():
     """Check for correct screen setting types."""
