@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui
 from settings import *
 import controller_manager
 
