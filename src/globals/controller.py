@@ -18,7 +18,7 @@ class Controller(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         self.set_location(0, 30)
-        self.set_icon(pyglet.image.load("../textures/icons8-coin-128.png"))
+        self.set_icon(pyglet.image.load("textures/icons8-coin-128.png"))
 
 
         controller_manager.controller = self
