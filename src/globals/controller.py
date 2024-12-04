@@ -12,19 +12,14 @@ from views.win_game import WinGame
 from views.loose_game import LooseGame
 
 import globals.controller_manager as controller_manager
-import globals.music_player as music_player
 
 class Controller(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         self.set_location(0, 30)
-        self.set_icon(pyglet.image.load("../textures/icons8-coin-128.png"))
-
-
-        controller_manager.controller = self
+        self.set_icon(pyglet.image.load("textures/icons8-coin-128.png"))
 
         self.to_game_home()
-        arcade.run()
     
     def to_game_home(self):
         view = GameHome()
