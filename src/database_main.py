@@ -35,9 +35,7 @@ class LeaderboardDB:
         """
         Fetch the top 5 scores for a level.
         If the user is not in the top 5, fetch their best score.
-        Return explicit format: [(level: int, username: str, score: float)].
         """
-        # Get top 5 scores
         self.cursor.execute("""
         SELECT s.level, u.username, s.score 
         FROM scores s
@@ -48,7 +46,6 @@ class LeaderboardDB:
         """, (level,))
         top_scores = self.cursor.fetchall()
 
-        # Check if the user needs to be added separately
         if username and username not in [row[1] for row in top_scores]:
             self.cursor.execute("""
             SELECT s.level, u.username, MAX(s.score)
@@ -67,60 +64,20 @@ class LeaderboardDB:
         """
         Save a score for a user in a specific level.
         Round scores to a thousandth of a second (3 decimal places).
-        Clean up scores that are not in the top 5 or the user's high score.
         """
-        # Ensure the user exists
         self.cursor.execute("INSERT OR IGNORE INTO users (username) VALUES (?)", (username,))
         self.connection.commit()
 
-        # Get the user's ID
         self.cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
         user_id = self.cursor.fetchone()[0]
 
-        # Round the score to 3 decimal places
         rounded_score = round(score, 3)
 
-        # Save the rounded score
         self.cursor.execute("INSERT INTO scores (user_id, level, score) VALUES (?, ?, ?)", (user_id, level, rounded_score))
         self.connection.commit()
 
-        # Clean up non-top-5 and non-high scores
-        self.cursor.execute("""
-        DELETE FROM scores 
-        WHERE id NOT IN (
-            SELECT id FROM (
-                SELECT s.id
-                FROM scores s
-                JOIN users u ON s.user_id = u.id
-                WHERE s.level = ?
-                ORDER BY s.score DESC
-                LIMIT 5
-            )
-        )
-        AND id NOT IN (
-            SELECT id FROM (
-                SELECT s.id
-                FROM scores s
-                JOIN users u ON s.user_id = u.id
-                WHERE u.username = ? AND s.level = ?
-                ORDER BY s.score DESC
-                LIMIT 1
-            )
-        )
-        """, (level, username, level))
-        self.connection.commit()
-
     def delete_score(self, level, username, score=None):
-        """
-        Delete a specific score for a user in a given level.
-        If no score is provided, delete all scores for the user in that level.
-
-        Args:
-            level (int): The level associated with the score.
-            username (str): The username of the player.
-            score (float, optional): The specific score to delete. If not provided, all scores for the user in the level are deleted.
-        """
-        # Ensure the user exists
+        """Delete a specific score or all scores for a user in a level."""
         self.cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
         user_row = self.cursor.fetchone()
         if not user_row:
@@ -130,25 +87,18 @@ class LeaderboardDB:
         user_id = user_row[0]
 
         if score is not None:
-            # Delete a specific score
             self.cursor.execute("""
             DELETE FROM scores 
             WHERE user_id = ? AND level = ? AND score = ?
             """, (user_id, level, score))
         else:
-            # Delete all scores for the user in this level
             self.cursor.execute("""
             DELETE FROM scores 
             WHERE user_id = ? AND level = ?
             """, (user_id, level))
         
         self.connection.commit()
-        print(f"Score(s) deleted for user '{username}' in level {level}.")
 
     def close(self):
         """Close the database connection."""
         self.connection.close()
-
-
-# instance similar to Controller
-leaderboard = LeaderboardDB()
