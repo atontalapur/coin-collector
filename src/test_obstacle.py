@@ -1,5 +1,4 @@
 import pytest
-import arcade
 
 # Assuming the class Obstacle is defined in a module called "game"
 from game.obstacle import Obstacle  

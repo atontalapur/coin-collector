@@ -1,6 +1,6 @@
 import pytest
 import arcade
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 from game.level import Level
 from game.coin import Coin
 from game.player import Player
@@ -11,7 +11,7 @@ from game.settings import SCREEN_WIDTH, SCREEN_HEIGHT
 def level_1():
     """Fixture to set up a Level object for testing."""
     # nullify set_background_color, as we don't have a window
-    with patch.object(arcade, 'set_background_color') as _:
+    with patch.object(arcade, 'set_background_color'):
         level = Level('level_1')
         return level
 
