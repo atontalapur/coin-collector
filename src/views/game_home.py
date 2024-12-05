@@ -3,6 +3,7 @@ import arcade.gui
 import math
 from game.settings import *
 import globals.controller_manager as controller_manager
+import globals.database_manager as database_manager
 
 import globals.music_player as music_player
 
@@ -112,12 +113,13 @@ class GameHome(arcade.View):
                 buttons=["Ok"]
             )
             self.text_box_manager.add(message_box)
-        elif self.user_text_box.text == "Thomas":
+        elif database_manager.database.check_user_exists(self.user_text_box.text):
+            database_manager.username = self.user_text_box.text
             self.prior_game_open(None)
         else:
             message_box = arcade.gui.UIMessageBox(
                 message_text=(
-                    "The User information was found!.\n"
+                    "User does not exist.\n"
                 ),
                 width=450,
                 height=150,
@@ -162,7 +164,6 @@ class GameHome(arcade.View):
             self.heading_text.rotation = 3 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
-        self.clear()
         arcade.start_render()
         self.heading_text.draw()
         self.returning_users.draw()
