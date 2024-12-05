@@ -70,9 +70,9 @@ class LooseGame(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=200, vertical=False)
 
 
-        self.retry_button = arcade.gui.UIFlatButton(text="Retry", width=200)
+        self.retry_button = arcade.gui.UIFlatButton(text="Select Level", width=200)
         self.v_box.add(self.retry_button.with_space_around(top=200, right=500))
-        self.exit_button = arcade.gui.UIFlatButton(text="Save and Exit", width=200)
+        self.exit_button = arcade.gui.UIFlatButton(text="Exit", width=200)
         self.v_box.add(self.exit_button.with_space_around(top=200))
         self.manager.add(
             arcade.gui.UIAnchorWidget(

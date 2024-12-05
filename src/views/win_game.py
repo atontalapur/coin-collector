@@ -9,7 +9,6 @@ import globals.controller_manager as controller_manager
 DEFAULT_LINE_HEIGHT = 45
 DEFAULT_FONT_SIZE = 20
 
-
 class WinGame(arcade.View):
     def __init__(self, time_taken):
         super().__init__()
@@ -72,9 +71,9 @@ class WinGame(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout(space_between=200, vertical=False)
 
 
-        self.next_level_button = arcade.gui.UIFlatButton(text="Next Level", width=200)
+        self.next_level_button = arcade.gui.UIFlatButton(text="Select Level", width=200)
         self.v_box.add(self.next_level_button.with_space_around(top=200, right=500))
-        self.exit_button = arcade.gui.UIFlatButton(text="Save and Exit", width=200)
+        self.exit_button = arcade.gui.UIFlatButton(text="Exit", width=200)
         self.v_box.add(self.exit_button.with_space_around(top=200))
 
         self.manager.add(
