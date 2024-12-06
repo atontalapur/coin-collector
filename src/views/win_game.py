@@ -14,7 +14,6 @@ class WinGame(arcade.View):
         self.lvl = lvl
         self.time_taken = time_taken
         self.leaderboard_data = database_manager.database.fetch_leaderboard(lvl, database_manager.username)
-        print(self.leaderboard_data)
         self.saved_score = False
 
         self.time_elapsed = 0.0
@@ -55,7 +54,6 @@ class WinGame(arcade.View):
             italic=True,
             font_name="Kenney Future"
         )
-
 
         self.time_text = arcade.Text(
             text=f"Time Taken: {time_taken:.2f} seconds",
@@ -149,7 +147,7 @@ class WinGame(arcade.View):
         entries = len(self.leaderboard_data[:5])
         i = 0
         idx = 0
-        while idx < entries:
+        while idx < min(entries + inserted, 5):
             name, score = self.leaderboard_data[i]
             entry_y = start_y - (idx * line_height + padding)
 
@@ -183,8 +181,7 @@ class WinGame(arcade.View):
             idx += 1
             i += 1
 
-
-        # Handle case where self.time_elapsed is worse than all top 5 scores
+        # Handle case where self.time_taken is worse than all times, but there is not a full leaderboard yet
         if not inserted and len(self.leaderboard_data) < 5:
             entry_y = start_y - (len(self.leaderboard_data) * line_height + padding)
             arcade.draw_text(
@@ -201,7 +198,7 @@ class WinGame(arcade.View):
                 database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
                 self.saved_score = True
         
-        # Check if self.time_elapsed is better than the 6th tuple (user's best score)
+        # Handle case where self.time_taken is worse than the leaderboard times but better than the user's time
         elif not inserted and len(self.leaderboard_data) > 5:
             _, best_score = self.leaderboard_data[5]
 
@@ -226,6 +223,7 @@ class WinGame(arcade.View):
                 font_name="Kenney Future"
             )
         
+        # Handle case where self.time_taken is worse than the leaderboard times but user does not have a time
         elif not inserted and all(database_manager.username != user for user, _ in self.leaderboard_data):
             entry_y = start_y - (5 * line_height + padding)
             arcade.draw_text(
