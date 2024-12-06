@@ -83,16 +83,16 @@ Why Whole Class Diagram Adheres to SOLID:
 5. DIP - No classes depending on low level modules.
 
  ## Changes (12/6)
- > Get rid of leaderboard class, as it is not necessary. The Database class will provide all of the scores as a list of tuples, and they just need to be parsed in the appropriate window. 
+ Get rid of leaderboard class, as it is not necessary. The Database class will provide all of the scores as a list of tuples, and they just need to be parsed in the appropriate window. 
  
  ## Screenshots
- > Screenshots of the input/output after running your application **********************************************
+ > Screenshots of the input/output after running your application
 
  ## Installation/Usage
- > In order to run Catch the Coins, run git clone https://github.com/cs100/final-project-the-best-team. Make sure the folder "final-project-the-best-team" is empty in the directory you are cloning to.
- > Then, run pip install arcade to have the necessary libraries to run the game. It is best to use a virtual environment rather than installing the libraries globally, but installing them this way is the easiest.
- > Then, run python src/main.py to begin the game. Have fun!
+ In order to run Catch the Coins, run git clone https://github.com/cs100/final-project-the-best-team. Make sure the folder "final-project-the-best-team" is empty in the directory you are cloning to.
+ Then, run pip install arcade to have the necessary libraries to run the game. It is best to use a virtual environment rather than installing the libraries globally, but installing them this way is the easiest.
+ Then, run python src/main.py to begin the game. Have fun!
 
  ## Testing
- > We used pytest to test out source code, unit test for the game and database are complete, and tests for interface navigation are underway. Estimated 60-70% method coverage.
+ We used pytest to test out source code, unit test for the game and database are complete, and tests for interface navigation are underway. Estimated 60-70% method coverage.
  
