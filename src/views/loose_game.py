@@ -106,9 +106,9 @@ class LooseGame(arcade.View):
         self.heading_text.font_size = 70 + 10 * math.sin(self.time_elapsed * 2)
         t = (math.sin(self.time_elapsed * 2) + 1) / 2
         self.heading_text.color = (
-            int(255 * (1 - t) + 50 * t),
-            int(255 * (1 - t) + 150 * t),
-            int(0 * (1 - t) + 50 * t)
+            int(255 * (1 - t) + 255 * t),
+            int(255 * (1 - t) + 51 * t),
+            int(0 * (1 - t) + 51 * t)
         )
         color1=arcade.color.REDWOOD
         color2=arcade.color.DARK_RED

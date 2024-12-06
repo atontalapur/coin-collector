@@ -82,18 +82,17 @@ Why Whole Class Diagram Adheres to SOLID:
 4. ISP - No classes implementing interfaces.
 5. DIP - No classes depending on low level modules.
 
- > ## Final deliverable
- > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
- > Before the demo, you should do the following:
- > * Complete the sections below (i.e. Screenshots, Installation/Usage, Testing)
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
- > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history.
->  * Each team member should also submit the Individual Contributions Form on Canvas for this final phase. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for the final phase, and a description of their contributions. Remember that each team member should submit the form individually.
+ ## Changes (12/6)
+ Get rid of leaderboard class, as it is not necessary. The Database class will provide all of the scores as a list of tuples, and they just need to be parsed in the appropriate window. 
  
  ## Screenshots
  > Screenshots of the input/output after running your application
+
  ## Installation/Usage
- > Instructions on installing and running your application
+ In order to run Catch the Coins, run git clone https://github.com/cs100/final-project-the-best-team. Make sure the folder "final-project-the-best-team" is empty in the directory you are cloning to.
+ Then, run pip install arcade to have the necessary libraries to run the game. It is best to use a virtual environment rather than installing the libraries globally, but installing them this way is the easiest.
+ Then, run python src/main.py to begin the game. Have fun!
+
  ## Testing
- > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
+ We used pytest to test out source code, unit test for the game and database are complete, and tests for interface navigation are underway. Estimated 60-70% method coverage.
  
