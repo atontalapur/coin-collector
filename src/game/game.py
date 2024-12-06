@@ -32,7 +32,6 @@ class Game(arcade.View):
 
         if len(self.level.coin_list) == 0:
             time.sleep(1)
-            database_manager.database.save_score(self.lvl, database_manager.username, self.time_elapsed)
             controller_manager.controller.to_win(self.lvl, self.time_elapsed)
         if self.time_elapsed > 60:
             time.sleep(1)

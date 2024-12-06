@@ -11,9 +11,10 @@ DEFAULT_FONT_SIZE = 20
 class LooseGame(arcade.View):
     def __init__(self, lvl, num_coins):
         super().__init__()
+        self.lvl = lvl
         self.leaderboard_data = database_manager.database.fetch_leaderboard(lvl, database_manager.username)
+        self.saved_score = False
 
-        self.text_angle = 0
         self.time_elapsed = 0.0
 
         self.username_text = arcade.Text(
@@ -39,6 +40,19 @@ class LooseGame(arcade.View):
             font_name="Kenney Future"
         )
         arcade.set_background_color(arcade.color.SKY_BLUE)
+
+        self.level_text = arcade.Text(
+            text=f"Level {lvl.split('_')[1]}",
+            start_x=SCREEN_WIDTH / 2,
+            start_y=SCREEN_HEIGHT - 200,
+            color=arcade.color.YELLOW,
+            font_size=20,
+            anchor_x="center",
+            anchor_y="center",
+            bold=False,
+            italic=True,
+            font_name="Kenney Future"
+        )
 
         self.underline_coin = arcade.Text(
             text=f"Num of Coins Collected:  + {num_coins}",
@@ -98,53 +112,83 @@ class LooseGame(arcade.View):
         color2=arcade.color.DARK_RED
         background_color = self.interpolate_color(color1, color2, t)
         arcade.set_background_color(background_color)
-
-    def on_draw(self):
-        self.clear()
-        arcade.start_render()
-        self.username_text.draw()
-        self.heading_text.draw()
-        self.underline_coin.draw()
-
+    
+    def draw_leaderboard(self):
+        import colorsys
+        """Draw the leaderboard rectangle and entries."""
         # Define the rectangle dimensions
         rect_x = SCREEN_WIDTH // 2
         rect_y = SCREEN_HEIGHT // 2 - 75
         rect_width = 600
         rect_height = 210
 
-        # Draw the white rectangle
-        arcade.draw_rectangle_filled(rect_x, rect_y, rect_width, rect_height, arcade.color.WHITE)
+        hue = (self.time_elapsed * 0.1) % 1.0
+        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
+        color = (int(r * 255), int(g * 255), int(b * 255))
 
+        # Draw the white rectangle
+        arcade.draw_rectangle_filled(rect_x, rect_y, rect_width, rect_height, arcade.color.BLACK)
+        arcade.draw_rectangle_outline(rect_x, rect_y, rect_width, rect_height, color, border_width=5)
+
+        # Draw the leaderboard entries
+        self.draw_leaderboard_entries(rect_x, rect_y, rect_width, rect_height)
+
+    def draw_leaderboard_entries(self, rect_x, rect_y, rect_width, rect_height):
+        """Draw leaderboard entries inside the rectangle."""
         padding = 20
         line_height = 30
         start_y = rect_y + (rect_height // 2) - padding
         start_x = rect_x - (rect_width // 2) + padding
 
-        for idx, (name, score) in enumerate(self.leaderboard_data):
-            # Calculate the y-position for this entry
-            entry_y = start_y - (idx * line_height + padding)
+        inserted = False  # Track whether self.time_elapsed has been added
 
+        # Handle existing leaderboard data
+        entries = len(self.leaderboard_data[:5])
+        idx = 0
+        while idx < entries:
+            name, score = self.leaderboard_data[idx]
+            entry_y = start_y - (idx * line_height + padding)
+            
             arcade.draw_text(
-                f"{idx + 1}. {name}: {score:.3f}",
+                text=f"{idx + 1}. {name}: {score:.2f}",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.BLACK,
+                color=arcade.color.WHITE,
                 font_size=20,
+                italic=True,
                 anchor_x="left",
                 font_name="Kenney Future"
             )
 
-            if idx == 5:
-                arcade.draw_text(
-                    f"Your best: {score:.3f}",
-                    start_x=start_x,
-                    start_y=entry_y,
-                    color=arcade.color.BLACK,
-                    font_size=20,
-                    anchor_x="left",
-                    font_name="Kenney Future"
-                )
+            idx += 1
 
+        # Handle case where self.time_elapsed is worse than all top 5 scores
+        if len(self.leaderboard_data) > 5:
+            _, score = self.leaderboard_data[5]
+            entry_y = start_y - (5 * line_height + padding)
+            arcade.draw_text(
+                text=f"Your best: {score:.2f}",
+                start_x=start_x,
+                start_y=entry_y,
+                color=arcade.color.WHITE,
+                font_size=20,
+                bold=True,
+                anchor_x="left",
+                font_name="Kenney Future"
+            ) 
+
+    def on_draw(self):
+        self.clear()
+        arcade.start_render()
+        self.username_text.draw()
+        self.heading_text.draw()
+        self.level_text.draw()
+        self.underline_coin.draw()
+
+        # Draw the leaderboard rectangle and content
+        self.draw_leaderboard()
+
+        # Draw the UI manager
         self.manager.draw()
 
     def load_sounds(self):

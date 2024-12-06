@@ -11,7 +11,10 @@ DEFAULT_FONT_SIZE = 20
 class WinGame(arcade.View):
     def __init__(self, lvl, time_taken):
         super().__init__()
+        self.lvl = lvl
+        self.time_taken = time_taken
         self.leaderboard_data = database_manager.database.fetch_leaderboard(lvl, database_manager.username)
+        self.saved_score = False
 
         self.time_elapsed = 0.0
 
@@ -51,7 +54,6 @@ class WinGame(arcade.View):
             italic=True,
             font_name="Kenney Future"
         )
-
 
         self.time_text = arcade.Text(
             text=f"Time Taken: {time_taken:.2f} seconds",
@@ -139,27 +141,52 @@ class WinGame(arcade.View):
         start_y = rect_y + (rect_height // 2) - padding
         start_x = rect_x - (rect_width // 2) + padding
 
-        # Draw top 5 entries
-        for idx, (name, score) in enumerate(self.leaderboard_data[:5]):  # Limit to top 5
-            entry_y = start_y - (idx * line_height + padding)-15
+        inserted = False  # Track whether self.time_elapsed has been added
+
+        # Handle existing leaderboard data
+        entries = len(self.leaderboard_data[:5])
+        i = 0
+        idx = 0
+        while idx < min(entries + inserted, 5):
+            name, score = self.leaderboard_data[i]
+            entry_y = start_y - (idx * line_height + padding)
+
+            # Insert self.time_elapsed if it qualifies and hasn't been inserted yet
+            if self.time_taken < score and not inserted:
+                score = self.time_taken
+                inserted = True
+                i -= 1
+    
+                text = f"{idx + 1}. {database_manager.username}: {score:.2f}"
+                color = arcade.color.YELLOW
+
+                if not self.saved_score:
+                    database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
+                    self.saved_score = True
+            else:
+                text = f"{idx + 1}. {name}: {score:.2f}"
+                color = arcade.color.WHITE
+            
             arcade.draw_text(
-                text=f"{idx + 1}. {name}: {score:.2f} seconds",
+                text=text,
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.YELLOW,
+                color=color,
                 font_size=20,
                 italic=True,
                 anchor_x="left",
                 font_name="Kenney Future"
             )
 
-        # Draw "Your best" entry (if exists in leaderboard_data)
-        if len(self.leaderboard_data) >= 5:
-            best_score_name, best_score = min(self.leaderboard_data, key=lambda x: x[1])
-            entry_y = start_y - (5 * line_height + padding) - 50
+            idx += 1
+            i += 1
+
+        # Handle case where self.time_taken is worse than all times, but there is not a full leaderboard yet
+        if not inserted and len(self.leaderboard_data) < 5:
+            entry_y = start_y - (len(self.leaderboard_data) * line_height + padding)
             arcade.draw_text(
-                text=f"Top Score:{best_score_name} {best_score:.2f} seconds",
-                start_x=start_x-20,
+                text=f"{len(self.leaderboard_data) + 1}. {database_manager.username}: {self.time_taken:.2f}",
+                start_x=start_x,
                 start_y=entry_y,
                 color=arcade.color.YELLOW,
                 font_size=20,
@@ -167,6 +194,50 @@ class WinGame(arcade.View):
                 anchor_x="left",
                 font_name="Kenney Future"
             )
+            if not self.saved_score:
+                database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
+                self.saved_score = True
+        
+        # Handle case where self.time_taken is worse than the leaderboard times but better than the user's time
+        elif not inserted and len(self.leaderboard_data) > 5:
+            _, best_score = self.leaderboard_data[5]
+
+            if self.time_taken < best_score:
+                best_score = self.time_taken
+                color = arcade.color.YELLOW
+
+                if not self.saved_score:
+                    database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
+                    self.saved_score = True
+            else:
+                color = arcade.color.WHITE
+
+            entry_y = start_y - (5 * line_height + padding)
+            arcade.draw_text(
+                text=f"Your best: {best_score:.2f}",
+                start_x=start_x,
+                start_y=entry_y,
+                color=color,
+                font_size=20,
+                anchor_x="left",
+                font_name="Kenney Future"
+            )
+        
+        # Handle case where self.time_taken is worse than the leaderboard times but user does not have a time
+        elif not inserted and all(database_manager.username != user for user, _ in self.leaderboard_data):
+            entry_y = start_y - (5 * line_height + padding)
+            arcade.draw_text(
+                text=f"Your best: {self.time_taken:.2f}",
+                start_x=start_x,
+                start_y=entry_y,
+                color=arcade.color.YELLOW,
+                font_size=20,
+                anchor_x="left",
+                font_name="Kenney Future"
+            )
+            if not self.saved_score:
+                database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
+                self.saved_score = True
 
     def on_draw(self):
         self.clear()
