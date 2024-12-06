@@ -3,8 +3,8 @@ import arcade.gui
 from game.settings import *
 import globals.controller_manager as controller_manager
 import globals.database_manager as database_manager
-
 import globals.music_player as music_player
+import sqlite3
 
 class Level_Screen(arcade.View):
 
@@ -12,6 +12,8 @@ class Level_Screen(arcade.View):
         super().__init__()
         self.text_angle = 0
         self.time_elapsed = 0.0
+        self.connection = sqlite3.connect("leaderboard.db")
+        self.cursor = self.connection.cursor()
         self.heading_text = arcade.Text(
             text=database_manager.username,
             start_x=SCREEN_WIDTH // 2,
@@ -27,6 +29,9 @@ class Level_Screen(arcade.View):
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
+        self.pop_up = arcade.gui.UIManager()
+        self.pop_up.enable()
+
         self.level_1_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.level_2_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.level_3_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
@@ -36,7 +41,6 @@ class Level_Screen(arcade.View):
         one_white = arcade.load_texture("textures/levelOneWhite132.jpg")
         one_black = arcade.load_texture("textures/levelOneBlack150.jpg")
         self.level_one = arcade.gui.UITextureButton(texture=one_black, texture_hovered=one_white, width=300, height=114)
-
 
         self.level_1_box.add(self.level_one)
         self.manager.add(
@@ -84,8 +88,7 @@ class Level_Screen(arcade.View):
 
         five_white = arcade.load_texture("textures/Level5_White.png")
         five_black = arcade.load_texture("textures/Level5_Black.png")
-        self.level_five = arcade.gui.UITextureButton(texture=five_black, texture_hovered=five_white, width=300,
-                                                     height=114)
+        self.level_five = arcade.gui.UITextureButton(texture=five_black, texture_hovered=five_white, width=300, height=114)
 
         self.level_5_box.add(self.level_five)
         self.manager.add(
@@ -99,7 +102,6 @@ class Level_Screen(arcade.View):
         self.level_three.on_click = self.level_click_3
         self.level_four.on_click = self.level_click_4
         self.level_five.on_click = self.level_click_5
-
 
         self.high_score = arcade.Text(
             text="high score: 0",
@@ -116,61 +118,65 @@ class Level_Screen(arcade.View):
 
         self.trophy = arcade.load_texture("textures/trophy.jpeg")
 
-
     def load_sounds(self):
         arcade.load_sound(f"sounds/{music_player.music}")
         self.background_music = arcade.load_sound("sounds/click.wav")
 
+    def get_user_current_level(self):
+        self.cursor.execute("SELECT current_level FROM users WHERE username = ?", (self.heading_text.text,))
+        result = self.cursor.fetchone()[2]
+        if result:
+            return result[2]
+        else:
+            return None
+
+    def show_level_restriction_message(self):
+        message_box = arcade.gui.UIMessageBox(
+            message_text=(
+                "Complete other levels to play this level."
+            ),
+            width=450,
+            height=150,
+            buttons=["Ok"]
+        )
+        self.pop_up.add(message_box)
 
     def level_click_1(self, event):
-        # get the current level of user
-        #if the level ID is greater than the current level of user, then show a message box
-        # that the user has not reached that level yet
-        #else, open the rules page
-        # print("Need to add logic to restrict the levels")
-        self.manager.disable()
-        controller_manager.controller.to_rule_page("level_1")
-
-    
+            self.manager.disable()
+            controller_manager.controller.to_rule_page("level_1")
 
     def level_click_2(self, event):
-        # get the current level of user
-        #if the level ID is greater than the current level of user, then show a message box
-        # that the user has not reached that level yet
-        #else, open the rules page
-        # print("Need to add logic to restrict the levels")
-        self.manager.disable()
-        controller_manager.controller.to_rule_page("level_2")
-    
+        user_current_level = self.get_user_current_level()
+        if 2 > user_current_level:
+            self.show_level_restriction_message()
+        else:
+            self.manager.disable()
+            controller_manager.controller.to_rule_page("level_2")
 
     def level_click_3(self, event):
-        # get the current level of user
-        #if the level ID is greater than the current level of user, then show a message box
-        # that the user has not reached that level yet
-        #else, open the rules page
-        # print("Need to add logic to restrict the levels")
-        self.manager.disable()
-        controller_manager.controller.to_rule_page("level_3")
-    
+        user_current_level = self.get_user_current_level()
+        if 3 > user_current_level:
+            self.show_level_restriction_message()
+        else:
+            self.manager.disable()
+            controller_manager.controller.to_rule_page("level_3")
 
     def level_click_4(self, event):
-        # get the current level of user
-        #if the level ID is greater than the current level of user, then show a message box
-        # that the user has not reached that level yet
-        #else, open the rules page
-        # print("Need to add logic to restrict the levels")
-        self.manager.disable()
-        controller_manager.controller.to_rule_page("level_4")
-    
+        user_current_level = self.get_user_current_level()
+        if 4 > user_current_level:
+            self.show_level_restriction_message()
+        else:
+            self.manager.disable()
+            controller_manager.controller.to_rule_page("level_4")
 
     def level_click_5(self, event):
-        # get the current level of user
-        #if the level ID is greater than the current level of user, then show a message box
-        # that the user has not reached that level yet
-        #else, open the rules page
-        # print("Need to add logic to restrict the levels")
-        self.manager.disable()
-        controller_manager.controller.to_rule_page("level_5")
+        user_current_level = self.get_user_current_level()
+        if 5 > user_current_level:
+            self.show_level_restriction_message()
+        else:
+            self.manager.disable()
+            controller_manager.controller.to_rule_page("level_5")
+
 
 
     def setup(self):
@@ -193,7 +199,7 @@ class Level_Screen(arcade.View):
         self.clear()
         arcade.start_render()
         self.heading_text.draw()
-        # self.new_player.draw()
+        self.pop_up.draw()
         self.manager.draw()
         #self.trophy.draw_scaled(55, 550, 0.2, 0.2)
         #self.high_score.draw()

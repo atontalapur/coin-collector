@@ -12,6 +12,7 @@ LEVEL_SETTINGS = {
         "OBSTACLE_PIXELS_X" : 128,
         "OBSTACLE_PIXELS_Y" : 128,
         "OBSTACLE_SCALING" : 0.5,
+        "LEVEL_ID" : 1,
 
         "COIN_IMAGE" : ":resources:images/items/coinGold.png",
         "COIN_SCALING" : 0.375,
@@ -37,6 +38,7 @@ LEVEL_SETTINGS = {
         "OBSTACLE_PIXELS_X" : 128,
         "OBSTACLE_PIXELS_Y" : 128,
         "OBSTACLE_SCALING" : 0.5,
+        "LEVEL_ID" : 2  ,
 
         "COIN_IMAGE" : ":resources:images/items/coinBronze.png",
         "COIN_SCALING" : 0.375,
@@ -62,6 +64,7 @@ LEVEL_SETTINGS = {
         "OBSTACLE_PIXELS_X" : 128,
         "OBSTACLE_PIXELS_Y" : 128,
         "OBSTACLE_SCALING" : 0.5,
+        "LEVEL_ID": 3,
 
         "COIN_IMAGE" : ":resources:images/items/coinSilver.png",
         "COIN_SCALING" : 0.375,
@@ -87,6 +90,7 @@ LEVEL_SETTINGS = {
         "OBSTACLE_PIXELS_X" : 128,
         "OBSTACLE_PIXELS_Y" : 128,
         "OBSTACLE_SCALING" : 0.5,
+        "LEVEL_ID": 4,
 
         "COIN_IMAGE" : ":resources:images/items/gemYellow.png",
         "COIN_SCALING" : 0.25,
@@ -112,6 +116,7 @@ LEVEL_SETTINGS = {
         "OBSTACLE_PIXELS_X" : 128,
         "OBSTACLE_PIXELS_Y" : 128,
         "OBSTACLE_SCALING" : 0.5,
+        "LEVEL_ID": 5,
 
         "COIN_IMAGE" : ":resources:images/items/gemBlue.png",
         "COIN_SCALING" : 0.375,

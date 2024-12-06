@@ -113,6 +113,8 @@ class GameHome(arcade.View):
                 buttons=["Ok"]
             )
             self.text_box_manager.add(message_box)
+
+
         elif database_manager.database.check_user_exists(self.user_text_box.text):
             database_manager.username = self.user_text_box.text
             self.prior_game_open(None)

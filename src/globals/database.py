@@ -15,7 +15,8 @@ class LeaderboardDB:
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL
+            username TEXT UNIQUE NOT NULL,
+            current_level INTEGER DEFAULT 1
         )
         """)
         self.cursor.execute("""
@@ -28,6 +29,12 @@ class LeaderboardDB:
         )
         """)
         self.connection.commit()
+
+        self.cursor.execute("PRAGMA table_info(users)")
+        columns = [column[1] for column in self.cursor.fetchall()]
+        if 'current_level' not in columns:
+            self.cursor.execute("ALTER TABLE users ADD COLUMN current_level INTEGER DEFAULT 1")
+            self.connection.commit()
 
     def check_user_exists(self, username: str) -> bool:
         """Check if a user exists in the database."""
@@ -68,7 +75,7 @@ class LeaderboardDB:
         Save a score for a user in a specific level.
         Round scores to a thousandth of a second (3 decimal places).
         """
-        self.cursor.execute("INSERT OR IGNORE INTO users (username) VALUES (?)", (username,))
+        self.cursor.execute("INSERT OR IGNORE INTO users (username, current_level) VALUES (?, ?)", (username, 1))
         self.connection.commit()
 
         self.cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
@@ -76,7 +83,8 @@ class LeaderboardDB:
 
         rounded_score = round(score, 3)
 
-        self.cursor.execute("INSERT INTO scores (user_id, level, score) VALUES (?, ?, ?)", (user_id, level, rounded_score))
+        self.cursor.execute("INSERT INTO scores (user_id, level, score) VALUES (?, ?, ?)",
+                            (user_id, level, rounded_score))
         self.connection.commit()
 
     def delete_score(self, level: int, username: str, score: Optional[float] = None) -> None:
