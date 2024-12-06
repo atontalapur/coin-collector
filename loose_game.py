@@ -38,7 +38,7 @@ class LooseGame(arcade.View):
         )
         arcade.set_background_color(arcade.color.SKY_BLUE)
 
-        self.underline_coin = arcade.Text(
+        self.coins_collected_text = arcade.Text(
             text="Num of Coins Collected:" + str(num_coins),
             start_x = SCREEN_WIDTH / 2,
             start_y = SCREEN_HEIGHT - 250,
@@ -115,7 +115,7 @@ class LooseGame(arcade.View):
         arcade.start_render()
         self.username_text.draw()
         self.heading_text.draw()
-        self.underline_coin.draw()
+        self.coins_collected_text.draw()
 
         self.leaderboard_text.draw()
         self.manager.draw()
