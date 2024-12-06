@@ -14,6 +14,7 @@ class WinGame(arcade.View):
         self.lvl = lvl
         self.time_taken = time_taken
         self.leaderboard_data = database_manager.database.fetch_leaderboard(lvl, database_manager.username)
+        print(self.leaderboard_data)
         self.saved_score = False
 
         self.time_elapsed = 0.0
@@ -57,7 +58,7 @@ class WinGame(arcade.View):
 
 
         self.time_text = arcade.Text(
-            text=f"Time Taken: {time_taken:.3f} seconds",
+            text=f"Time Taken: {time_taken:.2f} seconds",
             start_x=SCREEN_WIDTH / 2,
             start_y=SCREEN_HEIGHT - 240,
             color=arcade.color.YELLOW,
@@ -116,6 +117,7 @@ class WinGame(arcade.View):
         arcade.set_background_color(background_color)
 
     def draw_leaderboard(self):
+        import colorsys
         """Draw the leaderboard rectangle and entries."""
         # Define the rectangle dimensions
         rect_x = SCREEN_WIDTH // 2
@@ -123,8 +125,13 @@ class WinGame(arcade.View):
         rect_width = 600
         rect_height = 210
 
+        hue = (self.time_elapsed * 0.1) % 1.0
+        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
+        color = (int(r * 255), int(g * 255), int(b * 255))
+
         # Draw the white rectangle
-        arcade.draw_rectangle_filled(rect_x, rect_y, rect_width, rect_height, arcade.color.WHITE)
+        arcade.draw_rectangle_filled(rect_x, rect_y, rect_width, rect_height, arcade.color.BLACK)
+        arcade.draw_rectangle_outline(rect_x, rect_y, rect_width, rect_height, color, border_width=5)
 
         # Draw the leaderboard entries
         self.draw_leaderboard_entries(rect_x, rect_y, rect_width, rect_height)
@@ -139,23 +146,28 @@ class WinGame(arcade.View):
         inserted = False  # Track whether self.time_elapsed has been added
 
         # Handle existing leaderboard data
-        for idx, (name, score) in enumerate(self.leaderboard_data[:5]):  # Limit to top 5
+        entries = len(self.leaderboard_data[:5])
+        i = 0
+        idx = 0
+        while idx < entries:
+            name, score = self.leaderboard_data[i]
             entry_y = start_y - (idx * line_height + padding)
 
             # Insert self.time_elapsed if it qualifies and hasn't been inserted yet
             if self.time_taken < score and not inserted:
                 score = self.time_taken
                 inserted = True
+                i -= 1
     
-                text = f"{idx + 1}. {database_manager.username}: {score:.3f}"
-                color = arcade.color.GREEN
+                text = f"{idx + 1}. {database_manager.username}: {score:.2f}"
+                color = arcade.color.YELLOW
 
                 if not self.saved_score:
                     database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
                     self.saved_score = True
             else:
-                text = f"{idx + 1}. {name}: {score:.3f}"
-                color = arcade.color.BLACK
+                text = f"{idx + 1}. {name}: {score:.2f}"
+                color = arcade.color.WHITE
             
             arcade.draw_text(
                 text=text,
@@ -163,19 +175,25 @@ class WinGame(arcade.View):
                 start_y=entry_y,
                 color=color,
                 font_size=20,
+                italic=True,
                 anchor_x="left",
                 font_name="Kenney Future"
             )
+
+            idx += 1
+            i += 1
+
 
         # Handle case where self.time_elapsed is worse than all top 5 scores
         if not inserted and len(self.leaderboard_data) < 5:
             entry_y = start_y - (len(self.leaderboard_data) * line_height + padding)
             arcade.draw_text(
-                text=f"{len(self.leaderboard_data) + 1}. {database_manager.username}: {self.time_taken:.3f}",
+                text=f"{len(self.leaderboard_data) + 1}. {database_manager.username}: {self.time_taken:.2f}",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.GREEN,
+                color=arcade.color.YELLOW,
                 font_size=20,
+                bold=True,
                 anchor_x="left",
                 font_name="Kenney Future"
             )
@@ -189,17 +207,17 @@ class WinGame(arcade.View):
 
             if self.time_taken < best_score:
                 best_score = self.time_taken
-                color = arcade.color.GREEN
+                color = arcade.color.YELLOW
 
                 if not self.saved_score:
                     database_manager.database.save_score(self.lvl, database_manager.username, self.time_taken)
                     self.saved_score = True
             else:
-                color = arcade.color.BLACK
+                color = arcade.color.WHITE
 
             entry_y = start_y - (5 * line_height + padding)
             arcade.draw_text(
-                text=f"Your best: {best_score:.3f}",
+                text=f"Your best: {best_score:.2f}",
                 start_x=start_x,
                 start_y=entry_y,
                 color=color,
@@ -211,10 +229,10 @@ class WinGame(arcade.View):
         elif not inserted and all(database_manager.username != user for user, _ in self.leaderboard_data):
             entry_y = start_y - (5 * line_height + padding)
             arcade.draw_text(
-                text=f"Your best: {self.time_taken:.3f}",
+                text=f"Your best: {self.time_taken:.2f}",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.GREEN,
+                color=arcade.color.YELLOW,
                 font_size=20,
                 anchor_x="left",
                 font_name="Kenney Future"
