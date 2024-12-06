@@ -46,8 +46,8 @@ class GameHome(arcade.View):
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         #self.text_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
-        right_button_g = arcade.load_texture("../textures/rightgreenarrow1.jpg", width=150, height=50)
-        right_button_w = arcade.load_texture("../textures/rightwhitearrow1.jpg", width=150, height=50)
+        right_button_g = arcade.load_texture("./textures/rightgreenarrow1.jpg", width=150, height=50)
+        right_button_w = arcade.load_texture("./textures/rightwhitearrow1.jpg", width=150, height=50)
         self.user_text_box = (arcade.gui.UIInputText
                               (width=250,
                                height=30,
@@ -137,7 +137,7 @@ class GameHome(arcade.View):
 
     def load_sounds(self):
         # self.background_music = arcade.load_sound("sounds/Apoxode_-_Electric_1.wav")
-        self.background_music = arcade.load_sound("../sounds/Apoxode_-_Electric_1.wav")
+        self.background_music = arcade.load_sound("./sounds/Apoxode_-_Electric_1.wav")
         # self.move_up_sound = arcade.load_sound("sounds/Rising_putter.wav")
         # self.move_down_sound = arcade.load_sound("sounds/Falling_putter.wav")
 

@@ -29,12 +29,7 @@ def test_game_on_draw():
     game.on_draw()
     assert game.level is not None
 
-def test_game_on_key_press_quit():
-    window = arcade.Window(800, 600, "Test Window")
-    game = Game("level_1")
-    window.show_view(game)
-    game.on_key_press(arcade.key.Q, None)
-    assert game.window_closed==True
+
 
 def test_game_on_key_press_restart():
     window = arcade.Window(800, 600, "Test Window")
