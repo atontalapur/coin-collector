@@ -80,31 +80,7 @@ class New_Player(arcade.View):
                 align_x=1,
                 child=self.r_box),
         )
-        self.new_name_available = arcade.Text(
-            text="Username Found!",
-            start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 450,
-            color=arcade.color.COOL_GREY,
-            font_size=35,
-            anchor_x="center",
-            anchor_y="center",
-            bold=True,
-            italic=True,
-            font_name="Kenney High Square"
-        )
 
-        self.new_name_unavailable = arcade.Text(
-            text="Username Not Found!",
-            start_x=SCREEN_WIDTH // 2,
-            start_y=SCREEN_HEIGHT - 520,
-            color=arcade.color.COOL_GREY,
-            font_size=35,
-            anchor_x="center",
-            anchor_y="center",
-            bold=True,
-            italic=True,
-            font_name="Kenney High Square"
-        )
 
     def on_mouse_press(self, x: int, y: int, button: int, modifiers: int):
         if button == arcade.MOUSE_BUTTON_LEFT and self.user_text_box.text == "Enter New User Name":
