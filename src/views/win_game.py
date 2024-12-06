@@ -13,7 +13,6 @@ class WinGame(arcade.View):
         super().__init__()
         self.leaderboard_data = database_manager.database.fetch_leaderboard(lvl, database_manager.username)
 
-        self.text_angle = 0
         self.time_elapsed = 0.0
 
         self.username_text = arcade.Text(
@@ -55,7 +54,7 @@ class WinGame(arcade.View):
 
 
         self.time_text = arcade.Text(
-            text=f"Time Taken: {time_taken:.3f} seconds",
+            text=f"Time Taken: {time_taken:.2f} seconds",
             start_x=SCREEN_WIDTH / 2,
             start_y=SCREEN_HEIGHT - 240,
             color=arcade.color.YELLOW,
@@ -114,6 +113,7 @@ class WinGame(arcade.View):
         arcade.set_background_color(background_color)
 
     def draw_leaderboard(self):
+        import colorsys
         """Draw the leaderboard rectangle and entries."""
         # Define the rectangle dimensions
         rect_x = SCREEN_WIDTH // 2
@@ -121,8 +121,13 @@ class WinGame(arcade.View):
         rect_width = 600
         rect_height = 210
 
+        hue = (self.time_elapsed * 0.1) % 1.0
+        r, g, b = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
+        color = (int(r * 255), int(g * 255), int(b * 255))
+
         # Draw the white rectangle
-        arcade.draw_rectangle_filled(rect_x, rect_y, rect_width, rect_height, arcade.color.WHITE)
+        arcade.draw_rectangle_filled(rect_x, rect_y, rect_width, rect_height, arcade.color.BLACK)
+        arcade.draw_rectangle_outline(rect_x, rect_y, rect_width, rect_height, color, border_width=5)
 
         # Draw the leaderboard entries
         self.draw_leaderboard_entries(rect_x, rect_y, rect_width, rect_height)
@@ -136,27 +141,29 @@ class WinGame(arcade.View):
 
         # Draw top 5 entries
         for idx, (name, score) in enumerate(self.leaderboard_data[:5]):  # Limit to top 5
-            entry_y = start_y - (idx * line_height + padding)
+            entry_y = start_y - (idx * line_height + padding)-15
             arcade.draw_text(
-                text=f"{idx + 1}. {name}: {score:.3f}",
+                text=f"{idx + 1}. {name}: {score:.2f} seconds",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.BLACK,
+                color=arcade.color.YELLOW,
                 font_size=20,
+                italic=True,
                 anchor_x="left",
                 font_name="Kenney Future"
             )
 
         # Draw "Your best" entry (if exists in leaderboard_data)
-        if len(self.leaderboard_data) > 5:
-            best_score_name, best_score = self.leaderboard_data[5]
-            entry_y = start_y - (5 * line_height + padding)
+        if len(self.leaderboard_data) >= 5:
+            best_score_name, best_score = min(self.leaderboard_data, key=lambda x: x[1])
+            entry_y = start_y - (5 * line_height + padding) - 50
             arcade.draw_text(
-                text=f"Your best score: {best_score:.3f}",
-                start_x=start_x,
+                text=f"Top Score:{best_score_name} {best_score:.2f} seconds",
+                start_x=start_x-20,
                 start_y=entry_y,
-                color=arcade.color.BLACK,
+                color=arcade.color.YELLOW,
                 font_size=20,
+                bold=True,
                 anchor_x="left",
                 font_name="Kenney Future"
             )
