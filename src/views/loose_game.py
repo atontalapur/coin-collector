@@ -5,8 +5,7 @@ from game.settings import *
 import globals.controller_manager as controller_manager
 import globals.database_manager as database_manager
 
-DEFAULT_LINE_HEIGHT = 45
-DEFAULT_FONT_SIZE = 20
+ENTRY_RENDER_DELAY = 0.75  # Time delay between rendering each entry
 
 class LooseGame(arcade.View):
     def __init__(self, lvl, num_coins):
@@ -16,6 +15,8 @@ class LooseGame(arcade.View):
         self.saved_score = False
 
         self.time_elapsed = 0.0
+        self.entry_render_time = 0.0
+
 
         self.username_text = arcade.Text(
             text=database_manager.username,
@@ -55,7 +56,7 @@ class LooseGame(arcade.View):
         )
 
         self.underline_coin = arcade.Text(
-            text=f"Num of Coins Collected:  + {num_coins}",
+            text=f"Num of Coins Collected: {num_coins}",
             start_x=SCREEN_WIDTH / 2,
             start_y=SCREEN_HEIGHT - 250,
             color=arcade.color.YELLOW,
@@ -101,6 +102,7 @@ class LooseGame(arcade.View):
 
     def on_update(self, delta_time):
         self.time_elapsed += delta_time
+        self.entry_render_time += delta_time
         self.heading_text.font_size = 70 + 10 * math.sin(self.time_elapsed * 2)
         t = (math.sin(self.time_elapsed * 2) + 1) / 2
         self.heading_text.color = (
@@ -112,7 +114,7 @@ class LooseGame(arcade.View):
         color2=arcade.color.DARK_RED
         background_color = self.interpolate_color(color1, color2, t)
         arcade.set_background_color(background_color)
-    
+
     def draw_leaderboard(self):
         import colorsys
         """Draw the leaderboard rectangle and entries."""
@@ -146,14 +148,17 @@ class LooseGame(arcade.View):
         entries = len(self.leaderboard_data[:5])
         idx = 0
         while idx < entries:
+            if self.entry_render_time < idx * ENTRY_RENDER_DELAY:
+                break
+
             name, score = self.leaderboard_data[idx]
             entry_y = start_y - (idx * line_height + padding)
-            
+
             arcade.draw_text(
-                text=f"{idx + 1}. {name}: {score:.2f}",
+                text=f"{idx + 1}. {name}: {score:.2f} seconds",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.WHITE,
+                color=arcade.color.YELLOW,
                 font_size=20,
                 italic=True,
                 anchor_x="left",
@@ -167,15 +172,15 @@ class LooseGame(arcade.View):
             _, score = self.leaderboard_data[5]
             entry_y = start_y - (5 * line_height + padding)
             arcade.draw_text(
-                text=f"Your best: {score:.2f}",
+                text=f"Your best: {score:.2f} seconds",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.WHITE,
+                color=arcade.color.YELLOW,
                 font_size=20,
                 bold=True,
                 anchor_x="left",
                 font_name="Kenney Future"
-            ) 
+            )
 
     def on_draw(self):
         self.clear()
