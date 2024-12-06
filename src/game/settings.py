@@ -115,7 +115,7 @@ LEVEL_SETTINGS = {
 
         "COIN_IMAGE" : ":resources:images/items/gemBlue.png",
         "COIN_SCALING" : 0.375,
-        "NUM_COINS": 1,
+        "NUM_COINS": 15,
         "COIN_OFFSET": 50,
         "COIN_FROM_BORDER" : 100,
         "COIN_MIN_SPEED": 1.5,
