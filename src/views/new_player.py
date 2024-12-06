@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 from game.settings import *
 import globals.controller_manager as controller_manager
+import globals.database_manager as database_manager
 
 class New_Player(arcade.View):
     def __init__(self):
@@ -110,11 +111,43 @@ class New_Player(arcade.View):
             self.user_text_box.text = ""
 
     def change_status(self, event):
-        available = True
-        if available is True:
-            self.new_name_available.color = arcade.color.GREEN
-        elif available is False:
-            self.new_name_unavailable.color = arcade.color.RED
+        if len(self.user_text_box.text) > 20:
+            message_box = arcade.gui.UIMessageBox(
+                    message_text=(
+                        "Name is too long (Max 20 chars).\n"
+                    ),
+                    width=450,
+                    height=150,
+                    buttons=["Ok"]
+            )
+            self.text_box_manager.add(message_box)
+        elif not database_manager.database.check_user_exists(self.user_text_box.text):
+            database_manager.username = self.user_text_box.text
+            message_box = arcade.gui.UIMessageBox(
+                    message_text=(
+                        "User created.\n"
+                    ),
+                    width=450,
+                    height=150,
+                    buttons=["Ok"],
+                    callback=self.on_ok_pressed
+            )
+            self.text_box_manager.add(message_box)
+        else:
+            message_box = arcade.gui.UIMessageBox(
+                    message_text=(
+                        "User already exists.\n"
+                    ),
+                    width=450,
+                    height=150,
+                    buttons=["Ok"]
+            )
+            self.text_box_manager.add(message_box)
+    
+    def on_ok_pressed(self, button_text: str):
+        if button_text == "Ok":  # Check which button was pressed
+            controller_manager.controller.to_level_screen()
+
 
     def new_user_open(self, event):
         self.text_box_manager.disable()
@@ -136,11 +169,8 @@ class New_Player(arcade.View):
         # self.text_angle = 10 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
-        self.clear()
-        self.heading_text.rotation = self.text_angle
+        arcade.start_render()
         self.heading_text.draw()
         self.new_player.draw()
         self.manager.draw()
         self.text_box_manager.draw()
-        self.new_name_available.draw()
-        self.new_name_unavailable.draw()

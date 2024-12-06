@@ -4,6 +4,7 @@ import arcade
 import arcade.gui
 from game.level import Level
 import globals.controller_manager as controller_manager
+import globals.database_manager as database_manager
 from game.settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
 
 
@@ -31,10 +32,10 @@ class Game(arcade.View):
 
         if len(self.level.coin_list) == 0:
             time.sleep(1)
-            controller_manager.controller.to_win(self.time_elapsed)
+            controller_manager.controller.to_win(self.lvl, self.time_elapsed)
         if self.time_elapsed > 60:
             time.sleep(1)
-            controller_manager.controller.to_loose(LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
+            controller_manager.controller.to_loose(self.lvl, LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
             len(self.level.coin_list))
 
     def on_draw(self):

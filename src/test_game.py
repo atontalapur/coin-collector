@@ -59,13 +59,13 @@ def test_game_on_update(game_instance):
             # test game ending with win
             game_instance.level.coin_list = []
             game_instance.on_update(0.5)
-            controller_manager.controller.to_win.assert_called_once_with(game_instance.time_elapsed)
+            controller_manager.controller.to_win.assert_called_once_with(game_instance.lvl, game_instance.time_elapsed)
 
             # test game ending with lose
             game_instance.level.coin_list = [1]
             game_instance.time_elapsed = 59.6 
             game_instance.on_update(0.5)
-            controller_manager.controller.to_loose.assert_called_once_with(LEVEL_SETTINGS[game_instance.lvl]["NUM_COINS"] - len(game_instance.level.coin_list))
+            controller_manager.controller.to_loose.assert_called_once_with(game_instance.lvl, LEVEL_SETTINGS[game_instance.lvl]["NUM_COINS"] - len(game_instance.level.coin_list))
         finally:
             controller_manager.controller = original_controller
 

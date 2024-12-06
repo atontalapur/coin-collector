@@ -44,7 +44,7 @@ class LeaderboardDB:
         FROM scores s
         JOIN users u ON s.user_id = u.id
         WHERE s.level = ?
-        ORDER BY s.score DESC
+        ORDER BY s.score
         LIMIT 5
         """, (level,))
         top_scores = self.cursor.fetchall()
