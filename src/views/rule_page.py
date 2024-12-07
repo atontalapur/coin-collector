@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 from game.settings import *
 import globals.controller_manager as controller_manager
+import globals.database_manager as database_manager
 
 class Rule_Page(arcade.View):
 
@@ -11,7 +12,7 @@ class Rule_Page(arcade.View):
         self.text_angle = 0
         self.time_elapsed = 0.0
         self.heading_text = arcade.Text(
-            text="atontalapur",
+            text=database_manager.username,
             start_x=SCREEN_WIDTH // 2,
             start_y=SCREEN_HEIGHT - 20,
             color=arcade.color.YELLOW,

@@ -4,6 +4,7 @@ import arcade
 import arcade.gui
 from game.level import Level
 import globals.controller_manager as controller_manager
+import globals.database_manager as database_manager
 from game.settings import SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_SETTINGS
 
 
@@ -30,11 +31,11 @@ class Game(arcade.View):
         self.game_view_screen = arcade.get_image()
 
         if len(self.level.coin_list) == 0:
-            time.sleep(1)
-            controller_manager.controller.to_win(self.time_elapsed)
+            time.sleep(0.5)
+            controller_manager.controller.to_win(self.lvl, self.time_elapsed)
         if self.time_elapsed > 60:
-            time.sleep(1)
-            controller_manager.controller.to_loose(LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
+            time.sleep(0.5)
+            controller_manager.controller.to_loose(self.lvl, LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
             len(self.level.coin_list))
 
     def on_draw(self):
@@ -64,8 +65,6 @@ class Game(arcade.View):
         # Pause Menu - resume, restart, or select level
         elif key == arcade.key.ESCAPE:
             self._toggle_pause()
-        elif key == arcade.key.R:
-            self.level.setup()
 
     def on_key_release(self, key, modifiers):
         """Keys that are released."""

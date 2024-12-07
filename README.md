@@ -71,41 +71,34 @@ The navigation diagram illustrates the flow of a user interface for a login and 
 ![Class Diagram](assets/class_diag.jpg)
 
 On login, a game object will be created. The game object will contain everything that the user will see in the game. It has a level object, which is the current level. The level has its own unique environment as well as leaderboard, which is aggregated. The environment controls the player and all of the obstacles and coins that are in that level. The game object will own everything except the leaderboard, as the leaderboard can exist on its own. On login, a username will be fetched/created and a databaseManager object will be created, and these will ensure the leaderboards will stay updated as well as the user's new high scores can be seen on the leaderboard.
- 
- > ## Phase III
- > You will need to schedule a check-in for the second scrum meeting with the same reader you had your first scrum meeting with (using Calendly). Your entire team must be present. This meeting will occur on week 8 during lab time.
- 
- > BEFORE the meeting you should do the following:
- > * Update your class diagram from Phase II to include any feedback you received from your TA/grader.
- > * Considering the SOLID design principles, reflect back on your class diagram and think about how you can use the SOLID principles to improve your design. You should then update the README.md file by adding the following:
- >   * A new class diagram incorporating your changes after considering the SOLID principles.
- >   * For each update in your class diagram, you must explain in 3-4 sentences:
- >     * What SOLID principle(s) did you apply?
- >     * How did you apply it? i.e. describe the change.
- >     * How did this change help you write better code?
- > * Perform a new sprint plan like you did in Phase II.
- > * Make sure that your README file (and Project board) are up-to-date reflecting the current status of your project and the most recent class diagram. Previous versions of the README file should still be visible through your commit history.
->  * Each team member should also submit the Individual Contributions Form on Canvas for phase III. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for phase III, and a description of their contributions. Remember that each team member should submit the form individually.
- 
-> During the meeting with your reader you will discuss: 
- > * How effective your last sprint was (each member should talk about what they did)
- > * Any tasks that did not get completed last sprint, and how you took them into consideration for this sprint
- > * Any bugs you've identified and created issues for during the sprint. Do you plan on fixing them in the next sprint or are they lower priority?
- > * What tasks you are planning for this next sprint.
 
- 
- > ## Final deliverable
- > All group members will give a demo to the reader during lab time. ou should schedule your demo on Calendly with the same reader who took your second scrum meeting. The reader will check the demo and the project GitHub repository and ask a few questions to all the team members. 
- > Before the demo, you should do the following:
- > * Complete the sections below (i.e. Screenshots, Installation/Usage, Testing)
- > * Plan one more sprint (that you will not necessarily complete before the end of the quarter). Your In-progress and In-testing columns should be empty (you are not doing more work currently) but your TODO column should have a full sprint plan in it as you have done before. This should include any known bugs (there should be some) or new features you would like to add. These should appear as issues/cards on your Project board.
- > * Make sure your README file and Project board are up-to-date reflecting the current status of your project (e.g. any changes that you have made during the project such as changes to your class diagram). Previous versions should still be visible through your commit history.
->  * Each team member should also submit the Individual Contributions Form on Canvas for this final phase. In this form, you need to fill in the names of all team members, the percentage of work contributed by each member for the final phase, and a description of their contributions. Remember that each team member should submit the form individually.
+Updated Class Diagram (SOLID):
+1. Moves Player to be composed in Environment, instead of Game. The game class should not be controlling the core functions of the game as well as updating where the player is drawn. That is the purpose of Game.level.environment. This was fixing a mistake, not an improvement. Now everything that is drawn as part of a level is next to each other. It makes it easier to ensure that everything is updated properly. This violated the Single Responsibility Principle.
+
+Why Whole Class Diagram Adheres to SOLID:
+1. SRP - each object has a specific purpose. Coin/Obstacle/Player represents the displayed player, environment is responsible for updating their interactions, leaderboard displays that leaderboard and owns a connection to the database, as it is the only object using the database. level consists of the environment being drawn and the high score leaderboard for it. Game represents the functions that any method should have, such as pausing, muting, and showing current time and coins left.
+2. OCP - A dictionary of settings for each level is used so that many of the feature the levels share is generalized outside of where the levels are built. This allows for the customization of how the coins/player act without having to write elif statement for each level. Right now, the _setup_walls() method does not follow OCD, as it used elif, but a fix is being developed.
+3. LSP - Not relevant. No superclasses/subclasses developed.
+4. ISP - No classes implementing interfaces.
+5. DIP - No classes depending on low level modules.
+
+ ## Changes (12/6)
+ Get rid of leaderboard class, as it is not necessary. The Database class will provide all of the scores as a list of tuples, and they just need to be parsed in the appropriate window. 
  
  ## Screenshots
- > Screenshots of the input/output after running your application
+ ![Game Home](assets/game_home.png)
+ ![New Player](assets/new_player.png)
+ ![Level Screen](assets/level_screen.png)
+ ![Rule Page](assets/rule_page.png)
+ ![Level 5/5](assets/level_5.png)
+ ![Win Screen](assets/win_page.png)
+ 
+
  ## Installation/Usage
- > Instructions on installing and running your application
+ In order to run Catch the Coins, run git clone https://github.com/cs100/final-project-the-best-team. Make sure the folder "final-project-the-best-team" is empty in the directory you are cloning to.
+ Then, run pip install arcade to have the necessary libraries to run the game. It is best to use a virtual environment rather than installing the libraries globally, but installing them this way is the easiest.
+ Then, run python src/main.py to begin the game. Have fun!
+
  ## Testing
- > How was your project tested/validated? If you used CI, you should have a "build passing" badge in this README.
+ We used pytest to test out source code, unit test for the game and database are complete, and tests for interface navigation are underway. Estimated 60-70% method coverage.
  

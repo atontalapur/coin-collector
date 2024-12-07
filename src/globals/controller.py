@@ -49,12 +49,12 @@ class Controller(arcade.Window):
         view = PauseView(game_view)
         self.show_view(view)
 
-    def to_win(self, time_taken):
-        view = WinGame(time_taken)
+    def to_win(self, lvl, time_taken):
+        view = WinGame(lvl, time_taken)
         view.setup()
         self.show_view(view)
 
-    def to_loose(self, num_coins):
-        view = LooseGame(num_coins)
+    def to_loose(self, lvl, num_coins):
+        view = LooseGame(lvl, num_coins)
         view.setup()
         self.show_view(view)

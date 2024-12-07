@@ -3,6 +3,7 @@ import arcade.gui
 import math
 from game.settings import *
 import globals.controller_manager as controller_manager
+import globals.database_manager as database_manager
 
 import globals.music_player as music_player
 
@@ -46,7 +47,6 @@ class GameHome(arcade.View):
 
         self.v_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
         self.r_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
-        #self.text_box = arcade.gui.UIBoxLayout(space_between=10, vertical=False)
 
         right_button_g = arcade.load_texture("textures/rightgreenarrow1.jpg", width=150, height=50)
         right_button_w = arcade.load_texture("textures/rightwhitearrow1.jpg", width=150, height=50)
@@ -57,15 +57,13 @@ class GameHome(arcade.View):
                                font_name="Arial",
                                anchor_x="center",
                                anchor_y="center",
-                               multiline=False, text="Enter User Name", text_color=arcade.color.BLACK,
-                               # Set text color to black
-                               color=arcade.color.BLACK)
-                              )
+                               multiline=False, text="Enter User Name",
+                               text_color=arcade.color.BLACK
+                               ))
         user_text_box_border = arcade.gui.UIBorder(child=self.user_text_box, border_width=2)
         self.confirm_box_button = arcade.gui.UITextureButton(texture=right_button_g, texture_hovered=right_button_w,
                                                              width=150)
         self.new_profile_button = arcade.gui.UIFlatButton(text="Create Profile", width=200)
-        # self.v_box.add(self.user_text_box)
         self.v_box.add(user_text_box_border)
         self.v_box.add(self.confirm_box_button)
 
@@ -112,12 +110,13 @@ class GameHome(arcade.View):
                 buttons=["Ok"]
             )
             self.text_box_manager.add(message_box)
-        elif self.user_text_box.text == "Thomas":
+        elif database_manager.database.check_user_exists(self.user_text_box.text):
+            database_manager.username = self.user_text_box.text
             self.prior_game_open(None)
         else:
             message_box = arcade.gui.UIMessageBox(
                 message_text=(
-                    "The User information was found!.\n"
+                    "User does not exist.\n"
                 ),
                 width=450,
                 height=150,
@@ -150,19 +149,18 @@ class GameHome(arcade.View):
             music_player.player = music.play(loop=True)
 
     def on_update(self, delta_time):
-            self.time_elapsed += delta_time
-            radius = 10
-            self.heading_text.start_x = SCREEN_WIDTH // 2 + radius * math.cos(self.time_elapsed * 2)
-            self.heading_text.start_y = SCREEN_HEIGHT - 60 + radius * math.sin(self.time_elapsed * 2)
-            self.heading_text.color = (
-                int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
-                int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
-                int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
-            )
-            self.heading_text.rotation = 3 * math.sin(self.time_elapsed * 2)
+        self.time_elapsed += delta_time
+        radius = 10
+        self.heading_text.start_x = SCREEN_WIDTH // 2 + radius * math.cos(self.time_elapsed * 2)
+        self.heading_text.start_y = SCREEN_HEIGHT - 60 + radius * math.sin(self.time_elapsed * 2)
+        self.heading_text.color = (
+            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 3))),
+            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 2))),
+            int(255 * (0.5 + 0.5 * math.sin(self.time_elapsed * 4))),
+        )
+        self.heading_text.rotation = 3 * math.sin(self.time_elapsed * 2)
 
     def on_draw(self):
-        self.clear()
         arcade.start_render()
         self.heading_text.draw()
         self.returning_users.draw()
