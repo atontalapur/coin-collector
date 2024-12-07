@@ -86,7 +86,13 @@ Why Whole Class Diagram Adheres to SOLID:
  Get rid of leaderboard class, as it is not necessary. The Database class will provide all of the scores as a list of tuples, and they just need to be parsed in the appropriate window. 
  
  ## Screenshots
- > Screenshots of the input/output after running your application
+ ![Game Home](assets/game_home.png)
+ ![New Player](assets/new_player.png)
+ ![Level Screen](assets/level_screen.png)
+ ![Rule Page](assets/rule_page.png)
+ ![Level 5/5](assets/level_5.png)
+ ![Win Screen](assets/win_page.png)
+ 
 
  ## Installation/Usage
  In order to run Catch the Coins, run git clone https://github.com/cs100/final-project-the-best-team. Make sure the folder "final-project-the-best-team" is empty in the directory you are cloning to.
