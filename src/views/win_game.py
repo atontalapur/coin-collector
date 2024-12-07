@@ -186,7 +186,7 @@ class WinGame(arcade.View):
             i += 1
 
         # Handle case where self.time_taken is worse than all times, but there is not a full leaderboard yet
-        if not inserted and len(self.leaderboard_data) < 5:
+        if not inserted and len(self.leaderboard_data) < 5 and not self.entry_render_time < len(self.leaderboard_data) * ENTRY_RENDER_DELAY:
             entry_y = start_y - (len(self.leaderboard_data) * line_height + padding)
             arcade.draw_text(
                 text=f"{len(self.leaderboard_data) + 1}. {database_manager.username}: {self.time_taken:.2f} seconds",
@@ -203,7 +203,7 @@ class WinGame(arcade.View):
                 self.saved_score = True
 
         # Handle case where self.time_taken is worse than the leaderboard times but better than the user's time
-        elif not inserted and len(self.leaderboard_data) > 5:
+        elif not inserted and len(self.leaderboard_data) == 6 and not self.entry_render_time < 5 * ENTRY_RENDER_DELAY:
             _, best_score = self.leaderboard_data[5]
 
             if self.time_taken < best_score:
@@ -228,7 +228,7 @@ class WinGame(arcade.View):
             )
 
         # Handle case where self.time_taken is worse than the leaderboard times but user does not have a time
-        elif not inserted and all(database_manager.username != user for user, _ in self.leaderboard_data):
+        elif not inserted and all(database_manager.username != user for user, _ in self.leaderboard_data) and not self.entry_render_time < 5 * ENTRY_RENDER_DELAY:
             entry_y = start_y - (5 * line_height + padding)
             arcade.draw_text(
                 text=f"Your best: {self.time_taken:.2f} seconds",
