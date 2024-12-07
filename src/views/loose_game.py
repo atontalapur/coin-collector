@@ -158,7 +158,7 @@ class LooseGame(arcade.View):
                 text=f"{idx + 1}. {name}: {score:.2f} seconds",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.YELLOW,
+                color=arcade.color.WHITE,
                 font_size=20,
                 italic=True,
                 anchor_x="left",
@@ -168,14 +168,14 @@ class LooseGame(arcade.View):
             idx += 1
 
         # Handle case where self.time_elapsed is worse than all top 5 scores
-        if len(self.leaderboard_data) > 5:
+        if len(self.leaderboard_data) == 6 and not self.entry_render_time < 5 * ENTRY_RENDER_DELAY:
             _, score = self.leaderboard_data[5]
             entry_y = start_y - (5 * line_height + padding)
             arcade.draw_text(
                 text=f"Your best: {score:.2f} seconds",
                 start_x=start_x,
                 start_y=entry_y,
-                color=arcade.color.YELLOW,
+                color=arcade.color.WHITE,
                 font_size=20,
                 bold=True,
                 anchor_x="left",
