@@ -31,10 +31,10 @@ class Game(arcade.View):
         self.game_view_screen = arcade.get_image()
 
         if len(self.level.coin_list) == 0:
-            time.sleep(1)
+            time.sleep(0.5)
             controller_manager.controller.to_win(self.lvl, self.time_elapsed)
         if self.time_elapsed > 60:
-            time.sleep(1)
+            time.sleep(0.5)
             controller_manager.controller.to_loose(self.lvl, LEVEL_SETTINGS[self.lvl]["NUM_COINS"] -
             len(self.level.coin_list))
 
@@ -65,8 +65,6 @@ class Game(arcade.View):
         # Pause Menu - resume, restart, or select level
         elif key == arcade.key.ESCAPE:
             self._toggle_pause()
-        elif key == arcade.key.R:
-            self.level.setup()
 
     def on_key_release(self, key, modifiers):
         """Keys that are released."""
