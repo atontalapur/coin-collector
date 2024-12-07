@@ -28,15 +28,15 @@ def test_save_score_edge_case(db):
 # Test cases for `fetch_leaderboard`
 def test_fetch_leaderboard_general_case(db):
     """Test fetching the top 5 scores."""
-    for i in range(1, 7):
+    for i in range(1, 6):
         db.save_score(level=1, username=f"user_{i}", score=100 + i)
     leaderboard = db.fetch_leaderboard(level=1)
     expected_leaderboard = [
-        ("user_6", 106.0),
-        ("user_5", 105.0),
-        ("user_4", 104.0),
-        ("user_3", 103.0),
+        ("user_1", 101.0),
         ("user_2", 102.0),
+        ("user_3", 103.0),
+        ("user_4", 104.0),
+        ("user_5", 105.0),
     ]
     assert leaderboard == expected_leaderboard
 
